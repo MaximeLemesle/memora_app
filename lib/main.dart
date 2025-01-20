@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memora_app/config/theme/app_theme.dart';
 import 'package:memora_app/features/home/home_page.dart';
 
 void main() {
@@ -11,12 +12,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      title: 'Memora',
+      themeMode: ThemeMode.system,
+      theme: lightMode,
+      routes: {
+        '/home_page': (context) => const HomePage()
+      },
+      initialRoute: '/home_page',
     );
   }
 }
