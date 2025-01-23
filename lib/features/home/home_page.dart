@@ -7,8 +7,14 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('Memora App'),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Text(
+          'Memora App',
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge
+              ?.copyWith(color: Theme.of(context).colorScheme.onPrimary),
+        ),
       ),
     );
   }

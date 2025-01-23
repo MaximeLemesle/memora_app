@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Memora',
+      debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: lightMode,
       routes: {
