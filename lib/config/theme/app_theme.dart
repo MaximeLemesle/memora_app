@@ -46,8 +46,9 @@ ThemeData lightMode = ThemeData(
     error: CustomColors.error700,
     onError: CustomColors.error100,
     surface: CustomColors.neutral0,
-    onSurface: CustomColors.neutral50,
-    onSurfaceVariant: CustomColors.neutral700,
+    onSurface: CustomColors.neutral900,
+    surfaceContainer: CustomColors.neutral50,
+    surfaceContainerHighest: CustomColors.neutral700,
     outline: CustomColors.neutral300,
   ),
   textTheme: const TextTheme(
