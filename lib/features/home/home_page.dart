@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memora_app/core/widgets/main_app_bar.dart';
+import 'package:memora_app/core/widgets/main_nav_bar.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,9 +12,10 @@ class HomePage extends StatelessWidget {
         title: 'Bonjour,',
         name: 'Maxime',
       ),
-      body: const Center(
+      body: Center(
         child: Text('Hello World!'),
       ),
+      bottomNavigationBar: MainNavBar(),
     );
   }
 }
