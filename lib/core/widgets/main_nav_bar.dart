@@ -1,39 +1,124 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class MainNavBar extends StatelessWidget {
+class MainNavBar extends StatefulWidget {
   const MainNavBar({super.key});
+
+  @override
+  State<MainNavBar> createState() => _MainNavBarState();
+}
+
+class _MainNavBarState extends State<MainNavBar> {
+  bool isOpen = false;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
+      decoration: BoxDecoration(color: Colors.transparent),
       padding: const EdgeInsets.all(24),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
+      height: 140,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomRight,
         children: [
-          ElevatedButton(
-            onPressed: () {},
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all<Color>(
-                Theme.of(context).colorScheme.primary,
+          // First button
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+            right: isOpen ? 0 : 0,
+            bottom: isOpen ? 85 : 0,
+            child: ElevatedButton(
+              onPressed: () {
+                // Handle first button action
+              },
+              style: _primaryButtonStyle(context),
+              child: Icon(
+                Icons.person_rounded,
+                size: 28,
+                color: Theme.of(context).colorScheme.surface,
               ),
-              padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
-                  EdgeInsets.symmetric(vertical: 12, horizontal: 6)),
-              fixedSize: WidgetStateProperty.all(Size(56, 56)),
-              shape: WidgetStateProperty.all<OutlinedBorder>(
-                CircleBorder(),
-              ),
-              elevation: WidgetStateProperty.all(2),
             ),
+          ),
+
+          // Second button
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.easeInOut,
+            right: isOpen ? 60 : 0,
+            bottom: isOpen ? 60 : 0,
+            child: ElevatedButton(
+              onPressed: () {
+                // Handle second button action
+              },
+              style: _primaryButtonStyle(context),
+              child: Icon(
+                Icons.bookmark_border_rounded,
+                size: 28,
+                color: Theme.of(context).colorScheme.surface,
+              ),
+            ),
+          ),
+
+          // Third button
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+            right: isOpen ? 85 : 0,
+            bottom: isOpen ? 0 : 0,
+            child: ElevatedButton(
+              onPressed: () {
+                // Handle third button action
+              },
+              style: _primaryButtonStyle(context),
+              child: Icon(
+                Icons.add,
+                size: 28,
+                color: Theme.of(context).colorScheme.surface,
+              ),
+            ),
+          ),
+
+          // Main button
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                isOpen = !isOpen;
+              });
+            },
+            style: isOpen
+                ? _secondaryButtonStyle(context)
+                : _primaryButtonStyle(context),
             child: SvgPicture.asset(
-              'assets/logo/logo-light-icon.svg',
+              isOpen
+                  ? 'assets/logo/logo-dark-icon.svg'
+                  : 'assets/logo/logo-light-icon.svg',
               width: 28,
               height: 28,
             ),
-          )
+          ),
         ],
       ),
+    );
+  }
+
+  // Styling for the buttons
+  ButtonStyle _primaryButtonStyle(BuildContext context) {
+    return ElevatedButton.styleFrom(
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      shape: CircleBorder(),
+      fixedSize: Size(56, 56),
+      elevation: 2,
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 6),
+    );
+  }
+
+  ButtonStyle _secondaryButtonStyle(BuildContext context) {
+    return ElevatedButton.styleFrom(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      shape: CircleBorder(),
+      fixedSize: Size(56, 56),
+      elevation: 2,
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 6),
     );
   }
 }
