@@ -20,17 +20,23 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
             children: [
               Text(
                 title,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge
-                    ?.copyWith(color: Theme.of(context).colorScheme.onSurface),
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface,
+                      fontFamily:
+                          Theme.of(context).textTheme.displayLarge?.fontFamily,
+                    ),
               ),
               Row(
                 children: [
                   Text(
                     name,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface),
+                          color: Theme.of(context).colorScheme.onSurface,
+                          fontFamily: Theme.of(context)
+                              .textTheme
+                              .displayLarge
+                              ?.fontFamily,
+                        ),
                   ),
                   const SizedBox(width: 6),
                   Transform(

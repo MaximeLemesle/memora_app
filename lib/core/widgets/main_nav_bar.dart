@@ -79,21 +79,38 @@ class _MainNavBarState extends State<MainNavBar> {
           ),
 
           // Main button
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                isOpen = !isOpen;
-              });
-            },
-            style: isOpen
-                ? _secondaryButtonStyle(context)
-                : _primaryButtonStyle(context),
-            child: SvgPicture.asset(
-              isOpen
-                  ? 'assets/logo/logo-dark-icon.svg'
-                  : 'assets/logo/logo-light-icon.svg',
-              width: 28,
-              height: 28,
+          AnimatedOpacity(
+            opacity: isOpen ? 1 : 0,
+            duration: const Duration(milliseconds: 200),
+            child: ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  isOpen = !isOpen;
+                });
+              },
+              style: _secondaryButtonStyle(context),
+              child: SvgPicture.asset(
+                'assets/logo/logo-dark-icon.svg',
+                width: 28,
+                height: 28,
+              ),
+            ),
+          ),
+          AnimatedOpacity(
+            opacity: isOpen ? 0 : 1,
+            duration: const Duration(milliseconds: 200),
+            child: ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  isOpen = !isOpen;
+                });
+              },
+              style: _primaryButtonStyle(context),
+              child: SvgPicture.asset(
+                'assets/logo/logo-light-icon.svg',
+                width: 28,
+                height: 28,
+              ),
             ),
           ),
         ],

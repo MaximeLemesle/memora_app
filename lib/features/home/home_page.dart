@@ -12,8 +12,9 @@ class HomePage extends StatelessWidget {
         title: 'Bonjour,',
         name: 'Maxime',
       ),
-      body: Center(
-        child: Text('Hello World!'),
+      body: Column(
+        // padding: const EdgeInsets.all(24),
+        children: const [Text('Mes albums')],
       ),
       bottomNavigationBar: MainNavBar(),
     );
