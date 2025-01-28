@@ -12,9 +12,36 @@ class HomePage extends StatelessWidget {
         title: 'Bonjour,',
         name: 'Maxime',
       ),
-      body: Column(
-        // padding: const EdgeInsets.all(24),
-        children: const [Text('Mes albums')],
+      body: Padding(
+        padding: EdgeInsets.all(24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Mes albums',
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+            ),
+            SizedBox(height: 8),
+            Container(
+              // TODO : Add size in percent
+              height: 450,
+              width: 300,
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Center(
+                child: Text(
+                  'Aucun album pour le moment',
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: MainNavBar(),
     );

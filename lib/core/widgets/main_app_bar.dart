@@ -22,8 +22,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                 title,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
                       color: Theme.of(context).colorScheme.onSurface,
-                      fontFamily:
-                          Theme.of(context).textTheme.displayLarge?.fontFamily,
                     ),
               ),
               Row(
@@ -32,10 +30,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                     name,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: Theme.of(context).colorScheme.onSurface,
-                          fontFamily: Theme.of(context)
-                              .textTheme
-                              .displayLarge
-                              ?.fontFamily,
                         ),
                   ),
                   const SizedBox(width: 6),
