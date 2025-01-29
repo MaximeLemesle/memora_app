@@ -24,20 +24,42 @@ class HomePage extends StatelessWidget {
                   ),
             ),
             SizedBox(height: 8),
-            Container(
-              // TODO : Add size in percent
-              height: 450,
-              width: 300,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).colorScheme.onSurface,
-                ),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Center(
-                child: Text(
-                  'Aucun album pour le moment',
-                ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Container(
+                    height: 450,
+                    width: 300,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Aucun album pour le moment',
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 24),
+                  Container(
+                    height: 450,
+                    width: 300,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Aucun album pour le moment',
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

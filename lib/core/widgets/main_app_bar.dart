@@ -50,7 +50,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
             radius: 25,
             child: CircleAvatar(
               backgroundImage: AssetImage(
-                'assets/avatar/avatar-1.png',
+                'assets/avatar/mathilde.png',
               ),
               radius: 24,
             ),
