@@ -21,16 +21,15 @@ class _MainNavBarState extends State<MainNavBar> {
         clipBehavior: Clip.none,
         alignment: Alignment.bottomRight,
         children: [
+          // Hidden buttons
           // First button
           AnimatedPositioned(
             duration: const Duration(milliseconds: 500),
             curve: Curves.easeInOut,
-            right: isOpen ? 0 : 0,
+            right: 0,
             bottom: isOpen ? 85 : 0,
             child: ElevatedButton(
-              onPressed: () {
-                // Handle first button action
-              },
+              onPressed: () {},
               style: _primaryButtonStyle(context),
               child: Icon(
                 Icons.person_rounded,
@@ -47,9 +46,7 @@ class _MainNavBarState extends State<MainNavBar> {
             right: isOpen ? 60 : 0,
             bottom: isOpen ? 60 : 0,
             child: ElevatedButton(
-              onPressed: () {
-                // Handle second button action
-              },
+              onPressed: () {},
               style: _primaryButtonStyle(context),
               child: Icon(
                 Icons.bookmark_border_rounded,
@@ -64,11 +61,9 @@ class _MainNavBarState extends State<MainNavBar> {
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
             right: isOpen ? 85 : 0,
-            bottom: isOpen ? 0 : 0,
+            bottom: 0,
             child: ElevatedButton(
-              onPressed: () {
-                // Handle third button action
-              },
+              onPressed: () {},
               style: _primaryButtonStyle(context),
               child: Icon(
                 Icons.add,
@@ -112,7 +107,7 @@ class _MainNavBarState extends State<MainNavBar> {
                 height: 28,
               ),
             ),
-          ),
+          )
         ],
       ),
     );

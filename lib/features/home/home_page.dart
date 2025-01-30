@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memora_app/core/widgets/album_pages/cover_page.dart';
 import 'package:memora_app/core/widgets/main_app_bar.dart';
 import 'package:memora_app/core/widgets/main_nav_bar.dart';
 
@@ -28,21 +29,7 @@ class HomePage extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  Container(
-                    height: 450,
-                    width: 300,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Aucun album pour le moment',
-                      ),
-                    ),
-                  ),
+                  CoverPage(),
                   SizedBox(width: 24),
                   Container(
                     height: 450,
