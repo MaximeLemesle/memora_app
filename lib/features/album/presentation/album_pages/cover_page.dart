@@ -47,46 +47,52 @@ class CoverPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  textDirection: TextDirection.rtl,
-                  spacing: -12,
-                  children: [
-                    // Member 1
-                    CircleAvatar(
-                      backgroundColor:
-                          Theme.of(context).colorScheme.surfaceContainer,
-                      radius: 16,
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage(
-                          'assets/avatar/mathilde.png',
+                SizedBox(
+                  height: 32,
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      Positioned(
+                        right: 0,
+                        child: CircleAvatar(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.surfaceContainer,
+                          radius: 16,
+                          child: CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/avatar/mathilde.png'),
+                            radius: 15,
+                          ),
                         ),
-                        radius: 15,
                       ),
-                    ),
-
-                    // Member 2
-                    CircleAvatar(
-                      backgroundColor:
-                          Theme.of(context).colorScheme.surfaceContainer,
-                      radius: 16,
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/avatar/jean.png'),
-                        radius: 15,
+                      Positioned(
+                        right: 20,
+                        child: CircleAvatar(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.surfaceContainer,
+                          radius: 16,
+                          child: CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/avatar/jean.png'),
+                            radius: 15,
+                          ),
+                        ),
                       ),
-                    ),
-
-                    // Member 3
-                    CircleAvatar(
-                      backgroundColor:
-                          Theme.of(context).colorScheme.surfaceContainer,
-                      radius: 16,
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/avatar/marie.png'),
-                        radius: 15,
+                      Positioned(
+                        right: 40,
+                        child: CircleAvatar(
+                          backgroundColor:
+                              Theme.of(context).colorScheme.surfaceContainer,
+                          radius: 16,
+                          child: CircleAvatar(
+                            backgroundImage:
+                                AssetImage('assets/avatar/marie.png'),
+                            radius: 15,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),

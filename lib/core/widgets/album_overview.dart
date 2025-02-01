@@ -13,19 +13,17 @@ class AlbumOverview extends StatelessWidget {
       "date_end": "2024-01-24",
     };
 
-    return SizedBox(
-      height: 450,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          CoverPage(
-            title: albumData['title']!,
-            date: '${albumData['date_start']} - ${albumData['date_end']}',
-          ),
-          SizedBox(height: 24),
-          AlbumDescription(),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CoverPage(
+          title: albumData['title']!,
+          date: '${albumData['date_start']} - ${albumData['date_end']}',
+        ),
+        SizedBox(height: 24),
+        AlbumDescription(),
+      ],
     );
   }
 }
