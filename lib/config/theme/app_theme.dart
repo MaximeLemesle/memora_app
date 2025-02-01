@@ -55,7 +55,7 @@ ThemeData lightMode = ThemeData(
     displayLarge: TextStyle(
       fontSize: 42.0,
       fontFamily: 'Montserrat Alternates',
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w800,
     ),
     titleLarge: TextStyle(
       fontSize: 32.0,

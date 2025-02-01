@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:memora_app/core/widgets/album_pages/cover_page.dart';
+import 'package:memora_app/core/widgets/album_overview.dart';
 import 'package:memora_app/core/widgets/main_app_bar.dart';
 import 'package:memora_app/core/widgets/main_nav_bar.dart';
 
@@ -17,6 +17,7 @@ class HomePage extends StatelessWidget {
         padding: EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               'Mes albums',
@@ -29,7 +30,7 @@ class HomePage extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  CoverPage(),
+                  AlbumOverview(),
                   SizedBox(width: 24),
                   Container(
                     height: 450,
