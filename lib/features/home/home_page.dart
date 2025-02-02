@@ -32,25 +32,8 @@ class HomePage extends StatelessWidget {
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: [
-                        AlbumOverview(),
-                        SizedBox(width: 24),
-                        Container(
-                          height: 450,
-                          width: 300,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Aucun album pour le moment',
-                            ),
-                          ),
-                        ),
-                      ],
+                      mainAxisSize: MainAxisSize.min,
+                      children: [AlbumOverview()],
                     ),
                   ),
                 ],

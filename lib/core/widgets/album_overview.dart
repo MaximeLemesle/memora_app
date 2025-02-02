@@ -1,29 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:memora_app/features/album/presentation/album_description.dart';
 import 'package:memora_app/features/album/presentation/album_pages/cover_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class AlbumOverview extends StatelessWidget {
+class AlbumOverview extends StatefulWidget {
   const AlbumOverview({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final albumData = {
-      "title": "Voyage en Italie",
-      "date_start": "2024-01-12",
-      "date_end": "2024-01-24",
-    };
+  State<AlbumOverview> createState() => _AlbumOverviewState();
+}
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CoverPage(
-          title: albumData['title']!,
-          date: '${albumData['date_start']} - ${albumData['date_end']}',
-        ),
-        SizedBox(height: 24),
-        AlbumDescription(),
-      ],
+class _AlbumOverviewState extends State<AlbumOverview> {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection("albums").snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Quelque chose s\'est mal passé');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        }
+
+        if (!snapshot.hasData) {
+          // TODO: Ajouter un "Créer votre premier album"
+          return Text('Aucun albums pour le moment');
+        }
+
+        List<dynamic> albums = [];
+        for (var element in snapshot.data!.docs) {
+          albums.add(element);
+        }
+
+        return SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SizedBox(
+            height: 644,
+            width: MediaQuery.of(context).size.width,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              shrinkWrap: true,
+              itemCount: albums.length,
+              itemBuilder: (context, index) {
+                final title = albums[index]['title'];
+
+                return Padding(
+                  padding: const EdgeInsets.only(right: 24.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CoverPage(
+                        title: title,
+                        date: '12/01 - 24/01',
+                      ),
+                      SizedBox(height: 24),
+                      AlbumDescription(),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }
