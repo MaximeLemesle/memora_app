@@ -45,6 +45,10 @@ class _AlbumOverviewState extends State<AlbumOverview> {
               itemCount: albums.length,
               itemBuilder: (context, index) {
                 final title = albums[index]['title'];
+                final backgroundImage = albums[index]['background_image'];
+                final dateStart = albums[index]['date_start'];
+                final dateEnd = albums[index]['date_end'];
+                // final members = albums[index]['members'];
 
                 return Padding(
                   padding: const EdgeInsets.only(right: 24.0),
@@ -54,7 +58,10 @@ class _AlbumOverviewState extends State<AlbumOverview> {
                     children: [
                       CoverPage(
                         title: title,
-                        date: '12/01 - 24/01',
+                        backgroundImage: backgroundImage,
+                        dateStart: dateStart,
+                        dateEnd: dateEnd,
+                        // members: members,
                       ),
                       SizedBox(height: 24),
                       AlbumDescription(),

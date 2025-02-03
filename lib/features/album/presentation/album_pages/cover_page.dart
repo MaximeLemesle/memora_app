@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CoverPage extends StatelessWidget {
   final String title;
-  final String date;
+  final String backgroundImage;
+  final String dateStart;
+  final String dateEnd;
+  // final List<String> members;
 
-  const CoverPage({super.key, required this.title, required this.date});
+  const CoverPage({
+    super.key,
+    required this.title,
+    required this.backgroundImage,
+    required this.dateStart,
+    required this.dateEnd,
+    // required this.members,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +31,7 @@ class CoverPage extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Image.asset(
-              'assets/albums/italie/italie-1.png',
+              'assets/albums/italie/$backgroundImage',
               fit: BoxFit.cover,
             ),
           ),
@@ -40,7 +51,7 @@ class CoverPage extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      date,
+                      "${DateFormat('dd MMM').format(DateFormat('yyyy-MM-dd').parse(dateStart))} - ${DateFormat('dd MMM').format(DateFormat('yyyy-MM-dd').parse(dateEnd))}",
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             color: Theme.of(context).colorScheme.surface,
                           ),
