@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memora_app/features/album/presentation/album_description.dart';
-import 'package:memora_app/features/album/presentation/album_pages/cover_page.dart';
+import 'package:memora_app/features/album/presentation/pages/cover_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AlbumOverview extends StatefulWidget {
