@@ -1,11 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CoverPage extends StatelessWidget {
   final String title;
   final String backgroundImage;
-  final String dateStart;
-  final String dateEnd;
+  final Timestamp dateStart;
+  final Timestamp dateEnd;
   // final List<String> members;
 
   const CoverPage({
@@ -51,7 +52,7 @@ class CoverPage extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      "${DateFormat('dd MMM').format(DateFormat('yyyy-MM-dd').parse(dateStart))} - ${DateFormat('dd MMM').format(DateFormat('yyyy-MM-dd').parse(dateEnd))}",
+                      "${DateFormat('dd MMM').format(DateFormat('yyyy-MM-dd').parse(dateStart as String))} - ${DateFormat('dd MMM').format(DateFormat('yyyy-MM-dd').parse(dateEnd as String))}",
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             color: Theme.of(context).colorScheme.surface,
                           ),

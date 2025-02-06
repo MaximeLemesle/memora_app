@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:memora_app/features/album/data/models/album_response.dart';
-import 'package:memora_app/features/album/data/services/album_service.dart';
+import 'package:memora_app/features/album/data/models/album_model.dart';
+import 'package:memora_app/features/album/data/repositories/album_repository.dart';
 import 'package:memora_app/features/album/presentation/album_description.dart';
 import 'package:memora_app/features/album/presentation/pages/cover_page.dart';
 
@@ -12,18 +12,18 @@ class AlbumOverview extends StatefulWidget {
 }
 
 class _AlbumOverviewState extends State<AlbumOverview> {
-  late final AlbumService albumService;
+  late final AlbumRepository albumRepository;
 
   @override
   void initState() {
     super.initState();
-    albumService = AlbumService();
+    albumRepository = AlbumRepository();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<AlbumResponse>>(
-      future: albumService.fetchAlbums(),
+    return FutureBuilder<List<AlbumModel>>(
+      future: albumRepository.fetchAlbums(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

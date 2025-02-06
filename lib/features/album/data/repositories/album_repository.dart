@@ -1,19 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../models/album_response.dart';
+import 'package:memora_app/features/album/data/models/album_model.dart';
 
-class AlbumService {
+class AlbumRepository {
   final FirebaseFirestore _firestore;
 
-  AlbumService({FirebaseFirestore? firestore})
+  AlbumRepository({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
   /// Récupère tous les albums depuis Firestore
-  Future<List<AlbumResponse>> fetchAlbums() async {
+  Future<List<AlbumModel>> fetchAlbums() async {
     try {
       final snapshot = await _firestore.collection('albums').get();
 
       return snapshot.docs.map((doc) {
-        return AlbumResponse.fromMap(doc.data());
+        return AlbumModel.fromMap(doc.data());
       }).toList();
     } catch (error) {
       throw Exception('Erreur lors de la récupération des albums : $error');

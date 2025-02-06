@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 class AlbumEntity extends Equatable {
   final String title;
   final String backgroundImage;
-  final String dateStart;
-  final String dateEnd;
+  final Timestamp dateStart;
+  final Timestamp dateEnd;
   final String owner;
   final List<String> members;
   final String description;
