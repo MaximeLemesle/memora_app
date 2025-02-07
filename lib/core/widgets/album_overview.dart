@@ -1,72 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:memora_app/features/album/data/models/album_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/features/album/data/repositories/album_repository.dart';
+import 'package:memora_app/features/album/domain/usecases/fetch_albums.dart';
+import 'package:memora_app/features/album/presentation/blocs/album_bloc.dart';
 import 'package:memora_app/features/album/presentation/album_description.dart';
 import 'package:memora_app/features/album/presentation/pages/cover_page.dart';
 
-class AlbumOverview extends StatefulWidget {
+// TODO: Change the location of this page to lib/features/album/presentation/pages/album_overview.dart
+class AlbumOverview extends StatelessWidget {
   const AlbumOverview({super.key});
 
   @override
-  State<AlbumOverview> createState() => _AlbumOverviewState();
-}
-
-class _AlbumOverviewState extends State<AlbumOverview> {
-  late final AlbumRepository albumRepository;
-
-  @override
-  void initState() {
-    super.initState();
-    albumRepository = AlbumRepository();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<AlbumModel>>(
-      future: albumRepository.fetchAlbums(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Erreur : ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('Aucun album trouvé'));
-        }
+    return BlocProvider(
+      create: (context) => AlbumBloc(
+        fetchAlbums: FetchAlbums(
+          repository: AlbumRepository(),
+        ),
+      )..add(FetchAlbumsEvent()),
+      child: BlocBuilder<AlbumBloc, AlbumState>(
+        builder: (context, state) {
+          if (state is AlbumLoadingState) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is AlbumErrorState) {
+            return Center(child: Text(state.message));
+          } else if (state is AlbumLoadedState) {
+            final albums = state.albums;
 
-        final albums = snapshot.data!;
+            if (albums.isEmpty) {
+              return const Center(child: Text('Aucun album trouvé'));
+            }
 
-        return SizedBox(
-          height: 644,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            itemCount: albums.length,
-            separatorBuilder: (context, index) =>
-                const SizedBox(width: 24), // Espacement entre les éléments
-            itemBuilder: (context, index) {
-              final album = albums[index];
+            return Container(
+              height: 644,
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.only(right: 24),
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: albums.length,
+                separatorBuilder: (context, index) => const SizedBox(width: 24),
+                itemBuilder: (context, index) {
+                  final album = albums[index];
 
-              return Padding(
-                padding: const EdgeInsets.only(right: 24.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CoverPage(
-                      title: album.title,
-                      backgroundImage: album.backgroundImage,
-                      dateStart: album.dateStart,
-                      dateEnd: album.dateEnd,
-                    ),
-                    SizedBox(height: 24),
-                    AlbumDescription(),
-                  ],
-                ),
-              );
-            },
-          ),
-        );
-      },
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CoverPage(
+                        title: album.title,
+                        backgroundImage: album.backgroundImage,
+                        dateStart: album.dateStart,
+                        dateEnd: album.dateEnd,
+                        members: album.members,
+                      ),
+                      const SizedBox(height: 24),
+                      AlbumDescription(
+                        owner: album.owner,
+                        description: album.description,
+                        totalPages: album.totalPages,
+                        usedPages: album.usedPages,
+                      ),
+                    ],
+                  );
+                },
+              ),
+            );
+          }
+
+          // Afficher un état par défaut si aucune condition ne correspond
+          return const SizedBox();
+        },
+      ),
     );
   }
 }

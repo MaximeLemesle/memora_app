@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
         child: Stack(
           children: [
             Padding(
-              padding: EdgeInsets.all(24),
+              padding: EdgeInsets.only(left: 24, top: 24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -29,13 +29,7 @@ class HomePage extends StatelessWidget {
                         ),
                   ),
                   SizedBox(height: 8),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [AlbumOverview()],
-                    ),
-                  ),
+                  AlbumOverview(),
                 ],
               ),
             ),

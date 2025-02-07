@@ -8,6 +8,7 @@ class FetchAlbums {
 
   Future<List<AlbumEntity>> call() async {
     final models = await repository.fetchAlbums();
+
     return models.map((model) => model.toEntity()).toList();
   }
 }

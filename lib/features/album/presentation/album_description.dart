@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:memora_app/core/widgets/avatar.widget.dart';
 
 class AlbumDescription extends StatelessWidget {
-  const AlbumDescription({super.key});
+  final String owner;
+  final String description;
+  final int totalPages;
+  final int usedPages;
+
+  const AlbumDescription(
+      {super.key,
+      required this.owner,
+      required this.description,
+      required this.totalPages,
+      required this.usedPages});
 
   @override
   Widget build(BuildContext context) {
@@ -12,26 +23,22 @@ class AlbumDescription extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            CircleAvatar(
-              backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
-              radius: 25,
-              child: CircleAvatar(
-                backgroundImage: AssetImage('assets/avatar/mathilde.png'),
-                radius: 24,
-              ),
+            AvatarWidget(
+              size: 'big',
+              person: owner,
             ),
             SizedBox(width: 12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Crée par Mathilde',
+                  'Crée par $owner.upperCase()',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
                 ),
                 Text(
-                  '12 pages utilisées sur 24',
+                  '$usedPages pages utilisées sur $totalPages',
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
@@ -47,7 +54,7 @@ class AlbumDescription extends StatelessWidget {
         SizedBox(
           width: 300,
           child: Text(
-            'Ce voyage en Italie a été un véritable moment de bonheur : une immersion totale dans la dolce vita. Chaque photo raconte une histoire, pleine de saveurs, de rencontres inoubliables et de paysages à couper le souffle. Un album qui capture l’âme de l’Italie, entre tradition et beauté intemporelle.',
+            description,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),

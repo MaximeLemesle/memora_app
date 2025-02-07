@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memora_app/core/widgets/avatar.widget.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -45,16 +46,10 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ],
           ),
-          CircleAvatar(
-            backgroundColor: Theme.of(context).colorScheme.surfaceContainer,
-            radius: 25,
-            child: CircleAvatar(
-              backgroundImage: AssetImage(
-                'assets/avatar/mathilde.png',
-              ),
-              radius: 24,
-            ),
-          ),
+          AvatarWidget(
+            size: 'big',
+            person: 'mathilde',
+          )
         ],
       ),
     );

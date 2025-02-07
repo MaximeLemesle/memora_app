@@ -6,8 +6,8 @@ class AlbumEntity extends Equatable {
   final String backgroundImage;
   final Timestamp dateStart;
   final Timestamp dateEnd;
-  final String owner;
   final List<String> members;
+  final String owner;
   final String description;
   final int totalPages;
   final int usedPages;
@@ -17,8 +17,8 @@ class AlbumEntity extends Equatable {
     required this.backgroundImage,
     required this.dateStart,
     required this.dateEnd,
-    required this.owner,
     required this.members,
+    required this.owner,
     required this.description,
     required this.totalPages,
     required this.usedPages,
@@ -30,8 +30,8 @@ class AlbumEntity extends Equatable {
         backgroundImage,
         dateStart,
         dateEnd,
-        owner,
         members,
+        owner,
         description,
         totalPages,
         usedPages,

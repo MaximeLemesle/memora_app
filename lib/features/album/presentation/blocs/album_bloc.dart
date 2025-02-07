@@ -1,20 +1,39 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:memora_app/features/album/domain/entities/album_entity.dart';
 import 'package:memora_app/features/album/domain/usecases/fetch_albums.dart';
-import 'package:memora_app/features/album/presentation/blocs/album_event.dart';
-import 'package:memora_app/features/album/presentation/blocs/album_state.dart';
+
+abstract class AlbumEvent {}
+
+class FetchAlbumsEvent extends AlbumEvent {}
+
+abstract class AlbumState {}
+
+class AlbumLoadingState extends AlbumState {}
+
+class AlbumLoadedState extends AlbumState {
+  final List<AlbumEntity> albums;
+
+  AlbumLoadedState({required this.albums});
+}
+
+class AlbumErrorState extends AlbumState {
+  final String message;
+
+  AlbumErrorState({required this.message});
+}
 
 class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
   final FetchAlbums fetchAlbums;
 
-  AlbumBloc({required this.fetchAlbums}) : super(AlbumInitial()) {
-    on<LoadAlbums>((event, emit) async {
-      emit(AlbumLoading());
+  AlbumBloc({required this.fetchAlbums}) : super(AlbumLoadingState()) {
+    on<FetchAlbumsEvent>((event, emit) async {
+      emit(AlbumLoadingState());
+
       try {
         final albums = await fetchAlbums();
-        emit(AlbumLoaded(albums: albums));
+        emit(AlbumLoadedState(albums: albums));
       } catch (error) {
-        emit(AlbumError(
-            message: 'Erreur lors de la récupération des pages : $error'));
+        emit(AlbumErrorState(message: error.toString()));
       }
     });
   }

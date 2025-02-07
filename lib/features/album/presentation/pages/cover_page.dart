@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:memora_app/core/widgets/avatar.widget.dart';
 
 class CoverPage extends StatelessWidget {
   final String title;
   final String backgroundImage;
   final Timestamp dateStart;
   final Timestamp dateEnd;
-  // final List<String> members;
+  final List<String> members;
 
   const CoverPage({
     super.key,
@@ -15,7 +16,7 @@ class CoverPage extends StatelessWidget {
     required this.backgroundImage,
     required this.dateStart,
     required this.dateEnd,
-    // required this.members,
+    required this.members,
   });
 
   @override
@@ -32,7 +33,7 @@ class CoverPage extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Image.asset(
-              'assets/albums/italie/$backgroundImage',
+              'assets/albums/$backgroundImage/$backgroundImage-bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -52,7 +53,7 @@ class CoverPage extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      "${DateFormat('dd MMM').format(DateFormat('yyyy-MM-dd').parse(dateStart as String))} - ${DateFormat('dd MMM').format(DateFormat('yyyy-MM-dd').parse(dateEnd as String))}",
+                      "${formatDate(dateStart)} - ${formatDate(dateEnd)}",
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             color: Theme.of(context).colorScheme.surface,
                           ),
@@ -63,47 +64,22 @@ class CoverPage extends StatelessWidget {
                   height: 32,
                   child: Stack(
                     clipBehavior: Clip.none,
-                    children: [
-                      Positioned(
-                        right: 0,
-                        child: CircleAvatar(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surfaceContainer,
-                          radius: 16,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/avatar/mathilde.png'),
-                            radius: 15,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        right: 20,
-                        child: CircleAvatar(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surfaceContainer,
-                          radius: 16,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/avatar/jean.png'),
-                            radius: 15,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        right: 40,
-                        child: CircleAvatar(
-                          backgroundColor:
-                              Theme.of(context).colorScheme.surfaceContainer,
-                          radius: 16,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/avatar/marie.png'),
-                            radius: 15,
-                          ),
-                        ),
-                      ),
-                    ],
+                    children: members
+                        .asMap()
+                        .map((index, member) {
+                          return MapEntry(
+                            index,
+                            Positioned(
+                              right: index * 20,
+                              child: AvatarWidget(
+                                size: 'medium',
+                                person: member,
+                              ),
+                            ),
+                          );
+                        })
+                        .values
+                        .toList(),
                   ),
                 ),
               ],
@@ -113,4 +89,9 @@ class CoverPage extends StatelessWidget {
       ),
     );
   }
+}
+
+String formatDate(Timestamp timestamp) {
+  final DateTime dateTime = timestamp.toDate();
+  return DateFormat('dd MMM').format(dateTime);
 }

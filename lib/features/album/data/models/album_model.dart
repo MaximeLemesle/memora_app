@@ -7,8 +7,8 @@ class AlbumModel extends Equatable {
   final String backgroundImage;
   final Timestamp dateStart;
   final Timestamp dateEnd;
-  final String owner;
   final List<String> members;
+  final String owner;
   final String description;
   final int totalPages;
   final int usedPages;
@@ -18,24 +18,45 @@ class AlbumModel extends Equatable {
     required this.backgroundImage,
     required this.dateStart,
     required this.dateEnd,
-    required this.owner,
     required this.members,
+    required this.owner,
     required this.description,
     required this.totalPages,
     required this.usedPages,
   });
 
+  // factory AlbumModel.fromMap(Map<String, dynamic> map) {
+  //   return AlbumModel(
+  //     title: map['title'] as String,
+  //     backgroundImage: map['background_image'] as String,
+  //     dateStart: map['date_start'] as Timestamp,
+  //     dateEnd: map['date_end'] as Timestamp,
+  //     members: List<String>.from(map['members'] as List<dynamic>),
+  //     owner: map['owner'] ?? 'toto',
+  //     description: map['description'] as String,
+  //     totalPages: map['total_pages'] as int,
+  //     usedPages: map['used_pages'] as int,
+  //   );
+  // }
+
   factory AlbumModel.fromMap(Map<String, dynamic> map) {
     return AlbumModel(
-      title: map['title'] as String,
-      backgroundImage: map['background_image'] as String,
-      dateStart: map['date_start'] as Timestamp,
-      dateEnd: map['date_end'] as Timestamp,
-      owner: map['owner'] as String,
-      members: List<String>.from(map['members'] as List<dynamic>),
-      description: map['description'] as String,
-      totalPages: map['total_pages'] as int,
-      usedPages: map['used_pages'] as int,
+      title: map['title'] as String? ?? (throw Exception('Title is required')),
+      backgroundImage: map['background_image'] as String? ??
+          (throw Exception('Background image is required')),
+      dateStart: map['date_start'] as Timestamp? ??
+          (throw Exception('Date start is required')),
+      dateEnd: map['date_end'] as Timestamp? ??
+          (throw Exception('Date end is required')),
+      members: List<String>.from(map['members'] as List<dynamic>? ??
+          (throw Exception('Members are required'))),
+      owner: map['owner'] as String? ?? (throw Exception('Owner is required')),
+      description: map['description'] as String? ??
+          (throw Exception('Description is required')),
+      totalPages: map['total_pages'] as int? ??
+          (throw Exception('Total pages are required')),
+      usedPages: map['used_pages'] as int? ??
+          (throw Exception('Used pages are required')),
     );
   }
 
@@ -45,8 +66,8 @@ class AlbumModel extends Equatable {
       backgroundImage: backgroundImage,
       dateStart: dateStart,
       dateEnd: dateEnd,
-      owner: owner,
       members: members,
+      owner: owner,
       description: description,
       totalPages: totalPages,
       usedPages: usedPages,
@@ -59,8 +80,8 @@ class AlbumModel extends Equatable {
         backgroundImage,
         dateStart,
         dateEnd,
-        owner,
         members,
+        owner,
         description,
         totalPages,
         usedPages,

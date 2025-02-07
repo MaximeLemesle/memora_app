@@ -78,4 +78,5 @@ flutter:
     - assets/avatar/
     - assets/logo/
     - assets/albums/
-    - assets/albums/italie/italie-1.png
+    - assets/albums/italie/
+    - assets/albums/pologne/
