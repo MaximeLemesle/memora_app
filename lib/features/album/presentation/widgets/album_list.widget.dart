@@ -3,10 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/features/album/data/repositories/album_repository.dart';
 import 'package:memora_app/features/album/domain/usecases/fetch_albums.dart';
 import 'package:memora_app/features/album/presentation/blocs/album_bloc.dart';
-import 'package:memora_app/features/album/presentation/album_description.dart';
-import 'package:memora_app/features/album/presentation/pages/cover_page.dart';
+import 'package:memora_app/features/album/presentation/widgets/album_description.widget.dart';
+import 'package:memora_app/features/album/presentation/widgets/album_cover.widget.dart';
 
-// TODO: Change the location of this page to lib/features/album/presentation/pages/album_overview.dart
 class AlbumOverview extends StatelessWidget {
   const AlbumOverview({super.key});
 

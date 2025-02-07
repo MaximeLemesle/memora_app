@@ -1,7 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:memora_app/config/theme/app_theme.dart';
-import 'package:memora_app/features/home/home_page.dart';
+import 'package:memora_app/features/home/presentation/pages/home.page.dart';
+import 'package:memora_app/features/landing/presentation/landing.page.dart';
 import 'package:memora_app/firebase_options.dart';
 
 void main() async {
@@ -22,8 +23,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: lightMode,
-      routes: {'/home_page': (context) => const HomePage()},
-      initialRoute: '/home_page',
+      routes: {
+        '/landing_page': (context) => const LandingPage(),
+        '/home_page': (context) => const HomePage()
+      },
+      initialRoute: '/landing_page',
     );
   }
 }

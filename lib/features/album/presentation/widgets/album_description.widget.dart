@@ -32,13 +32,13 @@ class AlbumDescription extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Crée par $owner.upperCase()',
+                  'Crée par ${owner[0].toUpperCase()}${owner.substring(1)}',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
                 ),
                 Text(
-                  '$usedPages pages utilisées sur $totalPages',
+                  '${totalPages - usedPages} pages restantes',
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurface,
                       ),

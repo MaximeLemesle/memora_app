@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:memora_app/core/widgets/album_overview.dart';
-import 'package:memora_app/core/widgets/main_app_bar.dart';
-import 'package:memora_app/core/widgets/main_nav_bar.dart';
+import 'package:memora_app/features/album/presentation/widgets/album_list.widget.dart';
+import 'package:memora_app/core/widgets/main_app_bar.widget.dart';
+import 'package:memora_app/core/widgets/main_nav_bar.widget.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

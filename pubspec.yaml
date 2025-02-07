@@ -75,8 +75,9 @@ flutter:
           weight: 600
 
   assets:
-    - assets/avatar/
-    - assets/logo/
+    - assets/avatars/
+    - assets/logos/
+    - assets/images/
     - assets/albums/
     - assets/albums/italie/
     - assets/albums/pologne/

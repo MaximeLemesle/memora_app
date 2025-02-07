@@ -11,7 +11,6 @@ class AlbumRepository {
   Future<List<AlbumModel>> fetchAlbums() async {
     try {
       final snapshot = await _firestore.collection('albums').get();
-      print('snapshot: ${snapshot.docs.map((doc) => doc.data())}');
 
       return snapshot.docs.map((doc) {
         return AlbumModel.fromMap(doc.data());
