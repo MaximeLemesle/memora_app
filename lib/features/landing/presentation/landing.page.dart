@@ -47,12 +47,11 @@ class LandingPage extends StatelessWidget {
 
               // connexion
               ButtonWidget(
-                label: 'Default',
+                label: 'Créer un compte',
                 variant: ButtonVariant.primary,
                 size: ButtonSize.big,
-                iconPosition: ButtonIcon.only,
                 onPressed: () {},
-                state: ButtonState.normal,
+                fullWidth: true,
               ),
             ],
           ),

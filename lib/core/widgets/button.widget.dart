@@ -31,20 +31,24 @@ class ButtonWidget extends StatelessWidget {
   final String label;
   final ButtonVariant variant;
   final ButtonSize size;
+  final VoidCallback onPressed;
   final ButtonIcon iconPosition;
   final ButtonState state;
-  final VoidCallback? onPressed;
   final IconData icon;
+  final bool fullWidth;
+
+  // TODO: setup les states
 
   const ButtonWidget({
     super.key,
     required this.label,
     required this.variant,
     required this.size,
+    required this.onPressed,
     this.iconPosition = ButtonIcon.none,
     this.state = ButtonState.normal,
-    this.onPressed,
     this.icon = Icons.add,
+    this.fullWidth = false,
   });
 
   @override
@@ -62,7 +66,7 @@ class ButtonWidget extends StatelessWidget {
         borderColor = colorScheme.primary;
         break;
       case ButtonVariant.secondary:
-        backgroundColor = colorScheme.surfaceContainer;
+        backgroundColor = CustomColors.primary50;
         foregroundColor = colorScheme.primary;
         borderColor = colorScheme.primary;
         break;
@@ -86,27 +90,22 @@ class ButtonWidget extends StatelessWidget {
         ),
         elevation: 0,
         padding: iconPosition == ButtonIcon.only
-            ? EdgeInsets.symmetric(
-                vertical: size == ButtonSize.big ? 18 : 12,
-                // TODO: fix default padding in the elevated button
-                // horizontal: size == ButtonSize.big ? 14 : 16,
-              )
+            ? EdgeInsets.all(size == ButtonSize.big ? 18 : 16)
             : EdgeInsets.symmetric(
                 vertical: size == ButtonSize.big ? 16 : 12,
                 horizontal: size == ButtonSize.big ? 24 : 16,
               ),
+        minimumSize: fullWidth ? Size(double.infinity, 0) : Size(0, 0),
       ),
       onPressed: onPressed,
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment:
+            fullWidth ? MainAxisAlignment.center : MainAxisAlignment.start,
         spacing: 8,
         children: [
           if (iconPosition == ButtonIcon.left ||
               iconPosition == ButtonIcon.only)
-            // Padding(
-            //   padding: size == ButtonSize.big
-            //       ? EdgeInsets.all(4)
-            //       : EdgeInsets.symmetric(vertical: 2, horizontal: 4),
             Icon(
               icon,
               color: foregroundColor,
