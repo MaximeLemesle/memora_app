@@ -85,7 +85,7 @@ class _MainNavBarState extends State<MainNavBar> {
               },
               style: _secondaryButtonStyle(context),
               child: SvgPicture.asset(
-                'assets/logo/logo-dark-icon.svg',
+                'assets/logos/logo-dark-icon.svg',
                 width: 28,
                 height: 28,
               ),
@@ -102,7 +102,7 @@ class _MainNavBarState extends State<MainNavBar> {
               },
               style: _primaryButtonStyle(context),
               child: SvgPicture.asset(
-                'assets/logo/logo-light-icon.svg',
+                'assets/logos/logo-light-icon.svg',
                 width: 28,
                 height: 28,
               ),

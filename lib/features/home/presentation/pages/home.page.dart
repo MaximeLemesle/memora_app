@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
                         ),
                   ),
                   SizedBox(height: 8),
-                  AlbumOverview(),
+                  AlbumList(),
                 ],
               ),
             ),

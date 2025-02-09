@@ -6,8 +6,8 @@ import 'package:memora_app/features/album/presentation/blocs/album_bloc.dart';
 import 'package:memora_app/features/album/presentation/widgets/album_description.widget.dart';
 import 'package:memora_app/features/album/presentation/widgets/album_cover.widget.dart';
 
-class AlbumOverview extends StatelessWidget {
-  const AlbumOverview({super.key});
+class AlbumList extends StatelessWidget {
+  const AlbumList({super.key});
 
   @override
   Widget build(BuildContext context) {

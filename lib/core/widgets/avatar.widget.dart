@@ -16,11 +16,9 @@ class AvatarWidget extends StatelessWidget {
               ? 16
               : 25,
       child: CircleAvatar(
-        // if no person put default avatar
         backgroundImage: person == null
-            ? AssetImage('assets/avatar/default.png')
-            : AssetImage('assets/avatar/$person.png'),
-
+            ? AssetImage('assets/avatars/default.png')
+            : AssetImage('assets/avatars/$person.png'),
         radius: size == 'small'
             ? 8
             : size == 'medium'
