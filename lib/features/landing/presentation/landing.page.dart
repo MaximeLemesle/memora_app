@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
+import 'package:memora_app/features/auth/presentation/signup.page.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -45,13 +46,36 @@ class LandingPage extends StatelessWidget {
                 ],
               ),
 
-              // connexion
-              ButtonWidget(
-                label: 'Créer un compte',
-                variant: ButtonVariant.primary,
-                size: ButtonSize.big,
-                onPressed: () {},
-                fullWidth: true,
+              // Inscription / Connexion
+              Column(
+                children: [
+                  ButtonWidget(
+                    label: 'Créer un compte',
+                    variant: ButtonVariant.primary,
+                    size: ButtonSize.big,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignUpPage()),
+                      );
+                    },
+                    fullWidth: true,
+                  ),
+                  SizedBox(height: 32),
+                  Text('Déjà membre ?',
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.surface,
+                          )),
+                  ButtonWidget(
+                    label: 'Se connecter',
+                    variant: ButtonVariant.ghost,
+                    size: ButtonSize.big,
+                    onPressed: () {
+                      // Logique pour se connecter
+                    },
+                  ),
+                ],
               ),
             ],
           ),

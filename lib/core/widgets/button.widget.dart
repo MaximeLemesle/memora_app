@@ -73,7 +73,7 @@ class ButtonWidget extends StatelessWidget {
       case ButtonVariant.ghost:
         backgroundColor = Colors.transparent;
         foregroundColor = colorScheme.onPrimary;
-        borderColor = CustomColors.primary400;
+        borderColor = Colors.transparent;
         break;
     }
 
@@ -115,13 +115,20 @@ class ButtonWidget extends StatelessWidget {
           if (iconPosition != ButtonIcon.only)
             Text(
               label,
-              style: size == ButtonSize.big
+              style: variant == ButtonVariant.ghost
                   ? Theme.of(context).textTheme.labelLarge?.copyWith(
                         color: foregroundColor,
+                        decoration: TextDecoration.underline,
+                        decorationColor: foregroundColor,
+                        decorationThickness: 2,
                       )
-                  : Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: foregroundColor,
-                      ),
+                  : size == ButtonSize.big
+                      ? Theme.of(context).textTheme.labelLarge?.copyWith(
+                            color: foregroundColor,
+                          )
+                      : Theme.of(context).textTheme.labelMedium?.copyWith(
+                            color: foregroundColor,
+                          ),
             ),
           if (iconPosition == ButtonIcon.right)
             Icon(
