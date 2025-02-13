@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
+import 'package:memora_app/core/widgets/input.widget.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
@@ -40,15 +41,9 @@ class SignUpPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Quel est ton prénom ?',
-              ),
-            ),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Quel est ton adresse mail ?',
-              ),
+            InputWidget(
+              label: 'Quel est ton prénom ?',
+              placeholder: 'John',
             ),
             TextField(
               obscureText: true,
