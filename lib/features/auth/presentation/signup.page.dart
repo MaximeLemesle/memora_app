@@ -11,72 +11,88 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                'assets/logos/logo-dark-word.svg',
-                width: 228,
-                height: 32,
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Des souvenirs que vous pouvez toucher.',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                overflow: TextOverflow.visible,
-                textAlign: TextAlign.center,
-                softWrap: true,
-              ),
-            ],
-          ),
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              'assets/logos/logo-dark-word.svg',
+              width: 228,
+              height: 32,
+            ),
+            SizedBox(height: 16),
+            Text(
+              'Des souvenirs que vous pouvez toucher.',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    height: 1.2,
+                  ),
+              overflow: TextOverflow.visible,
+              textAlign: TextAlign.center,
+              softWrap: true,
+            ),
+          ],
         ),
         toolbarHeight: 144,
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InputWidget(
-              label: 'Quel est ton prénom ?',
-              placeholder: 'John',
-            ),
-            TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Choisis ton mot de passe ?',
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                spacing: 48,
+                children: [
+                  Column(
+                    spacing: 24,
+                    children: [
+                      InputWidget(
+                        label: 'Quel est ton prénom ?',
+                        placeholder: 'John',
+                      ),
+                      InputWidget(
+                        label: 'Quel est ton adresse mail ?',
+                        placeholder: 'john.doe@gmail.com',
+                      ),
+                      InputWidget(
+                        label: 'Choisis ton mot de passe ?',
+                        placeholder: 'Mot de passe',
+                        obscureText: true,
+                      ),
+                    ],
+                  ),
+                  ButtonWidget(
+                    label: 'Continuer',
+                    variant: ButtonVariant.primary,
+                    size: ButtonSize.big,
+                    onPressed: () {},
+                    fullWidth: true,
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: 48),
-            ButtonWidget(
-              label: 'Continuer',
-              variant: ButtonVariant.primary,
-              size: ButtonSize.big,
-              onPressed: () {},
-              fullWidth: true,
-            ),
-            const SizedBox(height: 20),
-            Text('ou'),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Logique pour se connecter avec Google
-              },
-              icon: const Icon(Icons.login),
-              label: const Text('Se connecter avec Google'),
-            ),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Logique pour se connecter avec Apple
-              },
-              icon: const Icon(Icons.apple),
-              label: const Text('Se connecter avec Apple'),
-            ),
-          ],
+
+              // ou separator
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   spacing: 8,
+              //   children: [
+              //     Container(
+              //       height: 2,
+              //       width: 130,
+              //       color: Theme.of(context).colorScheme.outline,
+              //     ),
+              //     Text('ou'),
+              //     Container(
+              //       height: 1,
+              //       width: 130,
+              //       color: Theme.of(context).colorScheme.outline,
+              //     ),
+              //   ],
+              // ),
+
+              // conexion with Google and Apple
+            ],
+          ),
         ),
       ),
     );

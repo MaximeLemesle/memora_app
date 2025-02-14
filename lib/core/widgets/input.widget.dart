@@ -6,9 +6,6 @@ class InputWidget extends StatelessWidget {
   final String placeholder;
   final bool obscureText;
   final TextEditingController? controller;
-  final IconData? icon;
-  final bool isRelatedText;
-  final String? relatedText;
 
   const InputWidget({
     super.key,
@@ -16,9 +13,6 @@ class InputWidget extends StatelessWidget {
     required this.placeholder,
     this.obscureText = false,
     this.controller,
-    this.icon,
-    this.isRelatedText = false,
-    this.relatedText,
   });
 
   @override

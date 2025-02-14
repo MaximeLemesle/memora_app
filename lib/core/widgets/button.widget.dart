@@ -37,8 +37,6 @@ class ButtonWidget extends StatelessWidget {
   final IconData icon;
   final bool fullWidth;
 
-  // TODO: setup les states
-
   const ButtonWidget({
     super.key,
     required this.label,

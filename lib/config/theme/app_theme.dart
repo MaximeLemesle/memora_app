@@ -98,7 +98,7 @@ ThemeData lightMode = ThemeData(
       fontWeight: FontWeight.w700,
     ),
     labelSmall: TextStyle(
-      fontSize: 12.0,
+      fontSize: 14.0,
       fontFamily: 'DM Sans',
       fontWeight: FontWeight.w700,
     ),
