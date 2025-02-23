@@ -20,6 +20,7 @@ class SignUpPage extends StatelessWidget {
               height: 32,
             ),
             SizedBox(height: 16),
+            // TODO: Create a widget "Spacer" to make sizedBox S / M / L / ... to have fixed sized like 16, 24, 32, 48
             Text(
               'Des souvenirs que vous pouvez toucher.',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -36,62 +37,39 @@ class SignUpPage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                spacing: 48,
-                children: [
-                  Column(
-                    spacing: 24,
-                    children: [
-                      InputWidget(
-                        label: 'Quel est ton prénom ?',
-                        placeholder: 'John',
-                      ),
-                      InputWidget(
-                        label: 'Quel est ton adresse mail ?',
-                        placeholder: 'john.doe@gmail.com',
-                      ),
-                      InputWidget(
-                        label: 'Choisis ton mot de passe ?',
-                        placeholder: 'Mot de passe',
-                        obscureText: true,
-                      ),
-                    ],
-                  ),
-                  ButtonWidget(
-                    label: 'Continuer',
-                    variant: ButtonVariant.primary,
-                    size: ButtonSize.big,
-                    onPressed: () {},
-                    fullWidth: true,
-                  ),
-                ],
-              ),
-
-              // ou separator
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   spacing: 8,
-              //   children: [
-              //     Container(
-              //       height: 2,
-              //       width: 130,
-              //       color: Theme.of(context).colorScheme.outline,
-              //     ),
-              //     Text('ou'),
-              //     Container(
-              //       height: 1,
-              //       width: 130,
-              //       color: Theme.of(context).colorScheme.outline,
-              //     ),
-              //   ],
-              // ),
-
-              // conexion with Google and Apple
-            ],
+        child: Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Column(
+                  spacing: 24,
+                  children: [
+                    InputWidget(
+                      label: 'Quel est ton prénom ?',
+                      placeholder: 'John',
+                    ),
+                    InputWidget(
+                      label: 'Quel est ton adresse mail ?',
+                      placeholder: 'john.doe@gmail.com',
+                    ),
+                    InputWidget(
+                      label: 'Choisis ton mot de passe ?',
+                      placeholder: 'Mot de passe',
+                      obscureText: true,
+                    ),
+                  ],
+                ),
+                Spacer(),
+                ButtonWidget(
+                  label: 'Valider mon compte',
+                  variant: ButtonVariant.primary,
+                  size: ButtonSize.big,
+                  onPressed: () {},
+                  fullWidth: true,
+                ),
+              ],
+            ),
           ),
         ),
       ),
