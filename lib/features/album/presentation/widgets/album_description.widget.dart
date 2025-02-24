@@ -18,16 +18,17 @@ class AlbumDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 6,
       children: [
         // Information
         Row(
           crossAxisAlignment: CrossAxisAlignment.end,
+          spacing: 12,
           children: [
             AvatarWidget(
               size: 'big',
               person: owner,
             ),
-            SizedBox(width: 12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -47,8 +48,6 @@ class AlbumDescription extends StatelessWidget {
             )
           ],
         ),
-
-        SizedBox(height: 8),
 
         // Description
         SizedBox(

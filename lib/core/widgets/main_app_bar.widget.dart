@@ -26,6 +26,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ),
               ),
               Row(
+                spacing: 6,
                 children: [
                   Text(
                     name,
@@ -33,7 +34,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
                   ),
-                  const SizedBox(width: 6),
                   Transform(
                     alignment: Alignment.center,
                     transform: Matrix4.rotationY(3.14159),

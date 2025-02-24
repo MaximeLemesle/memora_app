@@ -19,6 +19,7 @@ class InputWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      spacing: 6,
       children: [
         Text(
           label,
@@ -26,7 +27,6 @@ class InputWidget extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onSurface,
               ),
         ),
-        const SizedBox(height: 6),
         TextField(
           controller: controller,
           obscureText: obscureText,

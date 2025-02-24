@@ -12,6 +12,7 @@ class SignUpPage extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Column(
+          spacing: 16,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
@@ -19,8 +20,6 @@ class SignUpPage extends StatelessWidget {
               width: 228,
               height: 32,
             ),
-            SizedBox(height: 16),
-            // TODO: Create a widget "Spacer" to make sizedBox S / M / L / ... to have fixed sized like 16, 24, 32, 48
             Text(
               'Des souvenirs que vous pouvez toucher.',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(

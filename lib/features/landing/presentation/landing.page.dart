@@ -29,13 +29,13 @@ class LandingPage extends StatelessWidget {
 
               // Logo and baseline
               Column(
+                spacing: 16,
                 children: [
                   SvgPicture.asset(
                     'assets/logos/logo-light-h.svg',
                     width: 300,
                     height: 60,
                   ),
-                  SizedBox(height: 16),
                   Text(
                     'Des souvenirs que vous pouvez toucher.',
                     textAlign: TextAlign.center,
@@ -48,6 +48,7 @@ class LandingPage extends StatelessWidget {
 
               // Inscription / Connexion
               Column(
+                spacing: 32,
                 children: [
                   ButtonWidget(
                     label: 'Créer un compte',
@@ -62,19 +63,25 @@ class LandingPage extends StatelessWidget {
                     },
                     fullWidth: true,
                   ),
-                  SizedBox(height: 32),
-                  Text('Déjà membre ?',
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: Theme.of(context).colorScheme.surface,
-                          )),
-                  ButtonWidget(
-                    label: 'Se connecter',
-                    variant: ButtonVariant.ghost,
-                    size: ButtonSize.big,
-                    onPressed: () {
-                      // Logique pour se connecter
-                    },
-                  ),
+                  Column(
+                    children: [
+                      Text('Déjà membre ?',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.surface,
+                              )),
+                      ButtonWidget(
+                        label: 'Se connecter',
+                        variant: ButtonVariant.ghost,
+                        size: ButtonSize.big,
+                        onPressed: () {
+                          // Logique pour se connecter
+                        },
+                      ),
+                    ],
+                  )
                 ],
               ),
             ],

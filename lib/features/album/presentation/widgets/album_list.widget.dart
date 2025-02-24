@@ -44,6 +44,7 @@ class AlbumList extends StatelessWidget {
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 24,
                     children: [
                       CoverPage(
                         title: album.title,
@@ -52,7 +53,6 @@ class AlbumList extends StatelessWidget {
                         dateEnd: album.dateEnd,
                         members: album.members,
                       ),
-                      const SizedBox(height: 24),
                       AlbumDescription(
                         owner: album.owner,
                         description: album.description,

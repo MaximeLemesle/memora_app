@@ -21,6 +21,7 @@ class HomePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
+                spacing: 6,
                 children: [
                   Text(
                     'Mes albums',
@@ -28,7 +29,6 @@ class HomePage extends StatelessWidget {
                           color: Theme.of(context).colorScheme.onSurface,
                         ),
                   ),
-                  SizedBox(height: 8),
                   AlbumList(),
                 ],
               ),
