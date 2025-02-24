@@ -33,44 +33,45 @@ class SignUpPage extends StatelessWidget {
             ),
           ],
         ),
-        toolbarHeight: 144,
+        toolbarHeight: 106,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Column(
-                  spacing: 24,
-                  children: [
-                    InputWidget(
-                      label: 'Quel est ton prénom ?',
-                      placeholder: 'John',
-                    ),
-                    InputWidget(
-                      label: 'Quel est ton adresse mail ?',
-                      placeholder: 'john.doe@gmail.com',
-                    ),
-                    InputWidget(
-                      label: 'Choisis ton mot de passe ?',
-                      placeholder: 'Mot de passe',
-                      obscureText: true,
-                    ),
-                  ],
-                ),
-                Spacer(),
-                ButtonWidget(
-                  label: 'Valider mon compte',
-                  variant: ButtonVariant.primary,
-                  size: ButtonSize.big,
-                  onPressed: () {},
-                  fullWidth: true,
-                ),
-              ],
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 48.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    spacing: 24,
+                    children: [
+                      InputWidget(
+                        label: 'Quel est ton prénom ?',
+                        placeholder: 'John',
+                      ),
+                      InputWidget(
+                        label: 'Quel est ton adresse mail ?',
+                        placeholder: 'john.doe@gmail.com',
+                      ),
+                      InputWidget(
+                        label: 'Choisis ton mot de passe ?',
+                        placeholder: 'Mot de passe',
+                        obscureText: true,
+                      ),
+                    ],
+                  ),
+                  ButtonWidget(
+                    label: 'Valider mon compte',
+                    variant: ButtonVariant.primary,
+                    size: ButtonSize.big,
+                    onPressed: () {},
+                    fullWidth: true,
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
