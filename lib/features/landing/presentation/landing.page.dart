@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
-import 'package:memora_app/features/auth/presentation/signup.page.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({super.key});
@@ -55,11 +54,7 @@ class LandingPage extends StatelessWidget {
                     variant: ButtonVariant.primary,
                     size: ButtonSize.big,
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SignUpPage()),
-                      );
+                      Navigator.pushNamed(context, '/signup_page');
                     },
                     fullWidth: true,
                   ),
@@ -77,7 +72,7 @@ class LandingPage extends StatelessWidget {
                         variant: ButtonVariant.ghost,
                         size: ButtonSize.big,
                         onPressed: () {
-                          // Logique pour se connecter
+                          Navigator.pushNamed(context, '/login_page');
                         },
                       ),
                     ],

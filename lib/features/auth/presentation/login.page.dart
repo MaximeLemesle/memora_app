@@ -3,8 +3,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/core/widgets/input.widget.dart';
 
-class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,25 +47,23 @@ class SignUpPage extends StatelessWidget {
                     spacing: 24,
                     children: [
                       InputWidget(
-                        label: 'Quel est ton prénom ?',
-                        placeholder: 'John',
-                      ),
-                      InputWidget(
                         label: 'Quel est ton adresse mail ?',
                         placeholder: 'john.doe@gmail.com',
                       ),
                       InputWidget(
-                        label: 'Choisis ton mot de passe ?',
+                        label: 'Quel est ton mot de passe ?',
                         placeholder: 'Mot de passe',
                         obscureText: true,
                       ),
                     ],
                   ),
                   ButtonWidget(
-                    label: 'Créer mon compte',
+                    label: 'Se connecter',
                     variant: ButtonVariant.primary,
                     size: ButtonSize.big,
-                    onPressed: () {},
+                    onPressed: () {
+                      // Logique de connexion
+                    },
                     fullWidth: true,
                   ),
                 ],
@@ -74,13 +72,13 @@ class SignUpPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Tu as déjà un compte ? "),
+                Text("Tu es nouveau ? "),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, '/login_page');
+                    Navigator.pushNamed(context, '/signup_page');
                   },
                   child: Text(
-                    "Se connecter",
+                    "Créer un compte",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w800,
