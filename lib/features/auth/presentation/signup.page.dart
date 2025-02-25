@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:memora_app/core/services/auth.service.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/core/widgets/input.widget.dart';
 
-class SignUpPage extends StatelessWidget {
+class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
+
+  @override
+  State<SignUpPage> createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +67,17 @@ class SignUpPage extends StatelessWidget {
                       InputWidget(
                         label: 'Quel est ton prénom ?',
                         placeholder: 'John',
+                        controller: _nameController,
                       ),
                       InputWidget(
                         label: 'Quel est ton adresse mail ?',
                         placeholder: 'john.doe@gmail.com',
+                        controller: _emailController,
                       ),
                       InputWidget(
                         label: 'Choisis ton mot de passe ?',
                         placeholder: 'Mot de passe',
+                        controller: _passwordController,
                         obscureText: true,
                       ),
                     ],
@@ -65,7 +86,12 @@ class SignUpPage extends StatelessWidget {
                     label: 'Créer mon compte',
                     variant: ButtonVariant.primary,
                     size: ButtonSize.big,
-                    onPressed: () {},
+                    onPressed: () async {
+                      AuthService().signup(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                      );
+                    },
                     fullWidth: true,
                   ),
                 ],

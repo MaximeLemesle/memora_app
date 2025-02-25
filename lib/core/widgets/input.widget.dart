@@ -4,15 +4,15 @@ import 'package:memora_app/config/theme/app_theme.dart';
 class InputWidget extends StatelessWidget {
   final String label;
   final String placeholder;
+  final TextEditingController controller;
   final bool obscureText;
-  final TextEditingController? controller;
 
   const InputWidget({
     super.key,
     required this.label,
     required this.placeholder,
+    required this.controller,
     this.obscureText = false,
-    this.controller,
   });
 
   @override

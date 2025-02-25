@@ -3,8 +3,23 @@ import 'package:flutter_svg/svg.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/core/widgets/input.widget.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +64,12 @@ class LoginPage extends StatelessWidget {
                       InputWidget(
                         label: 'Quel est ton adresse mail ?',
                         placeholder: 'john.doe@gmail.com',
+                        controller: _emailController,
                       ),
                       InputWidget(
                         label: 'Quel est ton mot de passe ?',
                         placeholder: 'Mot de passe',
+                        controller: _passwordController,
                         obscureText: true,
                       ),
                     ],
