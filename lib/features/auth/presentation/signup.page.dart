@@ -87,9 +87,10 @@ class _SignUpPageState extends State<SignUpPage> {
                     variant: ButtonVariant.primary,
                     size: ButtonSize.big,
                     onPressed: () async {
-                      AuthService().signup(
+                      await AuthService().signup(
                         email: _emailController.text,
                         password: _passwordController.text,
+                        context: context,
                       );
                     },
                     fullWidth: true,

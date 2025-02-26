@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:memora_app/core/services/auth.service.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/core/widgets/input.widget.dart';
 
@@ -78,8 +79,12 @@ class _LoginPageState extends State<LoginPage> {
                     label: 'Se connecter',
                     variant: ButtonVariant.primary,
                     size: ButtonSize.big,
-                    onPressed: () {
-                      // Logique de connexion
+                    onPressed: () async {
+                      await AuthService().signin(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                        context: context,
+                      );
                     },
                     fullWidth: true,
                   ),
