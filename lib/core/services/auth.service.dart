@@ -14,7 +14,9 @@ class AuthService {
         email: email,
         password: password,
       );
+
       await Future.delayed(const Duration(seconds: 1));
+      if (!context.mounted) return;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
@@ -23,8 +25,10 @@ class AuthService {
       String message = '';
       if (e.code == 'weak-password') {
         message = 'Le mot de passe est trop faible.';
+        // good
       } else if (e.code == 'email-already-in-use') {
         message = 'Un compte existe déjà avec cet email.';
+        // good
       } else {
         message = 'Erreur inconnue: ${e.message}';
       }
@@ -48,29 +52,20 @@ class AuthService {
     required BuildContext context,
   }) async {
     try {
-      if (email.isEmpty || password.isEmpty) {
-        throw FirebaseAuthException(
-            code: 'invalid-input',
-            message: 'Email and password cannot be empty');
-      }
-
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email.trim(),
         password: password,
       );
       await Future.delayed(const Duration(seconds: 1));
+      if (!context.mounted) return;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
       );
     } on FirebaseAuthException catch (e) {
       String message = '';
-      if (e.code == 'user-not-found') {
-        message = 'Aucun compte trouvé avec cet email.';
-      } else if (e.code == 'wrong-password') {
-        message = 'Mot de passe incorrect.';
-      } else if (e.code == 'invalid-email') {
-        message = 'Email invalide.';
+      if (e.code == 'invalid-credential') {
+        message = 'Adresse mail ou mot de passe incorrect.';
       } else {
         message = 'Erreur inconnue: ${e.message}';
       }
