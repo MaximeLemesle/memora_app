@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:memora_app/core/services/auth.service.dart';
 
 class MainNavBar extends StatefulWidget {
   const MainNavBar({super.key});
@@ -29,7 +30,9 @@ class _MainNavBarState extends State<MainNavBar> {
             right: 0,
             bottom: isOpen ? 85 : 0,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                await AuthService().signout(context: context);
+              },
               style: _primaryButtonStyle(context),
               child: Icon(
                 Icons.person_rounded,

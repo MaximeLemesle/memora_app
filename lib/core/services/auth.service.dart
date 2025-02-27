@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:memora_app/features/home/presentation/pages/home.page.dart';
 
 class AuthService {
+  /// Sign Up a new user
   Future<void> signup({
     required String email,
     required String password,
@@ -17,10 +17,7 @@ class AuthService {
 
       await Future.delayed(const Duration(seconds: 1));
       if (!context.mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
+      Navigator.pushReplacementNamed(context, '/home_page');
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'weak-password') {
@@ -46,6 +43,7 @@ class AuthService {
     }
   }
 
+  /// Sign In an existing user
   Future<void> signin({
     required String email,
     required String password,
@@ -58,10 +56,7 @@ class AuthService {
       );
       await Future.delayed(const Duration(seconds: 1));
       if (!context.mounted) return;
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
+      Navigator.pushReplacementNamed(context, '/home_page');
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'invalid-credential') {
@@ -81,5 +76,13 @@ class AuthService {
     } catch (e) {
       debugPrint("Error in signin: $e");
     }
+  }
+
+  /// Sign Out the current user
+  Future<void> signout({required BuildContext context}) async {
+    await FirebaseAuth.instance.signOut();
+    await Future.delayed(Duration(seconds: 1));
+    if (!context.mounted) return;
+    Navigator.pushReplacementNamed(context, '/landing_page');
   }
 }
