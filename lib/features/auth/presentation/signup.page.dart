@@ -88,7 +88,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     size: ButtonSize.big,
                     onPressed: () async {
                       await AuthService().signup(
-                        // name: _nameController.text,
+                        name: _nameController.text,
                         email: _emailController.text,
                         password: _passwordController.text,
                         context: context,

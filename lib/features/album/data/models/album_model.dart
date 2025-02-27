@@ -25,20 +25,6 @@ class AlbumModel extends Equatable {
     required this.usedPages,
   });
 
-  // factory AlbumModel.fromMap(Map<String, dynamic> map) {
-  //   return AlbumModel(
-  //     title: map['title'] as String,
-  //     backgroundImage: map['background_image'] as String,
-  //     dateStart: map['date_start'] as Timestamp,
-  //     dateEnd: map['date_end'] as Timestamp,
-  //     members: List<String>.from(map['members'] as List<dynamic>),
-  //     owner: map['owner'] ?? 'toto',
-  //     description: map['description'] as String,
-  //     totalPages: map['total_pages'] as int,
-  //     usedPages: map['used_pages'] as int,
-  //   );
-  // }
-
   factory AlbumModel.fromMap(Map<String, dynamic> map) {
     return AlbumModel(
       title: map['title'] as String? ?? (throw Exception('Title is required')),
