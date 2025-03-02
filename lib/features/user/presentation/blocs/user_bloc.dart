@@ -1,60 +1,51 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:memora_app/features/user/domain/entities/user_entity.dart';
+import 'package:memora_app/features/user/domain/repository/user_repository.dart';
 
-// Modèle d'utilisateur
-class User {
+abstract class UserEvent extends Equatable {
+  @override
+  List<Object> get props => [];
+}
+
+class LoadUserEvent extends UserEvent {
   final String uid;
-  final String name;
-  final String email;
 
-  User({required this.uid, required this.name, required this.email});
-
-  Map<String, dynamic> toMap() {
-    return {
-      'uid': uid,
-      'name': name,
-      'email': email,
-    };
-  }
+  LoadUserEvent(this.uid);
 }
 
-// Événements du bloc
-abstract class UserEvent {}
-
-class SaveUserEvent extends UserEvent {
-  final User user;
-
-  SaveUserEvent(this.user);
+abstract class UserState extends Equatable {
+  @override
+  List<Object> get props => [];
 }
-
-// États du bloc
-abstract class UserState {}
 
 class UserInitial extends UserState {}
 
-class UserSaved extends UserState {}
+class UserLoading extends UserState {}
+
+class UserLoaded extends UserState {
+  final UserEntity user;
+  UserLoaded(this.user);
+}
 
 class UserError extends UserState {
   final String message;
-
   UserError(this.message);
 }
 
-// Bloc pour gérer l'enregistrement de l'utilisateur
+// ⚡ BLOC
 class UserBloc extends Bloc<UserEvent, UserState> {
-  UserBloc() : super(UserInitial());
+  final UserRepository userRepository;
 
-  Stream<UserState> mapEventToState(UserEvent event) async* {
-    if (event is SaveUserEvent) {
+  UserBloc(this.userRepository) : super(UserInitial()) {
+    on<LoadUserEvent>((event, emit) async {
+      emit(UserLoading());
       try {
-        await FirebaseFirestore.instance
-            .collection("users")
-            .doc(event.user.uid)
-            .set(event.user.toMap());
-        yield UserSaved();
+        final user = await userRepository.getUser(event.uid);
+        emit(UserLoaded(user as UserEntity));
       } catch (e) {
-        yield UserError("Erreur lors de l'enregistrement de l'utilisateur: $e");
+        emit(UserError("Failed to load user"));
       }
-    }
+    });
   }
 }
