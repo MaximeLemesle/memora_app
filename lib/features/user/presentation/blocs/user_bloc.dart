@@ -1,23 +1,8 @@
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/features/user/domain/entities/user_entity.dart';
-import 'package:memora_app/features/user/domain/repository/user_repository.dart';
+import 'package:memora_app/features/user/domain/usecases/get_user.dart';
 
-abstract class UserEvent extends Equatable {
-  @override
-  List<Object> get props => [];
-}
-
-class LoadUserEvent extends UserEvent {
-  final String uid;
-
-  LoadUserEvent(this.uid);
-}
-
-abstract class UserState extends Equatable {
-  @override
-  List<Object> get props => [];
-}
+abstract class UserState {}
 
 class UserInitial extends UserState {}
 
@@ -33,19 +18,18 @@ class UserError extends UserState {
   UserError(this.message);
 }
 
-// ⚡ BLOC
-class UserBloc extends Bloc<UserEvent, UserState> {
-  final UserRepository userRepository;
+class UserBloc extends Cubit<UserState> {
+  final GetUser getUser;
 
-  UserBloc(this.userRepository) : super(UserInitial()) {
-    on<LoadUserEvent>((event, emit) async {
-      emit(UserLoading());
-      try {
-        final user = await userRepository.getUser(event.uid);
-        emit(UserLoaded(user as UserEntity));
-      } catch (e) {
-        emit(UserError("Failed to load user"));
-      }
-    });
+  UserBloc(this.getUser) : super(UserInitial());
+
+  Future<void> fetchUser(String uid) async {
+    emit(UserLoading());
+    try {
+      final user = await getUser(uid);
+      emit(UserLoaded(user));
+    } catch (e) {
+      emit(UserError("Error: $e"));
+    }
   }
 }

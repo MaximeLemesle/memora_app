@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
 
-class AlbumEntity extends Equatable {
+class AlbumEntity {
   final String title;
   final String backgroundImage;
   final Timestamp dateStart;
@@ -23,17 +22,4 @@ class AlbumEntity extends Equatable {
     required this.totalPages,
     required this.usedPages,
   });
-
-  @override
-  List<Object> get props => [
-        title,
-        backgroundImage,
-        dateStart,
-        dateEnd,
-        members,
-        owner,
-        description,
-        totalPages,
-        usedPages,
-      ];
 }

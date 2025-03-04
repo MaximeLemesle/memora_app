@@ -1,5 +1,6 @@
-import 'package:memora_app/features/user/data/models/user_model.dart';
+import 'package:memora_app/features/user/domain/entities/user_entity.dart';
 
 abstract class UserRepository {
-  Future<UserModel> getUser(String uid);
+  Future<UserEntity> getUser(String uid);
+  Future<void> createUser(UserEntity user);
 }

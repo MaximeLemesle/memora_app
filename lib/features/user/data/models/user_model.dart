@@ -1,25 +1,37 @@
-import 'package:equatable/equatable.dart';
 import 'package:memora_app/features/user/domain/entities/user_entity.dart';
 
-class UserModel extends Equatable {
-  final String uid;
-  final String name;
-  final String email;
-  final String? avatarUrl;
-
+class UserModel extends UserEntity {
   const UserModel({
-    required this.uid,
-    required this.name,
-    required this.email,
-    this.avatarUrl,
+    required super.uid,
+    required super.name,
+    required super.email,
+    super.avatarUrl,
   });
 
-  factory UserModel.fromMap(Map<String, dynamic> map) {
+  factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      uid: map['uid'] as String? ?? (throw Exception('UID is required')),
-      name: map['name'] as String? ?? (throw Exception('Name is required')),
-      email: map['email'] as String? ?? (throw Exception('Email is required')),
-      avatarUrl: map['avatarUrl'] as String? ?? '',
+      uid: json['uid'],
+      name: json['name'],
+      email: json['email'],
+      avatarUrl: json['avatarUrl'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'uid': uid,
+      'name': name,
+      'email': email,
+      'avatarUrl': avatarUrl,
+    };
+  }
+
+  factory UserModel.fromEntity(UserEntity entity) {
+    return UserModel(
+      uid: entity.uid,
+      name: entity.name,
+      email: entity.email,
+      avatarUrl: entity.avatarUrl,
     );
   }
 
@@ -31,12 +43,4 @@ class UserModel extends Equatable {
       avatarUrl: avatarUrl,
     );
   }
-
-  @override
-  List<Object?> get props => [
-        uid,
-        name,
-        email,
-        avatarUrl,
-      ];
 }

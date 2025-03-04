@@ -2,8 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:memora_app/features/user/data/data-sources/user_remote_data_source.dart';
+import 'package:memora_app/features/user/data/repositories/user_repository_impl.dart';
+import 'package:memora_app/features/user/domain/entities/user_entity.dart';
+import 'package:memora_app/features/user/domain/repository/user_repository.dart';
 
 class AuthService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final UserRepository userRepository;
+
+  AuthService()
+      : userRepository = UserRepositoryImpl(
+          remoteDataSource:
+              UserRemoteDataSource(firestore: FirebaseFirestore.instance),
+        );
+
   /// Sign Up a new user
   Future<void> signup({
     required String name,
@@ -13,22 +26,16 @@ class AuthService {
   }) async {
     try {
       UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
       User? user = userCredential.user;
       if (user != null) {
-        await user.updateDisplayName(name);
-        await user.reload();
-
-        await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
-          "uid": user.uid,
-          "name": name,
-          "email": email,
-          "createdAt": FieldValue.serverTimestamp(),
-        });
+        await userRepository.createUser(
+          UserEntity(uid: user.uid, name: name, email: user.email!),
+        );
       }
 
       await Future.delayed(const Duration(seconds: 1));

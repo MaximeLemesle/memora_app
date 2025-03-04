@@ -1,18 +1,24 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:memora_app/features/user/data/data-sources/user_remote_data_source.dart';
 import 'package:memora_app/features/user/data/models/user_model.dart';
+import 'package:memora_app/features/user/domain/entities/user_entity.dart';
 import 'package:memora_app/features/user/domain/repository/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
-  final FirebaseFirestore firestore;
+  final UserRemoteDataSource remoteDataSource;
 
-  UserRepositoryImpl({required this.firestore});
+  UserRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<UserModel> getUser(String uid) async {
-    final doc = await firestore.collection("users").doc(uid).get();
-    if (doc.exists) {
-      return UserModel.fromMap(doc.data()!);
-    }
-    throw Exception("User not found");
+  Future<UserEntity> getUser(String uid) async {
+    final UserModel userModel = await remoteDataSource.getUser(uid);
+
+    return userModel.toEntity();
+  }
+
+  @override
+  Future<void> createUser(UserEntity user) async {
+    final UserModel userModel = UserModel.fromEntity(user);
+
+    await remoteDataSource.createUser(userModel);
   }
 }

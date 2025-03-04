@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:equatable/equatable.dart';
 import 'package:memora_app/features/album/domain/entities/album_entity.dart';
 
-class AlbumModel extends Equatable {
+class AlbumModel {
   final String title;
   final String backgroundImage;
   final Timestamp dateStart;
@@ -59,17 +58,4 @@ class AlbumModel extends Equatable {
       usedPages: usedPages,
     );
   }
-
-  @override
-  List<Object> get props => [
-        title,
-        backgroundImage,
-        dateStart,
-        dateEnd,
-        members,
-        owner,
-        description,
-        totalPages,
-        usedPages,
-      ];
 }
