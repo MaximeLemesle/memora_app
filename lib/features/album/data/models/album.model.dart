@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:memora_app/features/album/domain/entities/album_entity.dart';
+import 'package:memora_app/features/album/domain/entities/album.entity.dart';
 
 class AlbumModel {
   final String title;

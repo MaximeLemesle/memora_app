@@ -2,10 +2,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:memora_app/config/theme/app_theme.dart';
 import 'package:memora_app/features/home/presentation/pages/home.page.dart';
-import 'package:memora_app/features/landing/presentation/landing.page.dart';
+import 'package:memora_app/features/landing/presentation/pages/landing.page.dart';
 import 'package:memora_app/firebase_options.dart';
-import 'package:memora_app/features/auth/presentation/login.page.dart';
-import 'package:memora_app/features/auth/presentation/signup.page.dart';
+import 'package:memora_app/features/auth/presentation/pages/login.page.dart';
+import 'package:memora_app/features/auth/presentation/pages/signup.page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

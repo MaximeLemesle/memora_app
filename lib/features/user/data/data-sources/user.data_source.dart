@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:memora_app/features/user/data/models/user.model.dart';
 
-class UserRemoteDataSource {
+class UserDataSource {
   final FirebaseFirestore firestore;
 
-  UserRemoteDataSource({required this.firestore});
+  UserDataSource({required this.firestore});
 
   Future<UserModel> getUser(String uid) async {
     final doc = await firestore.collection("users").doc(uid).get();

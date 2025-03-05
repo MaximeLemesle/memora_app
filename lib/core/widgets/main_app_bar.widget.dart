@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:memora_app/core/widgets/avatar.widget.dart';
+import 'package:memora_app/features/user/presentation/widgets/avatar.widget.dart';
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;

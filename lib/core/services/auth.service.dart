@@ -13,8 +13,7 @@ class AuthService {
 
   AuthService()
       : userRepository = UserRepositoryImpl(
-          remoteDataSource:
-              UserRemoteDataSource(firestore: FirebaseFirestore.instance),
+          dataSource: UserDataSource(firestore: FirebaseFirestore.instance),
         );
 
   /// Sign Up a new user

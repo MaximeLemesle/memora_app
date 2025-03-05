@@ -11,6 +11,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: MainAppBar(
         title: 'Bonjour,',
+        // TODO - Get user name from user bloc
         name: 'Maxime',
       ),
       body: SizedBox.expand(

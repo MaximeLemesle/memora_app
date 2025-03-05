@@ -4,13 +4,13 @@ import 'package:memora_app/features/user/domain/entities/user.entity.dart';
 import 'package:memora_app/features/user/domain/repository/user.repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
-  final UserRemoteDataSource remoteDataSource;
+  final UserDataSource dataSource;
 
-  UserRepositoryImpl({required this.remoteDataSource});
+  UserRepositoryImpl({required this.dataSource});
 
   @override
   Future<UserEntity> getUser(String uid) async {
-    final UserModel userModel = await remoteDataSource.getUser(uid);
+    final UserModel userModel = await dataSource.getUser(uid);
 
     return userModel.toEntity();
   }
@@ -19,6 +19,6 @@ class UserRepositoryImpl implements UserRepository {
   Future<void> createUser(UserEntity user) async {
     final UserModel userModel = UserModel.fromEntity(user);
 
-    await remoteDataSource.createUser(userModel);
+    await dataSource.createUser(userModel);
   }
 }
