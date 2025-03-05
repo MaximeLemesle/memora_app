@@ -1,5 +1,5 @@
-import 'package:memora_app/features/user/domain/entities/user_entity.dart';
-import 'package:memora_app/features/user/domain/repository/user_repository.dart';
+import 'package:memora_app/features/user/domain/entities/user.entity.dart';
+import 'package:memora_app/features/user/domain/repository/user.repository.dart';
 
 class GetUser {
   final UserRepository repository;

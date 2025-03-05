@@ -1,4 +1,4 @@
-import 'package:memora_app/features/user/domain/entities/user_entity.dart';
+import 'package:memora_app/features/user/domain/entities/user.entity.dart';
 
 class UserModel extends UserEntity {
   const UserModel({
