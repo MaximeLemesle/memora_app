@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:memora_app/features/album/data/models/album_model.dart';
+import 'package:memora_app/features/album/data/models/album.model.dart';
 
 class AlbumRepository {
   final FirebaseFirestore _firestore;

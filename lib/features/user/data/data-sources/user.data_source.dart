@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:memora_app/features/user/data/models/user_model.dart';
+import 'package:memora_app/features/user/data/models/user.model.dart';
 
 class UserRemoteDataSource {
   final FirebaseFirestore firestore;

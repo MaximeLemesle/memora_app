@@ -1,5 +1,5 @@
-import 'package:memora_app/features/album/data/repositories/album_repository.dart';
-import 'package:memora_app/features/album/domain/entities/album_entity.dart';
+import 'package:memora_app/features/album/data/repositories/album.repository.dart';
+import 'package:memora_app/features/album/domain/entities/album.entity.dart';
 
 class FetchAlbums {
   final AlbumRepository repository;

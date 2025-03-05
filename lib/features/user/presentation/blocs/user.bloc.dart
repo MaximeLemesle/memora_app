@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:memora_app/features/user/domain/entities/user_entity.dart';
-import 'package:memora_app/features/user/domain/usecases/get_user.dart';
+import 'package:memora_app/features/user/domain/entities/user.entity.dart';
+import 'package:memora_app/features/user/domain/usecases/get_user.usecase.dart';
 
 abstract class UserState {}
 

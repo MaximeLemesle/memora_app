@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:memora_app/features/album/domain/entities/album_entity.dart';
-import 'package:memora_app/features/album/domain/usecases/fetch_albums.dart';
+import 'package:memora_app/features/album/domain/entities/album.entity.dart';
+import 'package:memora_app/features/album/domain/usecases/fetch_albums.usecase.dart';
 
 abstract class AlbumEvent {}
 

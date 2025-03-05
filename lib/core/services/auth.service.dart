@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:memora_app/features/user/data/data-sources/user_remote_data_source.dart';
-import 'package:memora_app/features/user/data/repositories/user_repository_impl.dart';
-import 'package:memora_app/features/user/domain/entities/user_entity.dart';
-import 'package:memora_app/features/user/domain/repository/user_repository.dart';
+import 'package:memora_app/features/user/data/data-sources/user.data_source.dart';
+import 'package:memora_app/features/user/data/repositories/user.repository_impl.dart';
+import 'package:memora_app/features/user/domain/entities/user.entity.dart';
+import 'package:memora_app/features/user/domain/repository/user.repository.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;

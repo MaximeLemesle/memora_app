@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:memora_app/features/album/data/repositories/album_repository.dart';
-import 'package:memora_app/features/album/domain/usecases/fetch_albums.dart';
-import 'package:memora_app/features/album/presentation/blocs/album_bloc.dart';
+import 'package:memora_app/features/album/data/repositories/album.repository.dart';
+import 'package:memora_app/features/album/domain/usecases/fetch_albums.usecase.dart';
+import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
 import 'package:memora_app/features/album/presentation/widgets/album_description.widget.dart';
 import 'package:memora_app/features/album/presentation/widgets/album_cover.widget.dart';
 

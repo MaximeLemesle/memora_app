@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:memora_app/core/widgets/avatar.widget.dart';
+import 'package:memora_app/features/user/presentation/widgets/avatar.widget.dart';
 
 class CoverPage extends StatelessWidget {
   final String title;

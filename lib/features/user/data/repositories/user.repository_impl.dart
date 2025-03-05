@@ -1,7 +1,7 @@
-import 'package:memora_app/features/user/data/data-sources/user_remote_data_source.dart';
+import 'package:memora_app/features/user/data/data-sources/user.data_source.dart';
 import 'package:memora_app/features/user/data/models/user.model.dart';
 import 'package:memora_app/features/user/domain/entities/user.entity.dart';
-import 'package:memora_app/features/user/domain/repository/user_repository.dart';
+import 'package:memora_app/features/user/domain/repository/user.repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final UserRemoteDataSource remoteDataSource;
