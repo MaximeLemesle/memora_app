@@ -1,73 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:memora_app/features/album/data/repositories/album.repository.dart';
-import 'package:memora_app/features/album/domain/usecases/fetch_albums.usecase.dart';
-import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
+import 'package:memora_app/features/album/domain/entities/album.entity.dart';
 import 'package:memora_app/features/album/presentation/widgets/album_description.widget.dart';
 import 'package:memora_app/features/album/presentation/widgets/album_cover.widget.dart';
 
 class AlbumList extends StatelessWidget {
-  const AlbumList({super.key});
+  final List<AlbumEntity> albums;
+
+  const AlbumList({super.key, required this.albums});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AlbumBloc(
-        fetchAlbums: FetchAlbums(
-          repository: AlbumRepository(),
-        ),
-      )..add(FetchAlbumsEvent()),
-      child: BlocBuilder<AlbumBloc, AlbumState>(
-        builder: (context, state) {
-          if (state is AlbumLoadingState) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is AlbumErrorState) {
-            return Center(child: Text(state.message));
-          } else if (state is AlbumLoadedState) {
-            final albums = state.albums;
+    return Container(
+      height: 644,
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.only(right: 24),
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: albums.length,
+        separatorBuilder: (context, index) => const SizedBox(width: 24),
+        itemBuilder: (context, index) {
+          final album = albums[index];
 
-            if (albums.isEmpty) {
-              return const Center(child: Text('Aucun album trouvé'));
-            }
-
-            return Container(
-              height: 644,
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(right: 24),
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: albums.length,
-                separatorBuilder: (context, index) => const SizedBox(width: 24),
-                itemBuilder: (context, index) {
-                  final album = albums[index];
-
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 24,
-                    children: [
-                      CoverPage(
-                        title: album.title,
-                        backgroundImage: album.backgroundImage,
-                        dateStart: album.dateStart,
-                        dateEnd: album.dateEnd,
-                        members: album.members,
-                      ),
-                      AlbumDescription(
-                        owner: album.owner,
-                        description: album.description,
-                        totalPages: album.totalPages,
-                        usedPages: album.usedPages,
-                      ),
-                    ],
-                  );
-                },
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 24,
+            children: [
+              CoverPage(
+                title: album.title,
+                backgroundImage: album.backgroundImage,
+                dateStart: album.dateStart,
+                dateEnd: album.dateEnd,
+                members: album.members,
               ),
-            );
-          }
-
-          // Afficher un état par défaut si aucune condition ne correspond
-          return const SizedBox();
+              AlbumDescription(
+                owner: album.owner,
+                description: album.description,
+                totalPages: album.totalPages,
+                usedPages: album.usedPages,
+              ),
+            ],
+          );
         },
       ),
     );

@@ -1,52 +1,67 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:memora_app/features/album/domain/entities/album.entity.dart';
 
-class AlbumModel {
-  final String title;
-  final String backgroundImage;
-  final Timestamp dateStart;
-  final Timestamp dateEnd;
-  final List<String> members;
-  final String owner;
-  final String description;
-  final int totalPages;
-  final int usedPages;
-
+class AlbumModel extends AlbumEntity {
   const AlbumModel({
-    required this.title,
-    required this.backgroundImage,
-    required this.dateStart,
-    required this.dateEnd,
-    required this.members,
-    required this.owner,
-    required this.description,
-    required this.totalPages,
-    required this.usedPages,
+    required super.uid,
+    required super.title,
+    required super.backgroundImage,
+    required super.dateStart,
+    required super.dateEnd,
+    required super.members,
+    required super.owner,
+    required super.description,
+    required super.totalPages,
+    required super.usedPages,
   });
 
-  factory AlbumModel.fromMap(Map<String, dynamic> map) {
+  factory AlbumModel.fromJson(Map<String, dynamic> json) {
     return AlbumModel(
-      title: map['title'] as String? ?? (throw Exception('Title is required')),
-      backgroundImage: map['background_image'] as String? ??
-          (throw Exception('Background image is required')),
-      dateStart: map['date_start'] as Timestamp? ??
-          (throw Exception('Date start is required')),
-      dateEnd: map['date_end'] as Timestamp? ??
-          (throw Exception('Date end is required')),
-      members: List<String>.from(map['members'] as List<dynamic>? ??
-          (throw Exception('Members are required'))),
-      owner: map['owner'] as String? ?? (throw Exception('Owner is required')),
-      description: map['description'] as String? ??
-          (throw Exception('Description is required')),
-      totalPages: map['total_pages'] as int? ??
-          (throw Exception('Total pages are required')),
-      usedPages: map['used_pages'] as int? ??
-          (throw Exception('Used pages are required')),
+      uid: json['uid'],
+      title: json['title'],
+      backgroundImage: json['background_image'],
+      dateStart: json['date_start'],
+      dateEnd: json['date_end'],
+      members: List<String>.from(json['members']),
+      owner: json['owner'],
+      description: json['description'],
+      totalPages: json['total_pages'],
+      usedPages: json['used_pages'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'uid': uid,
+      'title': title,
+      'background_image': backgroundImage,
+      'date_start': dateStart,
+      'date_end': dateEnd,
+      'members': members,
+      'owner': owner,
+      'description': description,
+      'total_pages': totalPages,
+      'used_pages': usedPages,
+    };
+  }
+
+  factory AlbumModel.fromEntity(AlbumEntity entity) {
+    return AlbumModel(
+      uid: entity.uid,
+      title: entity.title,
+      backgroundImage: entity.backgroundImage,
+      dateStart: entity.dateStart,
+      dateEnd: entity.dateEnd,
+      members: entity.members,
+      owner: entity.owner,
+      description: entity.description,
+      totalPages: entity.totalPages,
+      usedPages: entity.usedPages,
     );
   }
 
   AlbumEntity toEntity() {
     return AlbumEntity(
+      uid: uid,
       title: title,
       backgroundImage: backgroundImage,
       dateStart: dateStart,

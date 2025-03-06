@@ -7,14 +7,20 @@ class UserDataSource {
   UserDataSource({required this.firestore});
 
   Future<UserModel> getUser(String uid) async {
-    final doc = await firestore.collection("users").doc(uid).get();
-    if (!doc.exists) {
-      throw Exception("User not found");
+    try {
+      final doc = await firestore.collection("users").doc(uid).get();
+
+      return UserModel.fromJson(doc.data() as Map<String, dynamic>);
+    } catch (e) {
+      throw Exception("Error fetching user: $e");
     }
-    return UserModel.fromJson(doc.data() as Map<String, dynamic>);
   }
 
   Future<void> createUser(UserModel user) async {
-    await firestore.collection('users').doc(user.uid).set(user.toJson());
+    try {
+      await firestore.collection('users').doc(user.uid).set(user.toJson());
+    } catch (e) {
+      throw Exception("Error creating user: $e");
+    }
   }
 }

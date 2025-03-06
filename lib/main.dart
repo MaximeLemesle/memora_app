@@ -3,6 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/config/theme/app_theme.dart';
+import 'package:memora_app/features/album/data/data_sources/album.data_source.dart';
+import 'package:memora_app/features/album/data/repositories/album.repository_impl.dart';
+import 'package:memora_app/features/album/domain/usecases/get_albums_by_user.usecase.dart';
+import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
 import 'package:memora_app/features/home/presentation/pages/home.page.dart';
 import 'package:memora_app/features/landing/presentation/pages/landing.page.dart';
 import 'package:memora_app/features/user/data/data-sources/user.data_source.dart';
@@ -20,14 +24,20 @@ void main() async {
   );
 
   final userRepository = UserRepositoryImpl(
-    dataSource: UserDataSource(
-      firestore: FirebaseFirestore.instance,
-    ),
+    dataSource: UserDataSource(firestore: FirebaseFirestore.instance),
+  );
+
+  final albumRepository = AlbumRepositoryImpl(
+    dataSource: AlbumDataSource(firestore: FirebaseFirestore.instance),
   );
 
   runApp(
-    BlocProvider(
-      create: (context) => UserBloc(GetUser(userRepository)),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => UserBloc(GetUser(userRepository))),
+        BlocProvider(
+            create: (context) => AlbumBloc(GetAlbumsByUser(albumRepository))),
+      ],
       child: MyApp(),
     ),
   );

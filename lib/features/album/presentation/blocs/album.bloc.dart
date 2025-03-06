@@ -1,40 +1,36 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/features/album/domain/entities/album.entity.dart';
-import 'package:memora_app/features/album/domain/usecases/fetch_albums.usecase.dart';
-
-abstract class AlbumEvent {}
-
-class FetchAlbumsEvent extends AlbumEvent {}
+import 'package:memora_app/features/album/domain/usecases/get_albums_by_user.usecase.dart';
 
 abstract class AlbumState {}
 
-class AlbumLoadingState extends AlbumState {}
+class AlbumInitial extends AlbumState {}
 
-class AlbumLoadedState extends AlbumState {
+class AlbumLoading extends AlbumState {}
+
+class AlbumLoaded extends AlbumState {
   final List<AlbumEntity> albums;
 
-  AlbumLoadedState({required this.albums});
+  AlbumLoaded(this.albums);
 }
 
-class AlbumErrorState extends AlbumState {
+class AlbumError extends AlbumState {
   final String message;
-
-  AlbumErrorState({required this.message});
+  AlbumError(this.message);
 }
 
-class AlbumBloc extends Bloc<AlbumEvent, AlbumState> {
-  final FetchAlbums fetchAlbums;
+class AlbumBloc extends Cubit<AlbumState> {
+  final GetAlbumsByUser getAlbumsByUser;
 
-  AlbumBloc({required this.fetchAlbums}) : super(AlbumLoadingState()) {
-    on<FetchAlbumsEvent>((event, emit) async {
-      emit(AlbumLoadingState());
+  AlbumBloc(this.getAlbumsByUser) : super(AlbumInitial());
 
-      try {
-        final albums = await fetchAlbums();
-        emit(AlbumLoadedState(albums: albums));
-      } catch (error) {
-        emit(AlbumErrorState(message: error.toString()));
-      }
-    });
+  Future<void> fetchAlbums(String uid) async {
+    emit(AlbumLoading());
+    try {
+      final albums = await getAlbumsByUser(uid);
+      emit(AlbumLoaded(albums));
+    } catch (e) {
+      emit(AlbumError("Error: $e"));
+    }
   }
 }

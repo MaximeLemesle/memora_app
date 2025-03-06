@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
 import 'package:memora_app/features/album/presentation/widgets/album_list.widget.dart';
 import 'package:memora_app/core/widgets/main_app_bar.widget.dart';
 import 'package:memora_app/core/widgets/main_nav_bar.widget.dart';
@@ -20,6 +21,7 @@ class _HomePageState extends State<HomePage> {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
       context.read<UserBloc>().fetchUser(currentUser.uid);
+      context.read<AlbumBloc>().fetchAlbums(currentUser.uid);
     }
   }
 
@@ -58,7 +60,18 @@ class _HomePageState extends State<HomePage> {
                               color: Theme.of(context).colorScheme.onSurface,
                             ),
                       ),
-                      AlbumList(),
+                      BlocBuilder<AlbumBloc, AlbumState>(
+                        builder: (context, albumState) {
+                          if (albumState is AlbumLoading) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (albumState is AlbumError) {
+                            return Center(child: Text(albumState.message));
+                          } else if (albumState is AlbumLoaded) {
+                            AlbumList(albums: albumState.albums);
+                          }
+                          return Text("Pas d'album pour le moment");
+                        },
+                      ),
                     ],
                   ),
                 ),
