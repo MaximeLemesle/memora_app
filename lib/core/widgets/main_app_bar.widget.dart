@@ -48,7 +48,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           AvatarWidget(
             size: 'big',
-            person: 'mathilde',
           )
         ],
       ),

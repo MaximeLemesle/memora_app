@@ -15,16 +15,24 @@ class AvatarWidget extends StatelessWidget {
           : size == 'medium'
               ? 16
               : 25,
-      child: CircleAvatar(
-        backgroundImage: person == null
-            ? AssetImage('assets/avatars/default.png')
-            : AssetImage('assets/avatars/$person.png'),
-        radius: size == 'small'
-            ? 8
-            : size == 'medium'
-                ? 15
-                : 24,
-      ),
+      child: person == null
+          ? Icon(
+              Icons.person,
+              size: size == 'small'
+                  ? 12
+                  : size == 'medium'
+                      ? 24
+                      : 40,
+              color: Theme.of(context).colorScheme.outline,
+            )
+          : CircleAvatar(
+              backgroundImage: AssetImage('assets/avatars/$person.png'),
+              radius: size == 'small'
+                  ? 8
+                  : size == 'medium'
+                      ? 15
+                      : 24,
+            ),
     );
   }
 }

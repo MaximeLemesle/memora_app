@@ -27,20 +27,20 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocBuilder<UserBloc, UserState>(
       builder: (context, state) {
-        String userName = "Invité";
+        String username = "Invité";
 
         if (state is UserLoaded) {
-          userName = state.user.name;
+          username = state.user.name;
         } else if (state is UserLoading) {
-          userName = "Chargement...";
+          username = "Chargement...";
         } else if (state is UserError) {
-          userName = "Erreur utilisateur";
+          username = "Erreur utilisateur";
         }
 
         return Scaffold(
           appBar: MainAppBar(
             title: 'Bonjour,',
-            name: userName,
+            name: username,
           ),
           body: SizedBox.expand(
             child: Stack(
