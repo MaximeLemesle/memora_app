@@ -10,11 +10,11 @@ class AlbumList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 644,
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.only(right: 24),
       child: ListView.separated(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
         scrollDirection: Axis.horizontal,
         itemCount: albums.length,
         separatorBuilder: (context, index) => const SizedBox(width: 24),

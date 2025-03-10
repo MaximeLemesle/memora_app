@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AlbumEntity {
-  final String uid;
   final String title;
   final String backgroundImage;
   final Timestamp dateStart;
@@ -13,7 +12,6 @@ class AlbumEntity {
   final int usedPages;
 
   const AlbumEntity({
-    required this.uid,
     required this.title,
     required this.backgroundImage,
     required this.dateStart,

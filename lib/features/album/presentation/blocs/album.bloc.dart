@@ -24,10 +24,10 @@ class AlbumBloc extends Cubit<AlbumState> {
 
   AlbumBloc(this.getAlbumsByUser) : super(AlbumInitial());
 
-  Future<void> fetchAlbums(String uid) async {
+  Future<void> fetchAlbums(String owner) async {
     emit(AlbumLoading());
     try {
-      final albums = await getAlbumsByUser(uid);
+      final albums = await getAlbumsByUser(owner);
       emit(AlbumLoaded(albums));
     } catch (e) {
       emit(AlbumError("Error: $e"));

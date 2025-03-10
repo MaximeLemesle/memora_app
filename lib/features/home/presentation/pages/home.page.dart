@@ -48,26 +48,39 @@ class _HomePageState extends State<HomePage> {
             child: Stack(
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: 24, top: 24),
+                  padding: EdgeInsets.symmetric(vertical: 24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     spacing: 6,
                     children: [
-                      Text(
-                        'Mes albums',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24),
+                        child: Text(
+                          'Mes albums',
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                        ),
                       ),
                       BlocBuilder<AlbumBloc, AlbumState>(
                         builder: (context, albumState) {
                           if (albumState is AlbumLoading) {
-                            return Center(child: CircularProgressIndicator());
+                            return SizedBox(
+                              height: 400,
+                              width: MediaQuery.of(context).size.width,
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                color: Theme.of(context).colorScheme.outline,
+                              )),
+                            );
                           } else if (albumState is AlbumError) {
                             return Center(child: Text(albumState.message));
                           } else if (albumState is AlbumLoaded) {
-                            AlbumList(albums: albumState.albums);
+                            return AlbumList(albums: albumState.albums);
                           }
                           return Text("Pas d'album pour le moment");
                         },

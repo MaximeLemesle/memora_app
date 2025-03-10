@@ -9,8 +9,8 @@ class AlbumRepositoryImpl implements AlbumRepository {
   AlbumRepositoryImpl({required this.dataSource});
 
   @override
-  Future<List<AlbumEntity>> getAlbumsByUser(String uid) async {
-    final List<AlbumModel> albums = await dataSource.getAlbumsByUser(uid);
+  Future<List<AlbumEntity>> getAlbumsByUser(String owner) async {
+    final List<AlbumModel> albums = await dataSource.getAlbumsByUser(owner);
 
     return albums.map((album) => album.toEntity()).toList();
   }

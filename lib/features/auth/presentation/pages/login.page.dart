@@ -77,6 +77,19 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   ButtonWidget(
                     label: 'Se connecter',
+                    variant: ButtonVariant.secondary,
+                    size: ButtonSize.big,
+                    onPressed: () async {
+                      await AuthService().signin(
+                        email: 'j.doe@gmail.com',
+                        password: 'johndoe',
+                        context: context,
+                      );
+                    },
+                    fullWidth: true,
+                  ),
+                  ButtonWidget(
+                    label: 'Se connecter',
                     variant: ButtonVariant.primary,
                     size: ButtonSize.big,
                     onPressed: () async {

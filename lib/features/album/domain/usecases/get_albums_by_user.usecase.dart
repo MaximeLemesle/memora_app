@@ -6,7 +6,7 @@ class GetAlbumsByUser {
 
   GetAlbumsByUser(this.repository);
 
-  Future<List<AlbumEntity>> call(String uid) async {
-    return await repository.getAlbumsByUser(uid);
+  Future<List<AlbumEntity>> call(String owner) async {
+    return await repository.getAlbumsByUser(owner);
   }
 }

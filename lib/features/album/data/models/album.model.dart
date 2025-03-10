@@ -2,7 +2,6 @@ import 'package:memora_app/features/album/domain/entities/album.entity.dart';
 
 class AlbumModel extends AlbumEntity {
   const AlbumModel({
-    required super.uid,
     required super.title,
     required super.backgroundImage,
     required super.dateStart,
@@ -16,7 +15,6 @@ class AlbumModel extends AlbumEntity {
 
   factory AlbumModel.fromJson(Map<String, dynamic> json) {
     return AlbumModel(
-      uid: json['uid'],
       title: json['title'],
       backgroundImage: json['background_image'],
       dateStart: json['date_start'],
@@ -31,7 +29,6 @@ class AlbumModel extends AlbumEntity {
 
   Map<String, dynamic> toJson() {
     return {
-      'uid': uid,
       'title': title,
       'background_image': backgroundImage,
       'date_start': dateStart,
@@ -46,7 +43,6 @@ class AlbumModel extends AlbumEntity {
 
   factory AlbumModel.fromEntity(AlbumEntity entity) {
     return AlbumModel(
-      uid: entity.uid,
       title: entity.title,
       backgroundImage: entity.backgroundImage,
       dateStart: entity.dateStart,
@@ -61,7 +57,6 @@ class AlbumModel extends AlbumEntity {
 
   AlbumEntity toEntity() {
     return AlbumEntity(
-      uid: uid,
       title: title,
       backgroundImage: backgroundImage,
       dateStart: dateStart,
