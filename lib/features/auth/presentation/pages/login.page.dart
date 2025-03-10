@@ -81,8 +81,8 @@ class _LoginPageState extends State<LoginPage> {
                     size: ButtonSize.big,
                     onPressed: () async {
                       await AuthService().signin(
-                        email: 'j.doe@gmail.com',
-                        password: 'johndoe',
+                        email: 'max123@gmail.com',
+                        password: 'max123',
                         context: context,
                       );
                     },

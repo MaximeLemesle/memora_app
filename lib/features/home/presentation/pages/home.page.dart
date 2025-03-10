@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
 import 'package:memora_app/features/album/presentation/widgets/album_list.widget.dart';
 import 'package:memora_app/core/widgets/main_app_bar.widget.dart';
@@ -42,7 +43,8 @@ class _HomePageState extends State<HomePage> {
         return Scaffold(
           appBar: MainAppBar(
             title: 'Bonjour,',
-            name: username,
+            name:
+                username.substring(0, 1).toUpperCase() + username.substring(1),
           ),
           body: SizedBox.expand(
             child: Stack(
@@ -80,9 +82,55 @@ class _HomePageState extends State<HomePage> {
                           } else if (albumState is AlbumError) {
                             return Center(child: Text(albumState.message));
                           } else if (albumState is AlbumLoaded) {
+                            if (albumState.albums.isEmpty) {
+                              return Center(
+                                child: Container(
+                                  height: 500,
+                                  width: MediaQuery.of(context).size.width,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 24),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .surfaceContainer,
+                                    border: Border.all(
+                                      color:
+                                          Theme.of(context).colorScheme.outline,
+                                    ),
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "☹️",
+                                        style: TextStyle(fontSize: 50),
+                                      ),
+                                      Text(
+                                        "Oh là là ! C'est un peu vide par ici...",
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
+                                      ),
+                                      const SizedBox(height: 32),
+                                      ButtonWidget(
+                                        label: 'Créer mon premier album',
+                                        variant: ButtonVariant.primary,
+                                        size: ButtonSize.big,
+                                        iconPosition: ButtonIcon.left,
+                                        onPressed: () {},
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
                             return AlbumList(albums: albumState.albums);
                           }
-                          return Text("Pas d'album pour le moment");
+                          return Text(
+                              "Une erreur s'est produite. Essayer de relancer l'application.");
                         },
                       ),
                     ],
