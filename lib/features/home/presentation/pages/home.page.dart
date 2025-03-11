@@ -42,8 +42,7 @@ class _HomePageState extends State<HomePage> {
 
         return Scaffold(
           appBar: MainAppBar(
-            title: 'Bonjour,',
-            name:
+            username:
                 username.substring(0, 1).toUpperCase() + username.substring(1),
           ),
           body: SizedBox.expand(
@@ -120,7 +119,10 @@ class _HomePageState extends State<HomePage> {
                                         variant: ButtonVariant.primary,
                                         size: ButtonSize.big,
                                         iconPosition: ButtonIcon.left,
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.pushNamed(
+                                              context, '/new_album_page');
+                                        },
                                       ),
                                     ],
                                   ),
