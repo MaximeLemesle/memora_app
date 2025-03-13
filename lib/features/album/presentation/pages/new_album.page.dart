@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/core/widgets/main_app_bar.widget.dart';
 
 class NewAlbumPage extends StatefulWidget {
@@ -10,165 +12,273 @@ class NewAlbumPage extends StatefulWidget {
 }
 
 class _NewAlbumPageState extends State<NewAlbumPage> {
-  DateTime dateTime = DateTime.now();
+  DateTime startDateTime = DateTime.now();
+  DateTime endDateTime = DateTime.now().add(Duration(days: 7));
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MainAppBar(variant: AppBarVariant.actionAppBar),
-      body: SizedBox.expand(
+      appBar: MainAppBar(
+        variant: AppBarVariant.actionAppBar,
+        title: 'Création d\'un album',
+      ),
+      body: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
         child: Column(
           children: [
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  spacing: 24,
-                  children: [
-                    /// SELECT BACKGROUND PHOTO
-                    Container(
-                      height: 250,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surfaceContainer,
-                        border: Border.all(
-                          width: 1,
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
-                        borderRadius: BorderRadius.circular(16),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(24, 24, 24, 48),
+              child: Column(
+                spacing: 16,
+                children: [
+                  /// SELECT BACKGROUND PHOTO
+                  Container(
+                    height: 250,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surfaceContainer,
+                      border: Border.all(
+                        width: 1,
+                        color: Theme.of(context).colorScheme.outline,
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 12,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.surface,
-                              border: Border.all(
-                                width: 1,
-                                color: Theme.of(context).colorScheme.outline,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(
-                              Icons.add_rounded,
-                              size: 40,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 12,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.surface,
+                            border: Border.all(
+                              width: 1,
                               color: Theme.of(context).colorScheme.outline,
                             ),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          Text(
-                            'Ajouter une photo de couverture',
+                          child: Icon(
+                            Icons.add_rounded,
+                            size: 40,
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
+                        ),
+                        Text(
+                          'Ajouter une photo de couverture',
+                          style: Theme.of(context).textTheme.titleSmall,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  /// SELECT TITLE OF THE ALBUM
+                  Container(
+                    height: 80,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surfaceContainer,
+                      border: Border.all(
+                        width: 1,
+                        color: Theme.of(context).colorScheme.outline,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: TextField(
                             style: Theme.of(context).textTheme.titleSmall,
                             textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    /// SELECT TITLE OF THE ALBUM
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surfaceContainer,
-                        border: Border.all(
-                          width: 1,
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: TextField(
-                              style: Theme.of(context).textTheme.titleSmall,
-                              textAlign: TextAlign.center,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: 'Ajouter une titre à mon album',
-                              ),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Ajouter une titre à mon album',
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-
-                    /// SELECT DATE OF THE ALBUM
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surfaceContainer,
-                        border: Border.all(
-                          width: 1,
-                          color: Theme.of(context).colorScheme.outline,
                         ),
-                        borderRadius: BorderRadius.circular(16),
+                      ],
+                    ),
+                  ),
+
+                  /// SELECT DATE OF THE ALBUM
+                  Container(
+                    height: 80,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surfaceContainer,
+                      border: Border.all(
+                        width: 1,
+                        color: Theme.of(context).colorScheme.outline,
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: Row(
-                              children: [
-                                CupertinoButton(
-                                  child: Text(
-                                      '${dateTime.day}/${dateTime.month}/${dateTime.year}'),
-                                  onPressed: () {
-                                    showModalBottomSheet(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 24, left: 24, right: 24),
-                                              child: Text(
-                                                'Sélectionner la date de début de l\'album',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleSmall,
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 350,
-                                              width: double.infinity,
-                                              child: CupertinoDatePicker(
-                                                initialDateTime: dateTime,
-                                                backgroundColor:
-                                                    Theme.of(context)
-                                                        .colorScheme
-                                                        .surface,
-                                                onDateTimeChanged:
-                                                    (DateTime newDateTime) {
-                                                  setState(() {
-                                                    dateTime = newDateTime;
-                                                  });
-                                                },
-                                                mode: CupertinoDatePickerMode
-                                                    .date,
-                                                dateOrder:
-                                                    DatePickerDateOrder.ymd,
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
-                                  },
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              /// START DATE
+                              CupertinoButton(
+                                child: Text(
+                                  '${startDateTime.day} ${DateFormat('MMM', 'fr').format(startDateTime)} ${startDateTime.year}',
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
-                              ],
-                            ),
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          SizedBox(
+                                            height: 350,
+                                            width: double.infinity,
+                                            child: CupertinoDatePicker(
+                                              initialDateTime: startDateTime,
+                                              backgroundColor: Theme.of(context)
+                                                  .colorScheme
+                                                  .surface,
+                                              onDateTimeChanged:
+                                                  (DateTime newDateTime) {
+                                                setState(() {
+                                                  startDateTime = newDateTime;
+                                                });
+                                              },
+                                              mode:
+                                                  CupertinoDatePickerMode.date,
+                                              dateOrder:
+                                                  DatePickerDateOrder.dmy,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+
+                              /// END DATE
+                              CupertinoButton(
+                                child: Text(
+                                  '${endDateTime.day} ${DateFormat('MMM', 'fr').format(endDateTime)} ${endDateTime.year}',
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                ),
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          SizedBox(
+                                            height: 350,
+                                            width: double.infinity,
+                                            child: CupertinoDatePicker(
+                                              initialDateTime: endDateTime,
+                                              backgroundColor: Theme.of(context)
+                                                  .colorScheme
+                                                  .surface,
+                                              onDateTimeChanged:
+                                                  (DateTime newDateTime) {
+                                                setState(() {
+                                                  endDateTime = newDateTime;
+                                                });
+                                              },
+                                              mode:
+                                                  CupertinoDatePickerMode.date,
+                                              dateOrder:
+                                                  DatePickerDateOrder.dmy,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+
+                  /// SEPARATOR
+                  Container(
+                    height: 1,
+                    width: 200,
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+
+                  Text(
+                    'Ajouter une description (optionnel)',
+                    style: Theme.of(context).textTheme.titleSmall,
+                    textAlign: TextAlign.start,
+                  ),
+
+                  /// ADD DESCRPTION OF THE ALBUM
+
+                  Container(
+                    height: 150,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surfaceContainer,
+                      border: Border.all(
+                        width: 1,
+                        color: Theme.of(context).colorScheme.outline,
+                      ),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 12),
+                          child: TextField(
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelSmall
+                                ?.copyWith(
+                                    color:
+                                        Theme.of(context).colorScheme.outline,
+                                    fontStyle: FontStyle.italic,
+                                    fontWeight: FontWeight.w500),
+                            textAlign: TextAlign.start,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText:
+                                  'Expliquer votre voyage, avec qui vous étiez ou encore ce que vous avez visitez...',
+                            ),
+                            maxLines: null,
+                            keyboardType: TextInputType.multiline,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  /// SEPARATOR
+                  Container(
+                    height: 1,
+                    width: 200,
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
+
+                  /// ADD BUTTON
+                  ButtonWidget(
+                    label: 'Créer mon album',
+                    variant: ButtonVariant.primary,
+                    size: ButtonSize.big,
+                    fullWidth: true,
+                    onPressed: () {},
+                  )
+                ],
               ),
             ),
           ],

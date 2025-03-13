@@ -17,6 +17,7 @@ import 'package:memora_app/features/user/presentation/blocs/user.bloc.dart';
 import 'package:memora_app/firebase_options.dart';
 import 'package:memora_app/features/auth/presentation/pages/login.page.dart';
 import 'package:memora_app/features/auth/presentation/pages/signup.page.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +52,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Memora',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('fr', 'FR'),
+        Locale('en', 'US'),
+      ],
+      locale: const Locale('fr', 'FR'),
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: lightMode,

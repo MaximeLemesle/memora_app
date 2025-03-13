@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:memora_app/features/user/presentation/widgets/avatar.widget.dart';
 
 enum AppBarVariant { mainAppBar, actionAppBar }
@@ -6,11 +7,13 @@ enum AppBarVariant { mainAppBar, actionAppBar }
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String username;
   final AppBarVariant variant;
+  final String title;
 
   const MainAppBar({
     super.key,
     this.username = 'Invité',
     this.variant = AppBarVariant.mainAppBar,
+    this.title = 'Page title',
   });
 
   @override
@@ -70,6 +73,8 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
       color: Theme.of(context).colorScheme.surface,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        spacing: 24,
         children: [
           Container(
             decoration: BoxDecoration(
@@ -81,6 +86,17 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
               onPressed: () => Navigator.of(context).pop(),
             ),
           ),
+          Expanded(
+            child: Text(
+              title,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+            ),
+          ),
+          const AvatarWidget(size: 'big'),
         ],
       ),
     );
