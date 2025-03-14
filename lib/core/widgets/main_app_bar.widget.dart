@@ -70,7 +70,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget _buildActionAppBar(BuildContext context) {
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 58, 24, 6),
-      color: Theme.of(context).colorScheme.surface,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -92,7 +91,7 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
               textAlign: TextAlign.center,
               maxLines: 2,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
             ),
           ),
