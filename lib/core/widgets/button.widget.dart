@@ -6,6 +6,7 @@ enum ButtonVariant {
   primary,
   secondary,
   ghost,
+  tertiary,
 }
 
 enum ButtonSize {
@@ -73,6 +74,11 @@ class ButtonWidget extends StatelessWidget {
         foregroundColor = colorScheme.onPrimary;
         borderColor = Colors.transparent;
         break;
+      case ButtonVariant.tertiary:
+        backgroundColor = colorScheme.surfaceContainer.withValues(alpha: 0.7);
+        foregroundColor = colorScheme.onSurface;
+        borderColor = Theme.of(context).colorScheme.outline;
+        break;
     }
 
     return ElevatedButton(
@@ -109,24 +115,27 @@ class ButtonWidget extends StatelessWidget {
               color: foregroundColor,
               size: size == ButtonSize.big ? 24 : 20,
             ),
-          // ),
           if (iconPosition != ButtonIcon.only)
-            Text(
-              label,
-              style: variant == ButtonVariant.ghost
-                  ? Theme.of(context).textTheme.labelLarge?.copyWith(
-                        color: foregroundColor,
-                        decoration: TextDecoration.underline,
-                        decorationColor: foregroundColor,
-                        decorationThickness: 2,
-                      )
-                  : size == ButtonSize.big
-                      ? Theme.of(context).textTheme.labelLarge?.copyWith(
-                            color: foregroundColor,
-                          )
-                      : Theme.of(context).textTheme.labelMedium?.copyWith(
-                            color: foregroundColor,
-                          ),
+            Flexible(
+              child: Text(
+                label,
+                overflow: TextOverflow.visible,
+                textAlign: TextAlign.center,
+                style: variant == ButtonVariant.ghost
+                    ? Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: foregroundColor,
+                          decoration: TextDecoration.underline,
+                          decorationColor: foregroundColor,
+                          decorationThickness: 2,
+                        )
+                    : size == ButtonSize.big
+                        ? Theme.of(context).textTheme.labelLarge?.copyWith(
+                              color: foregroundColor,
+                            )
+                        : Theme.of(context).textTheme.labelMedium?.copyWith(
+                              color: foregroundColor,
+                            ),
+              ),
             ),
           if (iconPosition == ButtonIcon.right)
             Icon(

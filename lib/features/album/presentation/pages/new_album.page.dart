@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -37,16 +38,34 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
       body: Stack(
         children: [
           /// BACKGROUND IMAGE
-          Container(
-            decoration: BoxDecoration(
-              image: _selectedImage != null
-                  ? DecorationImage(
-                      image: FileImage(_selectedImage!), fit: BoxFit.cover)
-                  : const DecorationImage(
-                      // TODO: Add a default image
-                      image: AssetImage('assets/images/default_cover.jpg'),
-                      fit: BoxFit.cover,
-                    ),
+          ShaderMask(
+            shaderCallback: (rect) {
+              return LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [
+                  Theme.of(context).colorScheme.onSurface,
+                  Colors.transparent,
+                ],
+                stops: [0.0, 0.8],
+              ).createShader(rect);
+            },
+            blendMode: BlendMode.darken,
+            child: ImageFiltered(
+              imageFilter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
+              child: Container(
+                decoration: BoxDecoration(
+                  image: _selectedImage != null
+                      ? DecorationImage(
+                          image: FileImage(_selectedImage!),
+                          fit: BoxFit.cover,
+                        )
+                      : const DecorationImage(
+                          image: AssetImage('assets/images/default_cover.jpg'),
+                          fit: BoxFit.cover,
+                        ),
+                ),
+              ),
             ),
           ),
 
@@ -62,25 +81,38 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
                     children: [
                       /// HEADER OF THE PAGE
                       Container(
-                        padding: const EdgeInsets.fromLTRB(24, 58, 24, 6),
+                        padding: const EdgeInsets.only(top: 58),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           spacing: 24,
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .surfaceContainer,
-                                borderRadius: BorderRadius.circular(12),
+                            IconButton(
+                              icon: const Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                size: 16,
                               ),
-                              child: IconButton(
-                                icon: const Icon(
-                                    Icons.arrow_back_ios_new_rounded,
-                                    size: 20),
-                                onPressed: () => Navigator.of(context).pop(),
+                              style: ButtonStyle(
+                                padding: WidgetStatePropertyAll(
+                                  const EdgeInsets.all(8),
+                                ),
+                                backgroundColor: WidgetStatePropertyAll(
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .surfaceContainer
+                                      .withValues(alpha: 0.7),
+                                ),
+                                shape: WidgetStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    side: BorderSide(
+                                      color:
+                                          Theme.of(context).colorScheme.outline,
+                                    ),
+                                  ),
+                                ),
                               ),
+                              onPressed: () => Navigator.of(context).pop(),
                             ),
                             Expanded(
                               child: Text(
@@ -103,53 +135,25 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
                       ),
 
                       /// SELECT BACKGROUND PHOTO
-                      GestureDetector(
-                        onTap: () => _pickImageFromGallery(),
-                        child: SizedBox(
-                          height: 200,
-                          width: double.infinity,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              _selectedImage != null
-                                  ? Container(
-                                      padding: EdgeInsets.all(8),
-                                      child: Icon(
-                                        Icons.edit,
-                                        size: 40,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .outline,
-                                      ),
-                                    )
-                                  : Container(
-                                      padding: EdgeInsets.all(8),
-                                      child: Icon(
-                                        Icons.add_photo_alternate_outlined,
-                                        size: 40,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .outline,
-                                      ),
-                                    ),
-                              Text(
-                                _selectedImage != null
-                                    ? 'Modifier l\'image'
-                                    : 'Ajouter une photo de couverture',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
-                                    ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary,
-                                    ),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
+                      Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 100,
+                            horizontal: 64,
                           ),
-                        ),
-                      ),
+                          child: ButtonWidget(
+                            label: _selectedImage != null
+                                ? 'Modifier'
+                                : 'Ajouter une photo de couverture',
+                            variant: ButtonVariant.tertiary,
+                            size: ButtonSize.medium,
+                            iconPosition: ButtonIcon.left,
+                            icon: _selectedImage != null
+                                ? Icons.edit
+                                : Icons.add_photo_alternate_outlined,
+                            onPressed: () {
+                              _pickImageFromGallery();
+                            },
+                          )),
 
                       /// SELECT TITLE OF THE ALBUM
                       Container(
@@ -189,7 +193,10 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
                         height: 80,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surfaceContainer,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .surfaceContainer
+                              .withValues(alpha: 0.7),
                           border: Border.all(
                             width: 1,
                             color: Theme.of(context).colorScheme.outline,
@@ -299,48 +306,56 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
                         ),
                       ),
 
-                      /// SEPARATOR
-                      Container(
-                        height: 1,
-                        width: 200,
-                        color: Theme.of(context).colorScheme.outline,
-                      ),
-
-                      /// ADD DESCRPTION OF THE ALBUM
-                      Text(
-                        'Ajouter une description (optionnel)',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                        textAlign: TextAlign.start,
-                      ),
+                      /// ADD DESCRIPTION OF THE ALBUM
                       Container(
                         height: 150,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surfaceContainer,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .surfaceContainer
+                              .withValues(alpha: 0.7),
                           border: Border.all(
                             width: 1,
                             color: Theme.of(context).colorScheme.outline,
                           ),
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 12),
-                              child: TextField(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 12),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    'Ajouter une description',
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                  ),
+                                  Text(
+                                    ' (optionnel)',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall
+                                        ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .surfaceContainerHighest,
+                                        ),
+                                  )
+                                ],
+                              ),
+                              TextField(
                                 style: Theme.of(context)
                                     .textTheme
-                                    .labelSmall
+                                    .bodyMedium
                                     ?.copyWith(
                                         color: Theme.of(context)
                                             .colorScheme
                                             .outline,
-                                        fontStyle: FontStyle.italic,
-                                        fontWeight: FontWeight.w500),
+                                        fontStyle: FontStyle.italic),
                                 textAlign: TextAlign.start,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
@@ -350,8 +365,8 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
                                 maxLines: null,
                                 keyboardType: TextInputType.multiline,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
 
