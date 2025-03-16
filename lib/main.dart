@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/config/theme/app_theme.dart';
 import 'package:memora_app/features/album/data/data_sources/album.data_source.dart';
 import 'package:memora_app/features/album/data/repositories/album.repository_impl.dart';
+import 'package:memora_app/features/album/domain/usecases/create_new_album.usecase.dart';
 import 'package:memora_app/features/album/domain/usecases/get_albums_by_user.usecase.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
 import 'package:memora_app/features/album/presentation/pages/new_album.page.dart';
@@ -38,7 +39,11 @@ void main() async {
       providers: [
         BlocProvider(create: (context) => UserBloc(GetUser(userRepository))),
         BlocProvider(
-            create: (context) => AlbumBloc(GetAlbumsByUser(albumRepository))),
+          create: (context) => AlbumBloc(
+            GetAlbumsByUser(albumRepository),
+            CreateNewAlbum(albumRepository),
+          ),
+        ),
       ],
       child: MyApp(),
     ),

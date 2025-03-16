@@ -14,4 +14,11 @@ class AlbumRepositoryImpl implements AlbumRepository {
 
     return albums.map((album) => album.toEntity()).toList();
   }
+
+  @override
+  Future<void> createAlbum(AlbumEntity album) async {
+    final AlbumModel albumModel = AlbumModel.fromEntity(album);
+
+    await dataSource.createAlbum(albumModel);
+  }
 }

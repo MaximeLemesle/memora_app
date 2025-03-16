@@ -4,15 +4,12 @@ import 'package:memora_app/features/user/presentation/widgets/avatar.widget.dart
 class AlbumDescription extends StatelessWidget {
   final String owner;
   final String description;
-  final int totalPages;
-  final int usedPages;
 
-  const AlbumDescription(
-      {super.key,
-      required this.owner,
-      required this.description,
-      required this.totalPages,
-      required this.usedPages});
+  const AlbumDescription({
+    super.key,
+    required this.owner,
+    required this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,18 +26,14 @@ class AlbumDescription extends StatelessWidget {
               size: 'big',
               person: owner,
             ),
+
+            // TODO: Enlever la column ?
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Crée par ${owner[0].toUpperCase()}${owner.substring(1)}',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                ),
-                Text(
-                  '${totalPages - usedPages} pages restantes',
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurface,
                       ),
                 ),

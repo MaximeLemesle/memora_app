@@ -6,16 +6,16 @@ import 'package:memora_app/features/user/presentation/widgets/avatar.widget.dart
 class CoverPage extends StatelessWidget {
   final String title;
   final String backgroundImage;
-  final Timestamp dateStart;
-  final Timestamp dateEnd;
+  final Timestamp startDate;
+  final Timestamp endDate;
   final List<String> members;
 
   const CoverPage({
     super.key,
     required this.title,
     required this.backgroundImage,
-    required this.dateStart,
-    required this.dateEnd,
+    required this.startDate,
+    required this.endDate,
     required this.members,
   });
 
@@ -33,8 +33,9 @@ class CoverPage extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Image.asset(
-              'assets/albums/$backgroundImage/$backgroundImage-bg.png',
+              backgroundImage,
               fit: BoxFit.cover,
+              height: 450,
             ),
           ),
           Padding(
@@ -53,7 +54,7 @@ class CoverPage extends StatelessWidget {
                           ),
                     ),
                     Text(
-                      "${formatDate(dateStart)} - ${formatDate(dateEnd)}",
+                      "${formatDate(startDate)} - ${formatDate(endDate)}",
                       style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             color: Theme.of(context).colorScheme.surface,
                           ),

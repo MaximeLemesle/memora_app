@@ -6,18 +6,18 @@ class AlbumDataSource {
 
   AlbumDataSource({required this.firestore});
 
-  Future<List<AlbumModel>> getAlbumsByUser(String owner) async {
+  Future<List<AlbumModel>> getAlbumsByUser(String ownerId) async {
     try {
       // Get albums where the user is the owner
       final ownerQuery = await firestore
           .collection("albums")
-          .where("owner", isEqualTo: owner)
+          .where("owner_id", isEqualTo: ownerId)
           .get();
 
       // Get albums where the user is a member
       final memberQuery = await firestore
           .collection("albums")
-          .where("members", arrayContains: owner)
+          .where("members", arrayContains: ownerId)
           .get();
 
       // Combine the two queries
@@ -29,6 +29,14 @@ class AlbumDataSource {
       return albums;
     } catch (e) {
       throw Exception("Error fetching albums: $e");
+    }
+  }
+
+  Future<void> createAlbum(AlbumModel album) async {
+    try {
+      await firestore.collection("albums").doc(album.uid).set(album.toJson());
+    } catch (e) {
+      throw Exception("Error creating album: $e");
     }
   }
 }

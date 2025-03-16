@@ -29,15 +29,13 @@ class AlbumList extends StatelessWidget {
               CoverPage(
                 title: album.title,
                 backgroundImage: album.backgroundImage,
-                dateStart: album.dateStart,
-                dateEnd: album.dateEnd,
-                members: album.members,
+                startDate: album.startDate,
+                endDate: album.endDate,
+                members: album.members ?? [],
               ),
               AlbumDescription(
-                owner: album.owner,
-                description: album.description,
-                totalPages: album.totalPages,
-                usedPages: album.usedPages,
+                owner: album.ownerId,
+                description: album.description ?? '',
               ),
             ],
           );

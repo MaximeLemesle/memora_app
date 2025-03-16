@@ -2,70 +2,65 @@ import 'package:memora_app/features/album/domain/entities/album.entity.dart';
 
 class AlbumModel extends AlbumEntity {
   const AlbumModel({
+    required super.uid,
     required super.title,
     required super.backgroundImage,
-    required super.dateStart,
-    required super.dateEnd,
-    required super.members,
-    required super.owner,
+    required super.startDate,
+    required super.endDate,
+    required super.ownerId,
     required super.description,
-    required super.totalPages,
-    required super.usedPages,
+    required super.members,
   });
 
   factory AlbumModel.fromJson(Map<String, dynamic> json) {
     return AlbumModel(
+      uid: json['uid'],
       title: json['title'],
       backgroundImage: json['background_image'],
-      dateStart: json['date_start'],
-      dateEnd: json['date_end'],
-      members: List<String>.from(json['members']),
-      owner: json['owner'],
+      startDate: json['start_date'],
+      endDate: json['end_date'],
+      ownerId: json['owner_id'],
       description: json['description'],
-      totalPages: json['total_pages'],
-      usedPages: json['used_pages'],
+      members: List<String>.from(json['members']),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
+      'uid': uid,
       'title': title,
       'background_image': backgroundImage,
-      'date_start': dateStart,
-      'date_end': dateEnd,
-      'members': members,
-      'owner': owner,
+      'start_date': startDate,
+      'end_date': startDate,
+      'owner_id': ownerId,
       'description': description,
-      'total_pages': totalPages,
-      'used_pages': usedPages,
+      'members': members,
     };
   }
 
   factory AlbumModel.fromEntity(AlbumEntity entity) {
     return AlbumModel(
+      uid: entity.uid,
       title: entity.title,
       backgroundImage: entity.backgroundImage,
-      dateStart: entity.dateStart,
-      dateEnd: entity.dateEnd,
-      members: entity.members,
-      owner: entity.owner,
+      startDate: entity.startDate,
+      endDate: entity.endDate,
+      ownerId: entity.ownerId,
       description: entity.description,
-      totalPages: entity.totalPages,
-      usedPages: entity.usedPages,
+      members: entity.members,
     );
   }
 
   AlbumEntity toEntity() {
     return AlbumEntity(
+      uid: uid,
       title: title,
       backgroundImage: backgroundImage,
-      dateStart: dateStart,
-      dateEnd: dateEnd,
-      members: members,
-      owner: owner,
+      startDate: startDate,
+      endDate: endDate,
+      ownerId: ownerId,
       description: description,
-      totalPages: totalPages,
-      usedPages: usedPages,
+      members: members,
     );
   }
 }

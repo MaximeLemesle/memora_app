@@ -74,9 +74,10 @@ class _HomePageState extends State<HomePage> {
                               height: 400,
                               width: MediaQuery.of(context).size.width,
                               child: Center(
-                                  child: CircularProgressIndicator(
-                                color: Theme.of(context).colorScheme.outline,
-                              )),
+                                child: CircularProgressIndicator(
+                                  color: Theme.of(context).colorScheme.outline,
+                                ),
+                              ),
                             );
                           } else if (albumState is AlbumError) {
                             return Center(child: Text(albumState.message));
@@ -87,7 +88,8 @@ class _HomePageState extends State<HomePage> {
                                   height: 500,
                                   width: MediaQuery.of(context).size.width,
                                   margin: const EdgeInsets.symmetric(
-                                      horizontal: 24),
+                                    horizontal: 24,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -121,7 +123,9 @@ class _HomePageState extends State<HomePage> {
                                         iconPosition: ButtonIcon.left,
                                         onPressed: () {
                                           Navigator.pushNamed(
-                                              context, '/new_album_page');
+                                            context,
+                                            '/new_album_page',
+                                          );
                                         },
                                       ),
                                     ],
@@ -132,7 +136,8 @@ class _HomePageState extends State<HomePage> {
                             return AlbumList(albums: albumState.albums);
                           }
                           return Text(
-                              "Une erreur s'est produite. Essayer de relancer l'application.");
+                            "Une erreur s'est produite. Essayer de relancer l'application.",
+                          );
                         },
                       ),
                     ],
