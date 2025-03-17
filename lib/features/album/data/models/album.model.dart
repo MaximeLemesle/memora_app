@@ -31,7 +31,7 @@ class AlbumModel extends AlbumEntity {
       'title': title,
       'background_image': backgroundImage,
       'start_date': startDate,
-      'end_date': startDate,
+      'end_date': endDate,
       'owner_id': ownerId,
       'description': description,
       'members': members,

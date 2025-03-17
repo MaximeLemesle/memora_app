@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:memora_app/core/services/image_picker.service.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/features/album/domain/entities/album.entity.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
@@ -21,18 +22,28 @@ class NewAlbumPage extends StatefulWidget {
 }
 
 class _NewAlbumPageState extends State<NewAlbumPage> {
-  File? _selectedImage;
-  final _imagePickerService = ImagePickerService();
+  XFile? _selectedImage;
+  String? _encodedImage;
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
 
   // Pick an image from the gallery
   Future<void> _pickImageFromGallery() async {
-    final image = await _imagePickerService.pickImageFromGallery();
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    if (image != null) {
+    if (pickedFile != null) {
+      // Convert the image to save it in the database
+      File imageFile = File(pickedFile.path);
+      List<int> imageBytes = await imageFile.readAsBytes();
+      String base64Image = base64Encode(imageBytes);
+
+      // Actualise the image background
       setState(() {
-        _selectedImage = image;
+        _selectedImage = pickedFile;
+        _encodedImage = base64Image;
+
+        //// SAVE THE ENCODED IMAGE IN THE DATABASE
       });
     }
   }
@@ -50,7 +61,7 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
     }
 
     // Check if the background image is not selected
-    if (_selectedImage == null) {
+    if (_encodedImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Veuillez ajouter une photo de couverture."),
