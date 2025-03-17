@@ -19,26 +19,19 @@ class AlbumDescription extends StatelessWidget {
       children: [
         // Information
         Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           spacing: 12,
           children: [
             AvatarWidget(
               size: 'big',
               person: owner,
             ),
-
-            // TODO: Enlever la column ?
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Crée par ${owner[0].toUpperCase()}${owner.substring(1)}',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
-                ),
-              ],
-            )
+            Text(
+              'Crée par ${owner[0].toUpperCase()}${owner.substring(1)}',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+            ),
           ],
         ),
 
