@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
@@ -23,23 +24,35 @@ class AlbumList extends StatelessWidget {
           if (index < albums.length) {
             final album = albums[index];
 
-            return Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: 24,
-              children: [
-                CoverPage(
-                  title: album.title,
-                  backgroundImage: album.backgroundImage,
-                  startDate: album.startDate,
-                  endDate: album.endDate,
-                  members: album.members ?? [],
-                ),
-                AlbumDescription(
-                  owner: album.ownerId,
-                  description: album.description ?? '',
-                ),
-              ],
+            // Fetch the user with the ownerId
+            return StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('users')
+                  .doc(album.ownerId)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                final userName =
+                    snapshot.data?.get('name') ?? 'Utilisateur inconnu';
+
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 24,
+                  children: [
+                    CoverPage(
+                      title: album.title,
+                      backgroundImage: album.backgroundImage,
+                      startDate: album.startDate,
+                      endDate: album.endDate,
+                      members: album.members ?? [],
+                    ),
+                    AlbumDescription(
+                      owner: userName,
+                      description: album.description ?? '',
+                    ),
+                  ],
+                );
+              },
             );
           } else {
             // Add the button to create a new album

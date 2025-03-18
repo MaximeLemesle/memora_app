@@ -15,22 +15,29 @@ class AlbumDescription extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 6,
+      spacing: 8,
       children: [
         // Information
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
           spacing: 12,
           children: [
             AvatarWidget(
               size: 'big',
               person: owner,
             ),
-            Text(
-              'Crée par ${owner[0].toUpperCase()}${owner.substring(1)}',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurface,
-                  ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Crée par ${owner[0].toUpperCase()}${owner.substring(1)}',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                Text(
+                  '12 pages restantes',
+                  style: Theme.of(context).textTheme.labelMedium,
+                ),
+              ],
             ),
           ],
         ),

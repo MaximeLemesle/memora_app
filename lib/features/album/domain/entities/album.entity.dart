@@ -20,4 +20,6 @@ class AlbumEntity {
     this.description,
     this.members,
   });
+
+  // Get user with the ownerId
 }
