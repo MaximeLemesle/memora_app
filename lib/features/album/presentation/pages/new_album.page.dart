@@ -396,7 +396,7 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
 
                         /// ADD DESCRIPTION OF THE ALBUM
                         Container(
-                          height: 150,
+                          constraints: const BoxConstraints(minHeight: 150),
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: Theme.of(context)
@@ -436,23 +436,30 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
                                     )
                                   ],
                                 ),
-                                TextField(
-                                  controller: _descriptionController,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(fontStyle: FontStyle.italic),
-                                  textAlign: TextAlign.start,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText:
-                                        'Expliquer votre voyage, avec qui vous étiez ou encore ce que vous avez visitez...',
-                                    counterText:
-                                        '${_descriptionController.text.length}/300',
+                                SizedBox(
+                                  height: 106,
+                                  child: TextField(
+                                    controller: _descriptionController,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(fontStyle: FontStyle.italic),
+                                    textAlign: TextAlign.start,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText:
+                                          'Expliquer votre voyage, avec qui vous étiez ou encore ce que vous avez visitez...',
+                                      counterText:
+                                          '${_descriptionController.text.length}/150',
+                                    ),
+                                    maxLines: null,
+                                    keyboardType: TextInputType.multiline,
+                                    maxLength: 150,
+                                    onChanged: (value) {
+                                      setState(() {});
+                                    },
+                                    expands: true,
                                   ),
-                                  maxLines: null,
-                                  keyboardType: TextInputType.multiline,
-                                  maxLength: 300,
                                 ),
                               ],
                             ),
