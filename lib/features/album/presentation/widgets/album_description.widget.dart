@@ -24,7 +24,6 @@ class AlbumDescription extends StatelessWidget {
           children: [
             AvatarWidget(
               size: 'big',
-              person: owner,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
