@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,25 +33,26 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
-      // Convert the image to save it in the database
-      File imageFile = File(pickedFile.path);
-      List<int> imageBytes = await imageFile.readAsBytes();
-      String base64Image = base64Encode(imageBytes);
+    // Actualise the background image
+    setState(() {
+      _selectedImage = pickedFile;
+    });
 
-      // Actualise the image background
-      setState(() {
-        _selectedImage = pickedFile;
-        _encodedImage = base64Image;
+    // Save the image in the database
 
-        //// SAVE THE ENCODED IMAGE IN THE DATABASE
-      });
-    }
+    // final backgroundImage = album.backgroundImage;
+    // final fileName = "albums/${album.uid}.jpg";
+    // final storageRef = FirebaseStorage.instance.ref().child(fileName);
+
+    // await storageRef.putFile(backgroundImage);
+    // final downloadUrl = await storageRef.getDownloadURL();
+
+    // album.backgroundImage = downloadUrl;
   }
 
   // Save the album
   void _saveAlbum() {
-    final albumBloc = context.read<AlbumBloc>();
+    // final albumBloc = context.read<AlbumBloc>();
 
     // Check if the title is empty
     if (_titleController.text.isEmpty) {
@@ -75,19 +77,20 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
       title: _titleController.text,
       description: _descriptionController.text,
       ownerId: FirebaseAuth.instance.currentUser!.uid,
-      backgroundImage: _selectedImage!.path,
+      backgroundImage: _encodedImage!,
       startDate: startDateTime,
       endDate: endDateTime,
       members: [],
     );
+    print('album: ${album.backgroundImage}');
 
-    albumBloc.createAlbum(album);
+    // albumBloc.createAlbum(album);
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text("Album créé avec succès !")),
     );
 
-    Navigator.pop(context);
+    // Navigator.pop(context);
   }
 
   // Select start and end date
