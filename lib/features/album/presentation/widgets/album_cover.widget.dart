@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:memora_app/config/theme/app_theme.dart';
 import 'package:memora_app/features/user/presentation/widgets/avatar.widget.dart';
 
 class CoverPage extends StatelessWidget {
@@ -36,6 +37,21 @@ class CoverPage extends StatelessWidget {
               backgroundImage,
               fit: BoxFit.cover,
               height: 450,
+            ),
+          ),
+          // Add a gradient to make the text more readable
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  CustomColors.neutral900.withValues(alpha: .8),
+                  Colors.transparent
+                ],
+                stops: [0, 0.5],
+              ),
             ),
           ),
           Padding(
