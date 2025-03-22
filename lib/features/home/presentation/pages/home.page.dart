@@ -121,11 +121,22 @@ class _HomePageState extends State<HomePage> {
                                         variant: ButtonVariant.primary,
                                         size: ButtonSize.big,
                                         iconPosition: ButtonIcon.left,
-                                        onPressed: () {
-                                          Navigator.pushNamed(
-                                            context,
-                                            '/new_album_page',
-                                          );
+                                        onPressed: () async {
+                                          final albumBloc =
+                                              context.read<AlbumBloc>();
+                                          final currentUser =
+                                              FirebaseAuth.instance.currentUser;
+
+                                          final result =
+                                              await Navigator.of(context)
+                                                  .pushNamed('/new_album_page');
+
+                                          if (!mounted) return;
+                                          if (result == true &&
+                                              currentUser != null) {
+                                            albumBloc
+                                                .fetchAlbums(currentUser.uid);
+                                          }
                                         },
                                       ),
                                     ],

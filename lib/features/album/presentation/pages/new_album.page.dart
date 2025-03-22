@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:memora_app/config/theme/app_theme.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/features/album/domain/entities/album.entity.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
@@ -57,6 +57,13 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
       return;
     }
 
+    // add a loader
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const Center(child: CircularProgressIndicator()),
+    );
+
     try {
       // Upload the background image to Firebase Storage
       final firebaseStorage = FirebaseStorage.instance;
@@ -80,8 +87,6 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
         members: [],
       );
 
-      print('album: $album');
-
       // Create the album
       if (!mounted) return;
       final albumBloc = context.read<AlbumBloc>();
@@ -93,8 +98,10 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
         const SnackBar(content: Text("Album créé avec succès !")),
       );
 
-      Navigator.pop(context);
+      Navigator.pop(context); // Close the loader
+      Navigator.pop(context, true);
     } catch (e) {
+      Navigator.pop(context); // Close the loader
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Erreur : $e")),
       );
@@ -125,34 +132,29 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
         body: Stack(
           children: [
             /// BACKGROUND IMAGE
-            ShaderMask(
-              shaderCallback: (rect) {
-                return LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
+            Container(
+              decoration: BoxDecoration(
+                image: _selectedImage != null
+                    ? DecorationImage(
+                        image: FileImage(File(_selectedImage!.path)),
+                        fit: BoxFit.cover,
+                      )
+                    : const DecorationImage(
+                        image: AssetImage('assets/images/default_cover.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                   colors: [
-                    Theme.of(context).colorScheme.onSurface,
-                    Colors.transparent,
+                    CustomColors.neutral900.withValues(alpha: .5),
+                    Colors.transparent
                   ],
-                  stops: [0.0, 0.8],
-                ).createShader(rect);
-              },
-              blendMode: BlendMode.darken,
-              child: ImageFiltered(
-                imageFilter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: _selectedImage != null
-                        ? DecorationImage(
-                            image: FileImage(File(_selectedImage!.path)),
-                            fit: BoxFit.cover,
-                          )
-                        : const DecorationImage(
-                            image:
-                                AssetImage('assets/images/default_cover.jpg'),
-                            fit: BoxFit.cover,
-                          ),
-                  ),
+                  stops: [0, 0.3],
                 ),
               ),
             ),
@@ -226,7 +228,7 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
                         /// SELECT BACKGROUND PHOTO
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                            vertical: 100,
+                            vertical: 96,
                             horizontal: 64,
                           ),
                           child: ButtonWidget(
@@ -247,7 +249,7 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
 
                         /// SELECT TITLE OF THE ALBUM
                         Container(
-                          height: 80,
+                          constraints: const BoxConstraints(minHeight: 80),
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: Theme.of(context)
@@ -264,16 +266,19 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 12),
                                 child: TextField(
                                   controller: _titleController,
-                                  style: Theme.of(context).textTheme.titleSmall,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
                                   textAlign: TextAlign.center,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: 'Ajouter une titre à mon album',
+                                    hintText: 'Ajouter un titre',
                                   ),
+                                  maxLength: 25,
+                                  maxLines: null,
                                 ),
                               ),
                             ],
@@ -460,8 +465,8 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
                                       border: InputBorder.none,
                                       hintText:
                                           'Expliquer votre voyage, avec qui vous étiez ou encore ce que vous avez visitez...',
-                                      counterText:
-                                          '${_descriptionController.text.length}/150',
+                                      // counterText:
+                                      //     '${_descriptionController.text.length}/150',
                                     ),
                                     maxLines: null,
                                     keyboardType: TextInputType.multiline,

@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/features/album/domain/entities/album.entity.dart';
+import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
 import 'package:memora_app/features/album/presentation/widgets/album_description.widget.dart';
 import 'package:memora_app/features/album/presentation/widgets/album_cover.widget.dart';
 
@@ -79,11 +82,16 @@ class AlbumList extends StatelessWidget {
                       size: ButtonSize.big,
                       iconPosition: ButtonIcon.only,
                       icon: CupertinoIcons.add,
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/new_album_page',
-                        );
+                      onPressed: () async {
+                        final albumBloc = context.read<AlbumBloc>();
+                        final currentUser = FirebaseAuth.instance.currentUser;
+
+                        final result = await Navigator.of(context)
+                            .pushNamed('/new_album_page');
+
+                        if (result == true && currentUser != null) {
+                          albumBloc.fetchAlbums(currentUser.uid);
+                        }
                       },
                     ),
                     Text(
