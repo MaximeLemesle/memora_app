@@ -46,7 +46,7 @@ class AlbumDescription extends StatelessWidget {
           width: 300,
           child: Text(
             description,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
             softWrap: true,

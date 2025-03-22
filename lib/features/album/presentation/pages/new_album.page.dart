@@ -1,9 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,7 +23,6 @@ class NewAlbumPage extends StatefulWidget {
 
 class _NewAlbumPageState extends State<NewAlbumPage> {
   XFile? _selectedImage;
-  String? _encodedImage;
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
 
@@ -37,23 +35,10 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
     setState(() {
       _selectedImage = pickedFile;
     });
-
-    // Save the image in the database
-
-    // final backgroundImage = album.backgroundImage;
-    // final fileName = "albums/${album.uid}.jpg";
-    // final storageRef = FirebaseStorage.instance.ref().child(fileName);
-
-    // await storageRef.putFile(backgroundImage);
-    // final downloadUrl = await storageRef.getDownloadURL();
-
-    // album.backgroundImage = downloadUrl;
   }
 
   // Save the album
-  void _saveAlbum() {
-    // final albumBloc = context.read<AlbumBloc>();
-
+  void _saveAlbum() async {
     // Check if the title is empty
     if (_titleController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -63,7 +48,7 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
     }
 
     // Check if the background image is not selected
-    if (_encodedImage == null) {
+    if (_selectedImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Veuillez ajouter une photo de couverture."),
@@ -72,25 +57,48 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
       return;
     }
 
-    final album = AlbumEntity(
-      uid: const Uuid().v4(),
-      title: _titleController.text,
-      description: _descriptionController.text,
-      ownerId: FirebaseAuth.instance.currentUser!.uid,
-      backgroundImage: _encodedImage!,
-      startDate: startDateTime,
-      endDate: endDateTime,
-      members: [],
-    );
-    print('album: ${album.backgroundImage}');
+    try {
+      // Upload the background image to Firebase Storage
+      final firebaseStorage = FirebaseStorage.instance;
+      File file = File(_selectedImage!.path);
+      String albumId = const Uuid().v4();
+      String filePath = 'albums/$albumId/background.png';
 
-    // albumBloc.createAlbum(album);
+      await firebaseStorage.ref(filePath).putFile(file);
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Album créé avec succès !")),
-    );
+      String downloadUrl = await firebaseStorage.ref(filePath).getDownloadURL();
 
-    // Navigator.pop(context);
+      // Build the album entity
+      final album = AlbumEntity(
+        uid: albumId,
+        title: _titleController.text,
+        description: _descriptionController.text,
+        ownerId: FirebaseAuth.instance.currentUser!.uid,
+        backgroundImage: downloadUrl,
+        startDate: startDateTime,
+        endDate: endDateTime,
+        members: [],
+      );
+
+      print('album: $album');
+
+      // Create the album
+      if (!mounted) return;
+      final albumBloc = context.read<AlbumBloc>();
+      await albumBloc.createAlbum(album);
+
+      // Success message
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Album créé avec succès !")),
+      );
+
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Erreur : $e")),
+      );
+    }
   }
 
   // Select start and end date
