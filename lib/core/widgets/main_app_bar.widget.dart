@@ -1,29 +1,18 @@
 import 'package:flutter/material.dart';
-
 import 'package:memora_app/features/user/presentation/widgets/avatar.widget.dart';
-
-enum AppBarVariant { mainAppBar, actionAppBar }
 
 class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String username;
-  final AppBarVariant variant;
   final String title;
 
   const MainAppBar({
     super.key,
     this.username = 'Invité',
-    this.variant = AppBarVariant.mainAppBar,
     this.title = 'Page title',
   });
 
   @override
   Widget build(BuildContext context) {
-    return variant == AppBarVariant.mainAppBar
-        ? _buildMainAppBar(context)
-        : _buildActionAppBar(context);
-  }
-
-  Widget _buildMainAppBar(BuildContext context) {
     return Container(
       color: Theme.of(context).colorScheme.surface,
       padding: const EdgeInsets.fromLTRB(24, 58, 24, 6),
@@ -60,40 +49,6 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ],
               ),
             ],
-          ),
-          const AvatarWidget(size: 'big'),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildActionAppBar(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(24, 58, 24, 6),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        spacing: 24,
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainer,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-            ),
           ),
           const AvatarWidget(size: 'big'),
         ],

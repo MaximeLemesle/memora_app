@@ -47,12 +47,20 @@ class AlbumList extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 24,
                     children: [
-                      CoverPage(
-                        title: album.title,
-                        backgroundImage: album.backgroundImage,
-                        startDate: album.startDate,
-                        endDate: album.endDate,
-                        members: album.members ?? [],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            '/album_page',
+                            arguments: album,
+                          );
+                        },
+                        child: CoverPage(
+                          title: album.title,
+                          backgroundImage: album.backgroundImage,
+                          startDate: album.startDate,
+                          endDate: album.endDate,
+                          members: album.members ?? [],
+                        ),
                       ),
                       AlbumDescription(
                         owner: userName,

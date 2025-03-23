@@ -8,6 +8,7 @@ import 'package:memora_app/features/album/data/repositories/album.repository_imp
 import 'package:memora_app/features/album/domain/usecases/create_new_album.usecase.dart';
 import 'package:memora_app/features/album/domain/usecases/get_albums_by_user.usecase.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
+import 'package:memora_app/features/album/presentation/pages/album.page.dart';
 import 'package:memora_app/features/album/presentation/pages/new_album.page.dart';
 import 'package:memora_app/features/home/presentation/pages/home.page.dart';
 import 'package:memora_app/features/landing/presentation/pages/landing.page.dart';
@@ -76,6 +77,7 @@ class MyApp extends StatelessWidget {
         '/login_page': (context) => const LoginPage(),
         '/signup_page': (context) => const SignUpPage(),
         '/new_album_page': (context) => const NewAlbumPage(),
+        '/album_page': (context) => const AlbumPage(),
       },
       initialRoute: '/landing_page',
     );

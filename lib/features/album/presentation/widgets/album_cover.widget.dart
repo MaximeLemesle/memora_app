@@ -90,7 +90,6 @@ class CoverPage extends StatelessWidget {
                               right: index * 20,
                               child: AvatarWidget(
                                 size: 'medium',
-                                person: member,
                               ),
                             ),
                           );
