@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final Widget leadingWidget;
-  final Widget mainWidget;
-  final Widget trailingWidget;
+  final Widget? leadingWidget;
+  final Widget? mainWidget;
+  final Widget? trailingWidget;
 
   const CustomAppBar({
     super.key,
-    required this.leadingWidget,
-    required this.mainWidget,
-    required this.trailingWidget,
+    this.leadingWidget,
+    this.mainWidget,
+    this.trailingWidget,
   });
 
   @override
@@ -21,9 +21,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 24,
         children: [
-          leadingWidget,
-          mainWidget,
-          trailingWidget,
+          leadingWidget ?? Container(),
+          mainWidget ?? Container(),
+          trailingWidget ?? Container(),
         ],
       ),
     );
