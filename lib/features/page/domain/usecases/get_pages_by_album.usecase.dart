@@ -6,7 +6,7 @@ class GetPagesByAlbum {
 
   GetPagesByAlbum(this.repository);
 
-  Future<List<PageEntity>> call(String albumUid) async {
-    return await repository.getPagesByAlbum(albumUid);
+  Future<List<PageEntity>> call(String albumId) async {
+    return await repository.getPagesByAlbum(albumId);
   }
 }

@@ -3,6 +3,7 @@ import 'package:memora_app/features/page/domain/entities/page.entity.dart';
 class PageModel extends PageEntity {
   const PageModel({
     required super.uid,
+    required super.albumId,
     required super.pageNumber,
     required super.type,
     required super.title,
@@ -10,9 +11,10 @@ class PageModel extends PageEntity {
     super.images,
   });
 
-  factory PageModel.fromJson(Map<String, dynamic> json) {
+  factory PageModel.fromJson(Map<String, dynamic> json, String docId) {
     return PageModel(
-      uid: json['uid'],
+      uid: docId,
+      albumId: json['album_id'],
       pageNumber: json['page_number'],
       type: json['type'],
       title: json['title'],
@@ -24,6 +26,7 @@ class PageModel extends PageEntity {
   Map<String, dynamic> toJson() {
     return {
       'uid': uid,
+      'album_id': albumId,
       'page_number': pageNumber,
       'type': type,
       'title': title,
@@ -35,6 +38,7 @@ class PageModel extends PageEntity {
   factory PageModel.fromEntity(PageEntity entity) {
     return PageModel(
       uid: entity.uid,
+      albumId: entity.albumId,
       pageNumber: entity.pageNumber,
       type: entity.type,
       title: entity.title,
@@ -46,6 +50,7 @@ class PageModel extends PageEntity {
   PageEntity toEntity() {
     return PageEntity(
       uid: uid,
+      albumId: albumId,
       pageNumber: pageNumber,
       type: type,
       title: title,

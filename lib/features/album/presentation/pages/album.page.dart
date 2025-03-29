@@ -41,6 +41,7 @@ class AlbumPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 112),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 /// HEADINGS
                 Padding(
@@ -73,29 +74,23 @@ class AlbumPage extends StatelessWidget {
                 ),
 
                 /// LIST OF PAGES
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 16,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: Text(
-                          'Pages',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall
-                              ?.copyWith(
-                                color: Theme.of(context).colorScheme.onPrimary,
-                              ),
-                        ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 16,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      child: Text(
+                        'Pages',
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
                       ),
+                    ),
 
-                      /// PAGES LIST
-                      PagesList(albumUid: album.uid),
-                    ],
-                  ),
+                    /// PAGES LIST
+                    PagesList(albumId: album.uid),
+                  ],
                 ),
               ],
             ),

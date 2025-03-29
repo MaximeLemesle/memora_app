@@ -6,30 +6,34 @@ class PageDataSource {
 
   PageDataSource({required this.firestore});
 
-  Future<void> createPage(String albumId, PageModel page) async {
-    try {
-      await firestore
-          .collection("albums")
-          .doc(albumId)
-          .collection('pages')
-          .doc(page.uid)
-          .set(page.toJson());
-    } catch (e) {
-      throw Exception("Error creating page: $e");
-    }
-  }
+  // Future<void> createPage(String albumId, PageModel page) async {
+  //   try {
+  //     await firestore
+  //         .collection("albums")
+  //         .doc(albumId)
+  //         .collection('pages')
+  //         .doc(page.uid)
+  //         .set(page.toJson());
+  //   } catch (e) {
+  //     throw Exception("Error creating page: $e");
+  //   }
+  // }
 
-  Future<List<PageModel>> getPages(String albumId) async {
+  Future<List<PageModel>> getPagesByAlbum(String albumId) async {
     try {
+      // Get all the pages in an album
       final snapshot = await firestore
-          .collection('albums')
-          .doc(albumId)
-          .collection('pages')
+          .collection("pages")
+          .where("album_id", isEqualTo: albumId)
           .get();
 
-      return snapshot.docs
-          .map((doc) => PageModel.fromJson(doc.data()))
-          .toList();
+      List<PageModel> pages = [];
+      for (var doc in snapshot.docs) {
+        PageModel page = PageModel.fromJson(doc.data(), doc.id);
+        pages.add(page);
+      }
+
+      return pages;
     } catch (e) {
       throw Exception("Error fetching page: $e");
     }

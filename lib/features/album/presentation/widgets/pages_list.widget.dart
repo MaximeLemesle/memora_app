@@ -5,21 +5,21 @@ import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/features/page/presentation/blocs/page.bloc.dart';
 
 class PagesList extends StatelessWidget {
-  final String albumUid;
-  const PagesList({super.key, required this.albumUid});
+  final String albumId;
+  const PagesList({super.key, required this.albumId});
 
   /// todo: Find why the app crash when I click on an album
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 644,
+      height: 450,
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.only(left: 24),
       child: BlocBuilder<PageBloc, PageState>(
         builder: (context, state) {
           if (state is PageInitial) {
-            context.read<PageBloc>().fetchPages(albumUid);
+            context.read<PageBloc>().fetchPages(albumId);
             return const Center(child: CircularProgressIndicator());
           } else if (state is PageLoading) {
             return const Center(child: CircularProgressIndicator());
@@ -29,6 +29,7 @@ class PagesList extends StatelessWidget {
             return PageView.builder(
               controller: PageController(
                 viewportFraction: 0.85,
+                initialPage: 0,
               ),
               padEnds: false,
               itemCount: pages.length + 1,
@@ -58,7 +59,7 @@ class PagesList extends StatelessWidget {
                     ),
                   );
                 } else {
-                  // Add the button to create a new album
+                  // Add the button to create a new page
                   return Padding(
                     padding: const EdgeInsets.only(right: 24),
                     child: Align(
@@ -87,7 +88,7 @@ class PagesList extends StatelessWidget {
                               onPressed: () {},
                             ),
                             Text(
-                              "Créer un nouvel album",
+                              "Créer une nouvelle page",
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ],

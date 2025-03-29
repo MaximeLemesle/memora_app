@@ -10,13 +10,13 @@ class PageRepositoryImpl implements PageRepository {
 
   @override
   Future<List<PageEntity>> getPagesByAlbum(String albumId) async {
-    final List<PageModel> pages = await dataSource.getPages(albumId);
+    final List<PageModel> pages = await dataSource.getPagesByAlbum(albumId);
     return pages.map((page) => page.toEntity()).toList();
   }
 
-  @override
-  Future<void> createPage(String albumId, PageEntity page) async {
-    final PageModel pageModel = PageModel.fromEntity(page);
-    await dataSource.createPage(albumId, pageModel);
-  }
+  // @override
+  // Future<void> createPage(String albumId, PageEntity page) async {
+  //   final PageModel pageModel = PageModel.fromEntity(page);
+  //   await dataSource.createPage(albumId, pageModel);
+  // }
 }
