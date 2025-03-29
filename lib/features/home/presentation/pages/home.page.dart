@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
-import 'package:memora_app/features/album/presentation/widgets/album_list.widget.dart';
+import 'package:memora_app/features/home/presentation/widgets/album_list.widget.dart';
 import 'package:memora_app/core/widgets/main_app_bar.widget.dart';
 import 'package:memora_app/core/widgets/main_nav_bar.widget.dart';
 import 'package:memora_app/features/user/presentation/blocs/user.bloc.dart';

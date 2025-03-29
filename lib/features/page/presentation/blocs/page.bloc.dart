@@ -1,0 +1,51 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:memora_app/features/page/domain/entities/page.entity.dart';
+import 'package:memora_app/features/page/domain/usecases/get_pages_by_album.usecase.dart';
+
+abstract class PageState {}
+
+class PageInitial extends PageState {}
+
+class PageLoading extends PageState {}
+
+class PageLoaded extends PageState {
+  final List<PageEntity> pages;
+
+  PageLoaded(this.pages);
+}
+
+class PageSuccess extends PageState {}
+
+class PageError extends PageState {
+  final String message;
+  PageError(this.message);
+}
+
+class PageBloc extends Cubit<PageState> {
+  final GetPagesByAlbum getPagesByAlbum;
+  // final CreatePage createPage;
+
+  PageBloc(
+    this.getPagesByAlbum,
+    // this.createPage,
+  ) : super(PageInitial());
+
+  Future<void> fetchPages(String owner) async {
+    emit(PageLoading());
+    try {
+      final pages = await getPagesByAlbum(owner);
+      emit(PageLoaded(pages));
+    } catch (e) {
+      emit(PageError("Error: $e"));
+    }
+  }
+
+  // Future<void> createNewPage(PageEntity page) async {
+  //   try {
+  //     await createPage(page);
+  //     emit(PageSuccess());
+  //   } catch (e) {
+  //     emit(PageError(e.toString()));
+  //   }
+  // }
+}

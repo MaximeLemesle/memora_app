@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/features/album/domain/entities/album.entity.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
-import 'package:memora_app/features/album/presentation/widgets/album_description.widget.dart';
-import 'package:memora_app/features/album/presentation/widgets/album_cover.widget.dart';
+import 'package:memora_app/features/home/presentation/widgets/album_cover.widget.dart';
+import 'package:memora_app/features/home/presentation/widgets/album_description.widget.dart';
 
 class AlbumList extends StatelessWidget {
   final List<AlbumEntity> albums;
