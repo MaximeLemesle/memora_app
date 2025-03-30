@@ -4,8 +4,8 @@ class PageEntity {
   final int pageNumber;
   final String type;
   final String title;
-  final List<String>? descriptions;
-  final List<String>? images;
+  final List<dynamic>? descriptions;
+  final List<dynamic>? images;
 
   const PageEntity({
     required this.uid,

@@ -14,9 +14,9 @@ class PageRepositoryImpl implements PageRepository {
     return pages.map((page) => page.toEntity()).toList();
   }
 
-  // @override
-  // Future<void> createPage(String albumId, PageEntity page) async {
-  //   final PageModel pageModel = PageModel.fromEntity(page);
-  //   await dataSource.createPage(albumId, pageModel);
-  // }
+  @override
+  Future<void> createPage(PageEntity page) async {
+    final PageModel pageModel = PageModel.fromEntity(page);
+    await dataSource.createPage(pageModel);
+  }
 }

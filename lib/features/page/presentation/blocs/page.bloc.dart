@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/features/page/domain/entities/page.entity.dart';
+import 'package:memora_app/features/page/domain/usecases/create_new_page.usecase.dart';
 import 'package:memora_app/features/page/domain/usecases/get_pages_by_album.usecase.dart';
 
 abstract class PageState {}
@@ -23,11 +24,11 @@ class PageError extends PageState {
 
 class PageBloc extends Cubit<PageState> {
   final GetPagesByAlbum getPagesByAlbum;
-  // final CreatePage createPage;
+  final CreateNewPage createNewPage;
 
   PageBloc(
     this.getPagesByAlbum,
-    // this.createPage,
+    this.createNewPage,
   ) : super(PageInitial());
 
   Future<void> fetchPages(String owner) async {
@@ -40,12 +41,12 @@ class PageBloc extends Cubit<PageState> {
     }
   }
 
-  // Future<void> createNewPage(PageEntity page) async {
-  //   try {
-  //     await createPage(page);
-  //     emit(PageSuccess());
-  //   } catch (e) {
-  //     emit(PageError(e.toString()));
-  //   }
-  // }
+  Future<void> createPage(PageEntity page) async {
+    try {
+      await createNewPage(page);
+      emit(PageSuccess());
+    } catch (e) {
+      emit(PageError(e.toString()));
+    }
+  }
 }

@@ -8,8 +8,6 @@ class PagesList extends StatelessWidget {
   final String albumId;
   const PagesList({super.key, required this.albumId});
 
-  /// todo: Find why the app crash when I click on an album
-
   @override
   Widget build(BuildContext context) {
     return Container(
