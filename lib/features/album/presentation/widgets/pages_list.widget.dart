@@ -12,7 +12,7 @@ class PagesListWidget extends StatelessWidget {
     return Container(
       height: 450,
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.only(left: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       child: BlocBuilder<PageBloc, PageState>(
         builder: (context, state) {
           if (state is PageInitial) {
@@ -57,7 +57,9 @@ class PagesListWidget extends StatelessWidget {
                   );
                 } else {
                   // Add the button to create a new page
-                  return AddPageWidget();
+                  return Center(
+                    child: AddPageWidget(),
+                  );
                 }
               },
             );
