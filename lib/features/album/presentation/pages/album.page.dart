@@ -89,7 +89,7 @@ class AlbumPage extends StatelessWidget {
                     ),
 
                     /// PAGES LIST
-                    PagesList(albumId: album.uid),
+                    PagesListWidget(albumId: album.uid),
                   ],
                 ),
               ],

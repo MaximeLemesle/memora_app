@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/features/page/presentation/blocs/page.bloc.dart';
+import 'package:memora_app/features/page/presentation/widgets/add_page.widget.dart';
 
-class PagesList extends StatelessWidget {
+class PagesListWidget extends StatelessWidget {
   final String albumId;
-  const PagesList({super.key, required this.albumId});
+  const PagesListWidget({super.key, required this.albumId});
 
   @override
   Widget build(BuildContext context) {
@@ -58,42 +57,7 @@ class PagesList extends StatelessWidget {
                   );
                 } else {
                   // Add the button to create a new page
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 24),
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        height: 450,
-                        width: 300,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.outline,
-                          ),
-                          color: Colors.transparent,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          spacing: 16,
-                          children: [
-                            ButtonWidget(
-                              label: '',
-                              variant: ButtonVariant.tertiary,
-                              size: ButtonSize.big,
-                              iconPosition: ButtonIcon.only,
-                              icon: CupertinoIcons.add,
-                              onPressed: () {},
-                            ),
-                            Text(
-                              "Créer une nouvelle page",
-                              style: Theme.of(context).textTheme.titleSmall,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                  return AddPageWidget();
                 }
               },
             );
