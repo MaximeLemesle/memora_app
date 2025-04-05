@@ -29,7 +29,7 @@ class CoverPageWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         color: Colors.transparent,
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline,
+          color: Theme.of(context).colorScheme.surfaceContainer,
           width: 1.5,
         ),
       ),

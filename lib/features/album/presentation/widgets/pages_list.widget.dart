@@ -29,11 +29,11 @@ class _PagesListWidgetState extends State<PagesListWidget> {
       height: 450,
       width: MediaQuery.of(context).size.width,
       child: BlocBuilder<PageBloc, PageState>(
-        builder: (context, pageState) {
-          if (pageState is PageLoading || pageState is PageInitial) {
+        builder: (context, state) {
+          if (state is PageLoading || state is PageInitial) {
             return const Center(child: CircularProgressIndicator());
-          } else if (pageState is PageLoaded) {
-            final pages = pageState.pages;
+          } else if (state is PageLoaded) {
+            final pages = state.pages;
 
             return PageView.builder(
               controller: PageController(viewportFraction: 0.85),
@@ -76,8 +76,8 @@ class _PagesListWidgetState extends State<PagesListWidget> {
                 );
               },
             );
-          } else if (pageState is PageError) {
-            return Center(child: Text(pageState.message));
+          } else if (state is PageError) {
+            return Center(child: Text(state.message));
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -98,8 +98,6 @@ class _AlbumCoverPage extends StatelessWidget {
       builder: (context, state) {
         if (state is AlbumLoaded) {
           final album = state.album;
-
-          debugPrint(album.toString());
 
           return CoverPageWidget(
             title: album.title,
