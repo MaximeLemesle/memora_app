@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               );
                             }
-                            return AlbumList(albums: albumState.albums);
+                            return AlbumListWidget(albums: albumState.albums);
                           }
                           return Text(
                             "Une erreur s'est produite. Essayer de relancer l'application.",

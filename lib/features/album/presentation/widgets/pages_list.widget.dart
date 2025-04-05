@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
 import 'package:memora_app/features/page/domain/entities/page.entity.dart';
 import 'package:memora_app/features/page/presentation/blocs/page.bloc.dart';
-import 'package:memora_app/features/page/presentation/widgets/add_page.widget.dart';
+import 'package:memora_app/features/page/presentation/widgets/add_new.widget.dart';
 import 'package:memora_app/features/page/presentation/widgets/cover_page.widget.dart';
 
 class PagesListWidget extends StatefulWidget {
@@ -43,7 +43,7 @@ class _PagesListWidgetState extends State<PagesListWidget> {
                 Widget child;
 
                 if (index == 0) {
-                  /// Ajout de la cover page de l'album
+                  /// Add the album cover page
                   child = _AlbumCoverPage(albumId: widget.albumId);
                 } else if (index < pages.length + 1) {
                   /// Fetch the pages in the album
@@ -51,7 +51,16 @@ class _PagesListWidgetState extends State<PagesListWidget> {
                   child = _PageItemWidget(page: page);
                 } else {
                   /// Add the button to create a new page
-                  child = const AddPageWidget();
+                  child = AddNewWidget(
+                    text: Text(
+                      'Créer une nouvelle page',
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            color:
+                                Theme.of(context).colorScheme.surfaceContainer,
+                          ),
+                    ),
+                    onPressed: () {},
+                  );
                 }
 
                 /// Add padding between each pages
