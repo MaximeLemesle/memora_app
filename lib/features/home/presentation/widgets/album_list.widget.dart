@@ -106,7 +106,7 @@ class AlbumList extends StatelessWidget {
                               .pushNamed('/new_album_page');
 
                           if (result == true && currentUser != null) {
-                            albumBloc.fetchAlbums(currentUser.uid);
+                            albumBloc.fetchAlbumsByUser(currentUser.uid);
                           }
                         },
                       ),

@@ -32,6 +32,21 @@ class AlbumDataSource {
     }
   }
 
+  Future<AlbumModel> getAlbumById(String albumId) async {
+    try {
+      // Get an album by its ID
+      final doc = await firestore.collection("albums").doc(albumId).get();
+
+      if (doc.exists) {
+        return AlbumModel.fromJson(doc.data()!);
+      } else {
+        throw Exception("Album not found");
+      }
+    } catch (e) {
+      throw Exception("Error fetching album: $e");
+    }
+  }
+
   Future<void> createAlbum(AlbumModel album) async {
     try {
       await firestore.collection("albums").doc(album.uid).set(album.toJson());

@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
       context.read<UserBloc>().fetchUser(currentUser.uid);
-      context.read<AlbumBloc>().fetchAlbums(currentUser.uid);
+      context.read<AlbumBloc>().fetchAlbumsByUser(currentUser.uid);
     }
   }
 
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                             );
                           } else if (albumState is AlbumError) {
                             return Center(child: Text(albumState.message));
-                          } else if (albumState is AlbumLoaded) {
+                          } else if (albumState is AlbumsLoaded) {
                             if (albumState.albums.isEmpty) {
                               return Center(
                                 child: Container(
@@ -134,8 +134,8 @@ class _HomePageState extends State<HomePage> {
                                           if (!mounted) return;
                                           if (result == true &&
                                               currentUser != null) {
-                                            albumBloc
-                                                .fetchAlbums(currentUser.uid);
+                                            albumBloc.fetchAlbumsByUser(
+                                                currentUser.uid);
                                           }
                                         },
                                       ),

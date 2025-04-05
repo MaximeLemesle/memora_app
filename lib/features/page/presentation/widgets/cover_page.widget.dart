@@ -28,6 +28,10 @@ class CoverPageWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: Colors.transparent,
+        border: Border.all(
+          color: Theme.of(context).colorScheme.outline,
+          width: 1.5,
+        ),
       ),
       child: Stack(
         children: [
@@ -47,10 +51,10 @@ class CoverPageWidget extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  CustomColors.neutral900.withValues(alpha: .8),
+                  CustomColors.neutral900.withValues(alpha: .3),
                   Colors.transparent
                 ],
-                stops: [0, 0.5],
+                stops: [0, 0.8],
               ),
             ),
           ),
