@@ -27,6 +27,9 @@ import 'package:memora_app/features/auth/presentation/pages/login.page.dart';
 import 'package:memora_app/features/auth/presentation/pages/signup.page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+final RouteObserver<ModalRoute<void>> routeObserver =
+    RouteObserver<ModalRoute<void>>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -77,6 +80,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Memora',
+      navigatorObservers: [routeObserver],
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

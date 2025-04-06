@@ -11,8 +11,6 @@ import 'package:memora_app/config/theme/app_theme.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/features/album/domain/entities/album.entity.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
-import 'package:memora_app/features/page/domain/entities/page.entity.dart';
-import 'package:memora_app/features/page/presentation/blocs/page.bloc.dart';
 import 'package:memora_app/features/user/presentation/widgets/avatar.widget.dart';
 import 'package:uuid/uuid.dart';
 
@@ -71,11 +69,16 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
       final firebaseStorage = FirebaseStorage.instance;
       File file = File(_selectedImage!.path);
       String albumId = const Uuid().v4();
-      String filePath = 'albums/$albumId/background.png';
+      String filePath = 'albums/$albumId/${albumId}_background.png';
 
-      await firebaseStorage.ref(filePath).putFile(file);
+      final bytes = await file.readAsBytes();
 
-      String downloadUrl = await firebaseStorage.ref(filePath).getDownloadURL();
+      final uploadTask = await firebaseStorage.ref(filePath).putData(
+            bytes,
+            SettableMetadata(contentType: 'image/jpeg'),
+          );
+
+      final downloadUrl = await uploadTask.ref.getDownloadURL();
 
       // Build the album entity
       final album = AlbumEntity(
@@ -93,22 +96,6 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
       if (!mounted) return;
       final albumBloc = context.read<AlbumBloc>();
       await albumBloc.createAlbum(album);
-
-      // Build the first page of the album
-      final page = PageEntity(
-        uid: const Uuid().v4(),
-        albumId: albumId,
-        pageNumber: 1,
-        type: 'cover',
-        title: album.title,
-        descriptions: [],
-        images: [album.backgroundImage],
-      );
-
-      // Create the page
-      if (!mounted) return;
-      final pageBloc = context.read<PageBloc>();
-      await pageBloc.createNewPage(page);
 
       // Success message
       if (!mounted) return;
@@ -357,8 +344,8 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
                                                         (DateTime newDateTime) {
                                                       setState(() {
                                                         startDateTime =
-                                                            newDateTime
-                                                                as Timestamp;
+                                                            Timestamp.fromDate(
+                                                                newDateTime);
                                                       });
                                                     },
                                                     mode:
@@ -404,8 +391,8 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
                                                         (DateTime newDateTime) {
                                                       setState(() {
                                                         endDateTime =
-                                                            newDateTime
-                                                                as Timestamp;
+                                                            Timestamp.fromDate(
+                                                                newDateTime);
                                                       });
                                                     },
                                                     mode:
