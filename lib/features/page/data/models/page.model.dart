@@ -4,9 +4,9 @@ class PageModel extends PageEntity {
   const PageModel({
     required super.uid,
     required super.albumId,
-    required super.pageNumber,
     required super.type,
-    required super.title,
+    required super.pageNumber,
+    super.title,
     super.descriptions,
     super.images,
   });
@@ -15,8 +15,8 @@ class PageModel extends PageEntity {
     return PageModel(
       uid: docId,
       albumId: json['album_id'],
-      pageNumber: json['page_number'],
       type: json['type'],
+      pageNumber: json['page_number'],
       title: json['title'],
       descriptions: json['descriptions'],
       images: json['images'],
@@ -27,8 +27,8 @@ class PageModel extends PageEntity {
     return {
       'uid': uid,
       'album_id': albumId,
-      'page_number': pageNumber,
       'type': type,
+      'page_number': pageNumber,
       'title': title,
       'descriptions': descriptions,
       'images': images,
@@ -39,8 +39,8 @@ class PageModel extends PageEntity {
     return PageModel(
       uid: entity.uid,
       albumId: entity.albumId,
-      pageNumber: entity.pageNumber,
       type: entity.type,
+      pageNumber: entity.pageNumber,
       title: entity.title,
       descriptions: entity.descriptions,
       images: entity.images,
@@ -51,8 +51,8 @@ class PageModel extends PageEntity {
     return PageEntity(
       uid: uid,
       albumId: albumId,
-      pageNumber: pageNumber,
       type: type,
+      pageNumber: pageNumber,
       title: title,
       descriptions: descriptions,
       images: images,

@@ -2,26 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:memora_app/config/theme/app_theme.dart';
+import 'package:memora_app/features/page/domain/entities/page.entity.dart';
 import 'package:memora_app/features/user/presentation/widgets/avatar.widget.dart';
 
 class CoverPageWidget extends StatelessWidget {
-  final String title;
-  final String backgroundImage;
-  final Timestamp startDate;
-  final Timestamp endDate;
-  final List<String> members;
+  final PageEntity page;
 
-  const CoverPageWidget({
-    super.key,
-    required this.title,
-    required this.backgroundImage,
-    required this.startDate,
-    required this.endDate,
-    required this.members,
-  });
+  const CoverPageWidget({super.key, required this.page});
 
   @override
   Widget build(BuildContext context) {
+    final title = page.title ?? '';
+    final backgroundImage = page.backgroundImage ?? '';
+    final startDate = page.startDate ?? Timestamp.now();
+    final endDate = page.endDate ?? Timestamp.now();
+    final members = page.members ?? [];
+
     return Container(
       height: 450,
       width: 300,

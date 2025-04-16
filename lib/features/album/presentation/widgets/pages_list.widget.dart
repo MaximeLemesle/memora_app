@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
-import 'package:memora_app/features/page/domain/entities/page.entity.dart';
 import 'package:memora_app/features/page/presentation/blocs/page.bloc.dart';
 import 'package:memora_app/features/page/presentation/widgets/add_new.widget.dart';
-import 'package:memora_app/features/page/presentation/widgets/cover_page.widget.dart';
+import 'package:memora_app/features/page/presentation/widgets/page_renderer.widget.dart';
 
 class PagesListWidget extends StatefulWidget {
   final String albumId;
@@ -42,13 +41,14 @@ class _PagesListWidgetState extends State<PagesListWidget> {
               itemBuilder: (context, index) {
                 Widget child;
 
-                if (index == 0) {
-                  /// Add the album cover page
-                  child = _AlbumCoverPage(albumId: widget.albumId);
-                } else if (index < pages.length + 1) {
+                // if (index == 0) {
+                /// Add the album cover page
+                // child = _AlbumCoverPage(albumId: widget.albumId);
+                // } else if (index < pages.length + 1) {
+                if (index < pages.length) {
                   /// Fetch the pages in the album
-                  final page = pages[index - 1];
-                  child = _PageItemWidget(page: page);
+                  final page = pages[index];
+                  child = PageRendererWidget(page: page);
                 } else {
                   /// Add the button to create a new page
                   child = AddNewWidget(
@@ -87,51 +87,51 @@ class _PagesListWidgetState extends State<PagesListWidget> {
   }
 }
 
-class _AlbumCoverPage extends StatelessWidget {
-  final String albumId;
+// class _AlbumCoverPage extends StatelessWidget {
+//   final String albumId;
 
-  const _AlbumCoverPage({required this.albumId});
+//   const _AlbumCoverPage({required this.albumId});
 
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<AlbumBloc, AlbumState>(
-      builder: (context, state) {
-        if (state is AlbumLoaded) {
-          final album = state.album;
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<AlbumBloc, AlbumState>(
+//       builder: (context, state) {
+//         if (state is AlbumLoaded) {
+//           final album = state.album;
 
-          return CoverPageWidget(
-            title: album.title,
-            backgroundImage: album.backgroundImage,
-            startDate: album.startDate,
-            endDate: album.endDate,
-            members: album.members ?? [],
-          );
-        }
-        return const Center(child: CircularProgressIndicator());
-      },
-    );
-  }
-}
+//           return CoverPageWidget(
+//             title: album.title,
+//             backgroundImage: album.backgroundImage,
+//             startDate: album.startDate,
+//             endDate: album.endDate,
+//             members: album.members ?? [],
+//           );
+//         }
+//         return const Center(child: CircularProgressIndicator());
+//       },
+//     );
+//   }
+// }
 
-class _PageItemWidget extends StatelessWidget {
-  final PageEntity page;
+// class _PageItemWidget extends StatelessWidget {
+//   final PageEntity page;
 
-  const _PageItemWidget({required this.page});
+//   const _PageItemWidget({required this.page});
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 24),
-      child: SizedBox(
-        height: 450,
-        width: 300,
-        child: Center(
-          child: Text(
-            page.title,
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.only(right: 24),
+//       child: SizedBox(
+//         height: 450,
+//         width: 300,
+//         child: Center(
+//           child: Text(
+//             page.title,
+//             style: Theme.of(context).textTheme.titleSmall,
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }

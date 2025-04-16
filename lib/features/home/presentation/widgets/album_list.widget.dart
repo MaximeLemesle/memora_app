@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:memora_app/features/album/domain/entities/album.entity.dart';
+import 'package:memora_app/features/album/presentation/widgets/album_cover.widget.dart';
 import 'package:memora_app/features/home/presentation/widgets/album_description.widget.dart';
 import 'package:memora_app/features/home/presentation/widgets/empty_album_list.widget.dart';
 import 'package:memora_app/features/page/presentation/widgets/add_new.widget.dart';
-import 'package:memora_app/features/page/presentation/widgets/cover_page.widget.dart';
 
 class AlbumListWidget extends StatelessWidget {
   final List<AlbumEntity> albums;
@@ -88,7 +88,7 @@ class _AlbumItemWidget extends StatelessWidget {
                   arguments: album,
                 );
               },
-              child: CoverPageWidget(
+              child: AlbumCoverWidget(
                 title: album.title,
                 backgroundImage: album.backgroundImage,
                 startDate: album.startDate,
