@@ -6,7 +6,7 @@ class PageEntity {
   final String type;
   final int pageNumber;
   final String? title;
-  final List<dynamic>? descriptions;
+  final List<dynamic>? description;
   final List<dynamic>? images;
   final String? backgroundImage;
   final Timestamp? startDate;
@@ -19,7 +19,7 @@ class PageEntity {
     required this.type,
     required this.pageNumber,
     this.title,
-    this.descriptions,
+    this.description,
     this.images,
     this.backgroundImage,
     this.startDate,

@@ -7,8 +7,12 @@ class PageModel extends PageEntity {
     required super.type,
     required super.pageNumber,
     super.title,
-    super.descriptions,
+    super.description,
     super.images,
+    super.backgroundImage,
+    super.startDate,
+    super.endDate,
+    super.members,
   });
 
   factory PageModel.fromJson(Map<String, dynamic> json, String docId) {
@@ -18,8 +22,12 @@ class PageModel extends PageEntity {
       type: json['type'],
       pageNumber: json['page_number'],
       title: json['title'],
-      descriptions: json['descriptions'],
+      description: json['description'],
       images: json['images'],
+      backgroundImage: json['background_image'],
+      startDate: json['start_date'],
+      endDate: json['end_date'],
+      members: json['members'],
     );
   }
 
@@ -30,8 +38,12 @@ class PageModel extends PageEntity {
       'type': type,
       'page_number': pageNumber,
       'title': title,
-      'descriptions': descriptions,
+      'description': description,
       'images': images,
+      'background_image': backgroundImage,
+      'start_date': startDate,
+      'end_date': endDate,
+      'members': members,
     };
   }
 
@@ -42,8 +54,12 @@ class PageModel extends PageEntity {
       type: entity.type,
       pageNumber: entity.pageNumber,
       title: entity.title,
-      descriptions: entity.descriptions,
+      description: entity.description,
       images: entity.images,
+      backgroundImage: entity.backgroundImage,
+      startDate: entity.startDate,
+      endDate: entity.endDate,
+      members: entity.members,
     );
   }
 
@@ -54,8 +70,12 @@ class PageModel extends PageEntity {
       type: type,
       pageNumber: pageNumber,
       title: title,
-      descriptions: descriptions,
+      description: description,
       images: images,
+      backgroundImage: backgroundImage,
+      startDate: startDate,
+      endDate: endDate,
+      members: members,
     );
   }
 }
