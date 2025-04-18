@@ -54,10 +54,7 @@ class AlbumPage extends StatelessWidget {
                       /// TITLE
                       Text(
                         album.title,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayLarge
-                            ?.copyWith(
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               color: Theme.of(context).colorScheme.onPrimary,
                             ),
                       ),

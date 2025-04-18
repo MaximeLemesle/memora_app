@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
 import 'package:memora_app/features/page/presentation/blocs/page.bloc.dart';
 import 'package:memora_app/features/page/presentation/widgets/add_new.widget.dart';
+import 'package:memora_app/features/page/presentation/widgets/page_renderer.widget.dart';
 
 class PagesListWidget extends StatefulWidget {
   final String albumId;
@@ -47,8 +48,7 @@ class _PagesListWidgetState extends State<PagesListWidget> {
                 if (index < pages.length) {
                   /// Fetch the pages in the album
                   final page = pages[index];
-                  child = Text('toto $index');
-                  // child = PageRendererWidget(page: page);
+                  child = PageRendererWidget(page: page);
                 } else {
                   /// Add the button to create a new page
                   child = AddNewWidget(

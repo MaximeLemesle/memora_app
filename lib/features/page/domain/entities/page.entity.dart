@@ -11,7 +11,7 @@ class PageEntity {
   final String? backgroundImage;
   final Timestamp? startDate;
   final Timestamp? endDate;
-  final List<String>? members;
+  final List<dynamic>? members;
 
   const PageEntity({
     required this.uid,
