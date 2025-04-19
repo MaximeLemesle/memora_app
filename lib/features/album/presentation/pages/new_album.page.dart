@@ -470,8 +470,6 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
                                       border: InputBorder.none,
                                       hintText:
                                           'Expliquer votre voyage, avec qui vous étiez ou encore ce que vous avez visitez...',
-                                      // counterText:
-                                      //     '${_descriptionController.text.length}/150',
                                     ),
                                     maxLines: null,
                                     keyboardType: TextInputType.multiline,

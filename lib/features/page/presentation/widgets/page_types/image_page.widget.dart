@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:memora_app/features/page/domain/entities/page.entity.dart';
 
-class DescriptionPageWidget extends StatelessWidget {
+class ImagePageWidget extends StatelessWidget {
   final PageEntity page;
 
-  const DescriptionPageWidget({super.key, required this.page});
+  const ImagePageWidget({super.key, required this.page});
 
   @override
   Widget build(BuildContext context) {
     final title = page.title ?? '';
-    final description = page.description ?? [];
+    final image = page.images ?? [];
+    final legend = page.texts ?? [];
 
     return Container(
       height: 450,
@@ -35,21 +36,23 @@ class DescriptionPageWidget extends StatelessWidget {
             Column(
               spacing: 12,
               children: [
-                Text(
-                  description[0],
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                Container(
-                  height: 150,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(4),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: Image.network(
+                    image[0],
+                    fit: BoxFit.cover,
+                    height: 300,
+                    width: double.infinity,
                   ),
                 ),
                 Text(
-                  description[1],
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  legend[0],
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontStyle: FontStyle.italic,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest,
+                      ),
                 ),
               ],
             ),
