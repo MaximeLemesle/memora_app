@@ -41,10 +41,6 @@ class _PagesListWidgetState extends State<PagesListWidget> {
               itemBuilder: (context, index) {
                 Widget child;
 
-                // if (index == 0) {
-                /// Add the album cover page
-                // child = _AlbumCoverPage(albumId: widget.albumId);
-                // } else if (index < pages.length + 1) {
                 if (index < pages.length) {
                   /// Fetch the pages in the album
                   final page = pages[index];
@@ -59,7 +55,16 @@ class _PagesListWidgetState extends State<PagesListWidget> {
                                 Theme.of(context).colorScheme.surfaceContainer,
                           ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      /// Get page with the type 'cover'
+                      final page =
+                          pages.firstWhere((page) => page.type == 'cover');
+
+                      Navigator.of(context).pushNamed(
+                        '/new_page_page',
+                        arguments: page,
+                      );
+                    },
                   );
                 }
 
@@ -86,52 +91,3 @@ class _PagesListWidgetState extends State<PagesListWidget> {
     );
   }
 }
-
-// class _AlbumCoverPage extends StatelessWidget {
-//   final String albumId;
-
-//   const _AlbumCoverPage({required this.albumId});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<AlbumBloc, AlbumState>(
-//       builder: (context, state) {
-//         if (state is AlbumLoaded) {
-//           final album = state.album;
-
-//           return CoverPageWidget(
-//             title: album.title,
-//             backgroundImage: album.backgroundImage,
-//             startDate: album.startDate,
-//             endDate: album.endDate,
-//             members: album.members ?? [],
-//           );
-//         }
-//         return const Center(child: CircularProgressIndicator());
-//       },
-//     );
-//   }
-// }
-
-// class _PageItemWidget extends StatelessWidget {
-//   final PageEntity page;
-
-//   const _PageItemWidget({required this.page});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.only(right: 24),
-//       child: SizedBox(
-//         height: 450,
-//         width: 300,
-//         child: Center(
-//           child: Text(
-//             page.title,
-//             style: Theme.of(context).textTheme.titleSmall,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

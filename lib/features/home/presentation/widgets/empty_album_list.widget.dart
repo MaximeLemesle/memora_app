@@ -47,8 +47,10 @@ class EmptyAlbumListWidget extends StatelessWidget {
                 final albumBloc = context.read<AlbumBloc>();
                 final currentUser = FirebaseAuth.instance.currentUser;
 
-                final result =
-                    await Navigator.of(context).pushNamed('/new_album_page');
+                final result = await Navigator.of(context).pushNamed(
+                  '/new_album_page',
+                  // arguments: album,
+                );
 
                 if (result == true && currentUser != null) {
                   albumBloc.fetchAlbumsByUser(currentUser.uid);
