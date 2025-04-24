@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class TextPageSkeletonWidget extends StatelessWidget {
-  const TextPageSkeletonWidget({super.key});
+class ImagePageSkeletonWidget extends StatelessWidget {
+  const ImagePageSkeletonWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,30 +16,24 @@ class TextPageSkeletonWidget extends StatelessWidget {
           width: 1.5,
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          spacing: 24,
-          children: [
-            Text(
-              'Page texte',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            Column(
-              spacing: 12,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 24,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: 24,
+        children: [
+          Text(
+            'Page image',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Cette page permet d’introduire un voyage, de raconter une anecdote en détails, ou de faire tout ce que je vous voulez.',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontStyle: FontStyle.italic,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .surfaceContainerHighest,
-                      ),
-                ),
                 Container(
-                  height: 200,
+                  height: 250,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surfaceContainer,
@@ -54,7 +48,7 @@ class TextPageSkeletonWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'En plus de ça, vous pouvez ajouter une image pour illustrer vos propos !',
+                  'Cette page permet d’ajouter une image et une légende à votre histoire.',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontStyle: FontStyle.italic,
                         color: Theme.of(context)
@@ -64,8 +58,8 @@ class TextPageSkeletonWidget extends StatelessWidget {
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

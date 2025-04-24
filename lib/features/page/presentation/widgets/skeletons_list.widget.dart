@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memora_app/features/page/presentation/widgets/page_skeletons/image_page_skeleton.widget.dart';
 import 'package:memora_app/features/page/presentation/widgets/page_skeletons/text_page_skeleton.widget.dart';
 
 class SkeletonsListWidget extends StatelessWidget {
@@ -9,6 +10,7 @@ class SkeletonsListWidget extends StatelessWidget {
     final List<Widget> pages = [
       // Add the good skeletons here
       const TextPageSkeletonWidget(),
+      const ImagePageSkeletonWidget(),
     ];
 
     return SizedBox(
