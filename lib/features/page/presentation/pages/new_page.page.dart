@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:memora_app/config/theme/app_theme.dart';
-import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/core/widgets/custom_app_bar.widget.dart';
 import 'package:memora_app/features/page/domain/entities/page.entity.dart';
 import 'package:memora_app/features/page/presentation/widgets/skeletons_list.widget.dart';
@@ -80,17 +79,6 @@ class NewPagePage extends StatelessWidget {
                     SkeletonsListWidget(),
                   ],
                 ),
-
-                const SizedBox(height: 24),
-
-                Center(
-                  child: ButtonWidget(
-                    label: 'Sélectionner une page',
-                    variant: ButtonVariant.secondary,
-                    size: ButtonSize.big,
-                    onPressed: () {},
-                  ),
-                )
               ],
             ),
           ),
