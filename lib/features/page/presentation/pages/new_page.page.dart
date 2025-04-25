@@ -1,17 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:memora_app/config/theme/app_theme.dart';
+import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/core/widgets/custom_app_bar.widget.dart';
 import 'package:memora_app/features/page/domain/entities/page.entity.dart';
+import 'package:memora_app/features/page/presentation/widgets/page_skeletons/image_page_skeleton.widget.dart';
+import 'package:memora_app/features/page/presentation/widgets/page_skeletons/text_page_skeleton.widget.dart';
 import 'package:memora_app/features/page/presentation/widgets/skeletons_list.widget.dart';
+import 'package:uuid/uuid.dart';
 
-class NewPagePage extends StatelessWidget {
+class NewPagePage extends StatefulWidget {
   const NewPagePage({super.key});
+
+  @override
+  State<NewPagePage> createState() => _NewPagePageState();
+}
+
+class _NewPagePageState extends State<NewPagePage> {
+  int? selectedIndex;
+
+  void _addPage() async {
+    if (selectedIndex == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Veuillez sélectionner un template.")),
+      );
+      return;
+    }
+
+    final pageType = selectedIndex == 0 ? 'text' : 'image';
+    final page = PageEntity(
+      uid: const Uuid().v4(),
+      albumId: '…',
+      type: pageType,
+      pageNumber: 1,
+      title: null,
+      texts: null,
+      images: null,
+    );
+
+    Navigator.of(context).pop(page);
+  }
 
   @override
   Widget build(BuildContext context) {
     final coverPage = ModalRoute.of(context)!.settings.arguments as PageEntity;
+
+    final skeletons = [
+      const TextPageSkeletonWidget(),
+      const ImagePageSkeletonWidget(),
+    ];
+
     return Scaffold(
-      // appBar: _buildAppBar(context, album),
       appBar: _buildAppBar(context),
       backgroundColor: Colors.transparent,
       extendBodyBehindAppBar: true,
@@ -36,49 +74,56 @@ class NewPagePage extends StatelessWidget {
               ),
             ),
           ),
+
+          /// CONTENT
           Padding(
             padding: const EdgeInsets.only(top: 112),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                /// HEADINGS
+                /// TITLE
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 6,
-                    children: [
-                      /// TITLE
-                      Text(
-                        coverPage.title!,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                      ),
-                    ],
+                  child: Text(
+                    coverPage.title!,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
                   ),
                 ),
 
-                /// LIST OF PAGES
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 16,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: Text(
-                        'Choisir un template',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onPrimary,
-                            ),
-                      ),
-                    ),
-
-                    /// TEMPLATES LIST
-                    SkeletonsListWidget(),
-                  ],
+                /// SUBTITLE
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Text(
+                    'Choisir un template',
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ),
                 ),
+
+                const SizedBox(height: 16),
+
+                /// SKELETONS LIST
+                SkeletonsListWidget(
+                  pages: skeletons,
+                  selectedIndex: selectedIndex,
+                  onPageTap: (i) => setState(() => selectedIndex = i),
+                ),
+
+                const SizedBox(height: 24),
+
+                /// BUTTON
+                Center(
+                  child: ButtonWidget(
+                    label: 'Ajouter la page',
+                    variant: ButtonVariant.primary,
+                    size: ButtonSize.big,
+                    onPressed: _addPage,
+                  ),
+                )
               ],
             ),
           ),
@@ -91,14 +136,9 @@ class NewPagePage extends StatelessWidget {
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
       leadingWidget: IconButton(
-        icon: const Icon(
-          Icons.arrow_back_ios_new_rounded,
-          size: 16,
-        ),
+        icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 16),
         style: ButtonStyle(
-          padding: WidgetStatePropertyAll(
-            const EdgeInsets.all(8),
-          ),
+          padding: WidgetStatePropertyAll(const EdgeInsets.all(8)),
           backgroundColor: WidgetStatePropertyAll(
             Theme.of(context)
                 .colorScheme
@@ -116,8 +156,6 @@ class NewPagePage extends StatelessWidget {
         ),
         onPressed: () => Navigator.of(context).pop(),
       ),
-
-      /// TODO: Create a dynamic display
       trailingWidget: Text(
         '24 pages restantes',
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
