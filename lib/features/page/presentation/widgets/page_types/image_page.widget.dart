@@ -47,12 +47,7 @@ class ImagePageWidget extends StatelessWidget {
                 ),
                 Text(
                   legend[0],
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontStyle: FontStyle.italic,
-                        color: Theme.of(context)
-                            .colorScheme
-                            .surfaceContainerHighest,
-                      ),
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
             ),

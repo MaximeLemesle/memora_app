@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/config/theme/app_theme.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/core/widgets/custom_app_bar.widget.dart';
 import 'package:memora_app/features/page/domain/entities/page.entity.dart';
+import 'package:memora_app/features/page/presentation/blocs/page.bloc.dart';
 import 'package:memora_app/features/page/presentation/widgets/page_skeletons/image_page_skeleton.widget.dart';
 import 'package:memora_app/features/page/presentation/widgets/page_skeletons/text_page_skeleton.widget.dart';
 import 'package:memora_app/features/page/presentation/widgets/skeletons_list.widget.dart';
@@ -17,28 +19,6 @@ class NewPagePage extends StatefulWidget {
 
 class _NewPagePageState extends State<NewPagePage> {
   int? selectedIndex;
-
-  void _addPage() async {
-    if (selectedIndex == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Veuillez sélectionner un template.")),
-      );
-      return;
-    }
-
-    final pageType = selectedIndex == 0 ? 'text' : 'image';
-    final page = PageEntity(
-      uid: const Uuid().v4(),
-      albumId: '…',
-      type: pageType,
-      pageNumber: 1,
-      title: null,
-      texts: null,
-      images: null,
-    );
-
-    Navigator.of(context).pop(page);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +101,7 @@ class _NewPagePageState extends State<NewPagePage> {
                     label: 'Ajouter la page',
                     variant: ButtonVariant.primary,
                     size: ButtonSize.big,
-                    onPressed: _addPage,
+                    onPressed: () => _createPage(albumId: coverPage.albumId),
                   ),
                 )
               ],
@@ -163,5 +143,51 @@ class _NewPagePageState extends State<NewPagePage> {
             ),
       ),
     );
+  }
+
+  void _createPage({required String albumId}) async {
+    if (selectedIndex == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Veuillez sélectionner un template.")),
+      );
+      return;
+    }
+
+    // add a loader
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const Center(child: CircularProgressIndicator()),
+    );
+
+    try {
+      // Build the page entity
+      final String pageType = selectedIndex == 0 ? 'text' : 'image';
+
+      final page = PageEntity(
+        uid: const Uuid().v4(),
+        albumId: albumId,
+        type: pageType,
+        title: '',
+        texts: [],
+        images: [],
+      );
+
+      // Add the page in the album
+      final pageBloc = context.read<PageBloc>();
+      await pageBloc.createPage(page);
+
+      if (!mounted) return;
+      Navigator.pop(context); // Close the loader
+      Navigator.of(context).pushNamed(
+        '/page_page',
+        arguments: page,
+      );
+    } catch (e) {
+      Navigator.pop(context); // Close the loader
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Erreur : $e")),
+      );
+    }
   }
 }
