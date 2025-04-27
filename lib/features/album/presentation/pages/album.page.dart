@@ -99,32 +99,6 @@ class AlbumPage extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar(BuildContext context, AlbumEntity album) {
     return CustomAppBar(
-      leadingWidget: IconButton(
-        icon: const Icon(
-          Icons.arrow_back_ios_new_rounded,
-          size: 16,
-        ),
-        style: ButtonStyle(
-          padding: WidgetStatePropertyAll(
-            const EdgeInsets.all(8),
-          ),
-          backgroundColor: WidgetStatePropertyAll(
-            Theme.of(context)
-                .colorScheme
-                .surfaceContainer
-                .withValues(alpha: 0.7),
-          ),
-          shape: WidgetStatePropertyAll(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
-              side: BorderSide(
-                color: Theme.of(context).colorScheme.outline,
-              ),
-            ),
-          ),
-        ),
-        onPressed: () => Navigator.of(context).pop(),
-      ),
       mainWidget: Expanded(
         child: SizedBox(
           height: 32,
