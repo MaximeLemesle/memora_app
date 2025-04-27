@@ -65,16 +65,19 @@ class _SignUpPageState extends State<SignUpPage> {
                     spacing: 24,
                     children: [
                       InputWidget(
+                        type: InputType.text,
                         label: 'Quel est ton prénom ?',
                         placeholder: 'John',
                         controller: _nameController,
                       ),
                       InputWidget(
+                        type: InputType.text,
                         label: 'Quel est ton adresse mail ?',
                         placeholder: 'john.doe@gmail.com',
                         controller: _emailController,
                       ),
                       InputWidget(
+                        type: InputType.text,
                         label: 'Choisis ton mot de passe ?',
                         placeholder: 'Mot de passe',
                         controller: _passwordController,

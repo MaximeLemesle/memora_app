@@ -63,11 +63,13 @@ class _LoginPageState extends State<LoginPage> {
                     spacing: 24,
                     children: [
                       InputWidget(
+                        type: InputType.text,
                         label: 'Quel est ton adresse mail ?',
                         placeholder: 'john.doe@gmail.com',
                         controller: _emailController,
                       ),
                       InputWidget(
+                        type: InputType.text,
                         label: 'Quel est ton mot de passe ?',
                         placeholder: 'Mot de passe',
                         controller: _passwordController,
