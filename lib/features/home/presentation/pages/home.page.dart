@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> with RouteAware {
                   ),
                 );
               }
-              return const SizedBox(); // fallback
+              return const SizedBox();
             },
           ),
         );

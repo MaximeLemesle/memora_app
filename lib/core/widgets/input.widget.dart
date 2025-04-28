@@ -14,7 +14,6 @@ class InputWidget extends StatelessWidget {
   final bool obscureText;
   final TextStyle? hintStyle;
   final int maxLines;
-  final TextInputType keyboardType;
 
   const InputWidget({
     super.key,
@@ -25,7 +24,6 @@ class InputWidget extends StatelessWidget {
     this.obscureText = false,
     this.hintStyle,
     this.maxLines = 1,
-    this.keyboardType = TextInputType.text,
   });
 
   @override
@@ -56,7 +54,6 @@ class InputWidget extends StatelessWidget {
         TextField(
           controller: controller,
           obscureText: obscureText,
-          keyboardType: keyboardType,
           maxLines: maxLines,
           style: inputTextStyle,
           decoration: InputDecoration(
