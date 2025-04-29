@@ -1,4 +1,5 @@
 {
   "cmake.ignoreCMakeListsMissing": true,
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "dart.devToolsBrowser": "default"
 }
