@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/core/widgets/custom_app_bar.widget.dart';
 import 'package:memora_app/features/page/domain/entities/page.entity.dart';
 import 'package:memora_app/features/page/presentation/widgets/page_editors/image_page_editor.widget.dart';
@@ -16,28 +15,7 @@ class PagePage extends StatelessWidget {
       appBar: _buildAppBar(context, page),
       body: Padding(
         padding: const EdgeInsets.all(24),
-        child: Column(
-          spacing: 24,
-          children: [
-            /// Add the editor for the page type
-            _buildEditorPageType(page),
-
-            /// Separator
-            Container(
-              height: 1,
-              width: 300,
-              color: Theme.of(context).colorScheme.outline,
-            ),
-
-            /// Save button
-            ButtonWidget(
-              label: 'Valider la page',
-              variant: ButtonVariant.primary,
-              size: ButtonSize.big,
-              onPressed: () {},
-            ),
-          ],
-        ),
+        child: _buildEditorPageType(page),
       ),
     );
   }

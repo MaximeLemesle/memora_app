@@ -17,6 +17,7 @@ import 'package:memora_app/features/page/data/data_sources/page.data_source.dart
 import 'package:memora_app/features/page/data/repositories/page.repository_impl.dart';
 import 'package:memora_app/features/page/domain/usecases/create_new_page.usecase.dart';
 import 'package:memora_app/features/page/domain/usecases/get_pages_by_album.usecase.dart';
+import 'package:memora_app/features/page/domain/usecases/update_page.usecase.dart';
 import 'package:memora_app/features/page/presentation/blocs/page.bloc.dart';
 import 'package:memora_app/features/page/presentation/pages/new_page.page.dart';
 import 'package:memora_app/features/page/presentation/pages/page.page.dart';
@@ -65,8 +66,9 @@ void main() async {
         ),
         BlocProvider<PageBloc>(
           create: (context) => PageBloc(
-            GetPagesByAlbum(pageRepository),
-            CreateNewPage(pageRepository),
+            GetPagesByAlbumUsecase(pageRepository),
+            CreateNewPageUsecase(pageRepository),
+            UpdatePageUsecase(pageRepository),
           ),
         )
       ],

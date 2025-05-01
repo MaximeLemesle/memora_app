@@ -6,14 +6,6 @@ class PageDataSource {
 
   PageDataSource({required this.firestore});
 
-  Future<void> createPage(PageModel page) async {
-    try {
-      await firestore.collection("pages").doc(page.uid).set(page.toJson());
-    } catch (e) {
-      throw Exception("Error creating page: $e");
-    }
-  }
-
   Future<List<PageModel>> getPagesByAlbum(String albumId) async {
     try {
       // Get all the pages in an album
@@ -31,6 +23,22 @@ class PageDataSource {
       return pages;
     } catch (e) {
       throw Exception("Error fetching pages: $e");
+    }
+  }
+
+  Future<void> createPage(PageModel page) async {
+    try {
+      await firestore.collection("pages").doc(page.uid).set(page.toJson());
+    } catch (e) {
+      throw Exception("Error creating page: $e");
+    }
+  }
+
+  Future<void> updatePage(PageModel page) async {
+    try {
+      await firestore.collection("pages").doc(page.uid).update(page.toJson());
+    } catch (e) {
+      throw Exception("Error updating page: $e");
     }
   }
 }

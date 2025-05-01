@@ -19,4 +19,10 @@ class PageRepositoryImpl implements PageRepository {
     final PageModel pageModel = PageModel.fromEntity(page);
     await dataSource.createPage(pageModel);
   }
+
+  @override
+  Future<void> updatePage(PageEntity newPage) async {
+    final PageModel pageModel = PageModel.fromEntity(newPage);
+    await dataSource.updatePage(pageModel);
+  }
 }

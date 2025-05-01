@@ -1,12 +1,12 @@
 import 'package:memora_app/features/page/domain/entities/page.entity.dart';
 import 'package:memora_app/features/page/domain/repository/page.repository.dart';
 
-class CreateNewPageUsecase {
+class UpdatePageUsecase {
   final PageRepository repository;
 
-  CreateNewPageUsecase(this.repository);
+  UpdatePageUsecase(this.repository);
 
-  Future<void> call(PageEntity page) async {
-    await repository.createPage(page);
+  Future<void> call(PageEntity newPage) async {
+    await repository.updatePage(newPage);
   }
 }

@@ -35,6 +35,7 @@ class TextPageWidget extends StatelessWidget {
             ),
             Column(
               spacing: 12,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
                   texts[0],
