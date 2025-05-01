@@ -1,10 +1,9 @@
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:memora_app/core/services/pick_image.service.dart';
+import 'package:memora_app/core/services/image.service.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/core/widgets/input.widget.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
@@ -29,7 +28,7 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
       TextEditingController();
 
   Future<void> _pickImage() async {
-    final pickedImage = await PickImage().pickImageFromGallery();
+    final pickedImage = await ImageService().pickImageFromGallery();
     setState(() {
       _selectedImage = pickedImage;
     });
@@ -160,21 +159,13 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
     }
 
     /// Upload the image to Firebase Storage
-    final firebaseStorage = FirebaseStorage.instance;
-    File file = File(_selectedImage!.path);
-    String albumId = page.albumId;
-    String pageId = page.uid;
-    String imageId = const Uuid().v4();
-    String filePath = 'albums/$albumId/pages/page_$pageId/image_$imageId.png';
+    String filePath =
+        'albums/${page.albumId}/pages/page_${page.uid}/image_${Uuid().v4()}.png';
 
-    final bytes = await file.readAsBytes();
-
-    final uploadTask = await firebaseStorage.ref(filePath).putData(
-          bytes,
-          SettableMetadata(contentType: 'image/jpeg'),
-        );
-
-    final downloadUrl = await uploadTask.ref.getDownloadURL();
+    final downloadUrl = await ImageService().saveImageToFirebaseStorage(
+      _selectedImage!,
+      filePath,
+    );
 
     /// Create the new page
     final newPage = PageEntity(
@@ -186,9 +177,7 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
         _firstDescriptionController.text,
         _secondDescriptionController.text,
       ],
-      images: [
-        downloadUrl,
-      ],
+      images: [downloadUrl],
     );
 
     try {

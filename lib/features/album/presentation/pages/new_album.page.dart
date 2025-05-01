@@ -1,13 +1,13 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:memora_app/config/theme/app_theme.dart';
+import 'package:memora_app/core/services/image.service.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/features/album/domain/entities/album.entity.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
@@ -66,19 +66,13 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
 
     try {
       // Upload the background image to Firebase Storage
-      final firebaseStorage = FirebaseStorage.instance;
-      File file = File(_selectedImage!.path);
       String albumId = const Uuid().v4();
       String filePath = 'albums/$albumId/${albumId}_background.png';
 
-      final bytes = await file.readAsBytes();
-
-      final uploadTask = await firebaseStorage.ref(filePath).putData(
-            bytes,
-            SettableMetadata(contentType: 'image/jpeg'),
-          );
-
-      final downloadUrl = await uploadTask.ref.getDownloadURL();
+      final downloadUrl = await ImageService().saveImageToFirebaseStorage(
+        _selectedImage!,
+        filePath,
+      );
 
       // Build the album entity
       final album = AlbumEntity(
