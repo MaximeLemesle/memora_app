@@ -52,17 +52,22 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
                       : 'Titre de la page',
                   controller: _titleController,
                   hintStyle: Theme.of(context).textTheme.titleLarge,
-                  maxLines: 2,
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                  maxLength: 32,
                 ),
 
                 /// Description
-                /// TODO: Add a counter for the description
                 InputWidget(
                   type: InputType.text,
                   placeholder: 'Ajouter un texte ici...',
                   controller: _firstDescriptionController,
                   hintStyle: Theme.of(context).textTheme.titleLarge,
-                  maxLines: 4,
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                  maxLength: 150,
                 ),
 
                 /// Image of the page
@@ -99,13 +104,15 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
                 ),
 
                 /// Description
-                /// TODO: Add a counter for the description
                 InputWidget(
                   type: InputType.text,
-                  placeholder: 'Et une description là...',
+                  placeholder: 'Ajouter un texte ici...',
                   controller: _secondDescriptionController,
                   hintStyle: Theme.of(context).textTheme.titleLarge,
-                  maxLines: 4,
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                  maxLength: 150,
                 ),
               ],
             ),

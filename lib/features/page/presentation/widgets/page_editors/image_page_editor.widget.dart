@@ -20,6 +20,7 @@ class ImagePageEditorWidget extends StatefulWidget {
 }
 
 class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
+  final TextEditingController _titleController = TextEditingController();
   XFile? _selectedImage;
   final TextEditingController _descriptionController = TextEditingController();
 
@@ -40,11 +41,25 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
             child: Column(
               spacing: 12,
               children: [
+                /// Title of the page
+                InputWidget(
+                  type: InputType.title,
+                  placeholder: widget.page.title!.isNotEmpty
+                      ? widget.page.title!
+                      : 'Titre de la page',
+                  controller: _titleController,
+                  hintStyle: Theme.of(context).textTheme.titleLarge,
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                  maxLength: 32,
+                ),
+
                 /// Image of the page
                 GestureDetector(
                   onTap: _pickImage,
                   child: Container(
-                    height: 200,
+                    height: 300,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       image: _selectedImage == null
@@ -73,14 +88,18 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
                   ),
                 ),
 
+                /// TODO: Fix design error in the page list of the album
+
                 /// Description
-                /// TODO: Add a counter for the description
                 InputWidget(
                   type: InputType.text,
                   placeholder: 'Ajouter une description ici...',
                   controller: _descriptionController,
                   hintStyle: Theme.of(context).textTheme.titleLarge,
-                  maxLines: 4,
+                  onChanged: (value) {
+                    setState(() {});
+                  },
+                  maxLength: 150,
                 ),
               ],
             ),
@@ -100,13 +119,20 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
           variant: ButtonVariant.primary,
           size: ButtonSize.big,
           onPressed: () => _updatePage(page: widget.page),
-          // onPressed: () => _createPage(albumId: coverPage.albumId),
         ),
       ],
     );
   }
 
   void _updatePage({required PageEntity page}) async {
+    /// Check if the title is empty
+    if (_titleController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Veuillez remplir le titre.")),
+      );
+      return;
+    }
+
     /// Check if the image is empty
     if (_selectedImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(

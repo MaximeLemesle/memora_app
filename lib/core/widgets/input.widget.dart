@@ -10,20 +10,26 @@ class InputWidget extends StatelessWidget {
   final InputType type;
   final String placeholder;
   final TextEditingController controller;
+  final Function(String)? onChanged;
+  final int maxLines;
+  final int? maxLength;
   final String? label;
   final bool obscureText;
   final TextStyle? hintStyle;
-  final int maxLines;
+  final bool expands;
 
   const InputWidget({
     super.key,
     required this.type,
     required this.placeholder,
     required this.controller,
+    this.onChanged,
+    this.maxLines = 1,
+    this.maxLength,
     this.label,
     this.obscureText = false,
     this.hintStyle,
-    this.maxLines = 1,
+    this.expands = false,
   });
 
   @override
@@ -54,8 +60,12 @@ class InputWidget extends StatelessWidget {
         TextField(
           controller: controller,
           obscureText: obscureText,
-          maxLines: maxLines,
+          maxLines: null,
+          keyboardType: TextInputType.multiline,
+          maxLength: maxLength,
+          expands: expands,
           style: inputTextStyle,
+          onChanged: onChanged,
           decoration: InputDecoration(
             // input inactif
             border: OutlineInputBorder(
