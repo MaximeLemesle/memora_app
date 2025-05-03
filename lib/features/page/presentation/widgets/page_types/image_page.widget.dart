@@ -35,6 +35,7 @@ class ImagePageWidget extends StatelessWidget {
             ),
             Column(
               spacing: 12,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(4),

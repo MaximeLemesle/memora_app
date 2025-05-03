@@ -88,8 +88,6 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
                   ),
                 ),
 
-                /// TODO: Fix design error in the page list of the album
-
                 /// Description
                 InputWidget(
                   type: InputType.text,
@@ -163,6 +161,7 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
       uid: page.uid,
       albumId: page.albumId,
       type: page.type,
+      title: _titleController.text,
       texts: [_descriptionController.text],
       images: [downloadUrl],
     );
