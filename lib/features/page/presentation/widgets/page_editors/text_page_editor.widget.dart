@@ -132,7 +132,6 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
           variant: ButtonVariant.primary,
           size: ButtonSize.big,
           onPressed: () => _updatePage(page: widget.page),
-          // onPressed: () => _createPage(albumId: coverPage.albumId),
         ),
       ],
     );
@@ -179,6 +178,7 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
       uid: page.uid,
       albumId: page.albumId,
       type: page.type,
+      pageNumber: page.pageNumber,
       title: _titleController.text,
       texts: [
         _firstDescriptionController.text,

@@ -60,7 +60,7 @@ class InputWidget extends StatelessWidget {
         TextField(
           controller: controller,
           obscureText: obscureText,
-          maxLines: null,
+          maxLines: obscureText == true ? 1 : null,
           keyboardType: TextInputType.multiline,
           maxLength: maxLength,
           expands: expands,

@@ -143,17 +143,28 @@ class _NewPagePageState extends State<NewPagePage> {
       // Build the page entity
       final String pageType = selectedIndex == 0 ? 'text' : 'image';
 
+      // Get the page number
+      final pageBloc = context.read<PageBloc>();
+      final int? pageCount = await pageBloc.getPageCountByAlbum(albumId);
+      final int pageNumber;
+
+      if (pageCount != null) {
+        pageNumber = pageCount + 1;
+      } else {
+        return null;
+      }
+
       final page = PageEntity(
         uid: const Uuid().v4(),
         albumId: albumId,
         type: pageType,
+        pageNumber: pageNumber,
         title: '',
         texts: [],
         images: [],
       );
 
       // Add the page in the album
-      final pageBloc = context.read<PageBloc>();
       await pageBloc.createPage(page);
 
       if (!mounted) return;

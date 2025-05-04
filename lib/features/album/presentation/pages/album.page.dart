@@ -99,6 +99,7 @@ class AlbumPage extends StatelessWidget {
 
   PreferredSizeWidget _buildAppBar(BuildContext context, AlbumEntity album) {
     return CustomAppBar(
+      onPressedBackButton: () => Navigator.pushNamed(context, '/home_page'),
       mainWidget: Expanded(
         child: SizedBox(
           height: 32,

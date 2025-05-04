@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? leadingWidget;
+  final VoidCallback? onPressedBackButton;
   final Widget? mainWidget;
   final Widget? trailingWidget;
 
   const CustomAppBar({
     super.key,
     this.leadingWidget,
+    this.onPressedBackButton,
     this.mainWidget,
     this.trailingWidget,
   });
@@ -21,7 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 24,
         children: [
-          leadingWidget ?? _buildBackButton(context),
+          leadingWidget ?? _buildBackButton(context, onPressedBackButton),
           mainWidget ?? Container(),
           trailingWidget ?? Container(),
         ],
@@ -33,7 +35,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(84);
 }
 
-Widget _buildBackButton(BuildContext context) {
+Widget _buildBackButton(
+  BuildContext context,
+  VoidCallback? onPressedBackButton,
+) {
   return IconButton(
     icon: const Icon(
       Icons.arrow_back_ios_new_rounded,
@@ -55,6 +60,6 @@ Widget _buildBackButton(BuildContext context) {
         ),
       ),
     ),
-    onPressed: () => Navigator.of(context).pop(),
+    onPressed: () => onPressedBackButton ?? Navigator.of(context).pop(),
   );
 }
