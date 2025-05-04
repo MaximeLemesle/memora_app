@@ -157,10 +157,11 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
     );
 
     /// Create the new page
-    final newPage = PageEntity(
+    final updatedPage = PageEntity(
       uid: page.uid,
       albumId: page.albumId,
       type: page.type,
+      pageNumber: page.pageNumber,
       title: _titleController.text,
       texts: [_descriptionController.text],
       images: [downloadUrl],
@@ -170,7 +171,7 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
       // Add the page in the album
       if (!mounted) return;
       final pageBloc = context.read<PageBloc>();
-      await pageBloc.updatePage(newPage);
+      await pageBloc.updatePage(updatedPage);
 
       // Get the album
       if (!mounted) return;

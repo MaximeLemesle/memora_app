@@ -4,6 +4,7 @@ class PageEntity {
   final String uid;
   final String albumId;
   final String type;
+  final int pageNumber;
   final String? title;
   final List<dynamic>? texts;
   final List<dynamic>? images;
@@ -16,6 +17,7 @@ class PageEntity {
     required this.uid,
     required this.albumId,
     required this.type,
+    required this.pageNumber,
     this.title,
     this.texts,
     this.images,

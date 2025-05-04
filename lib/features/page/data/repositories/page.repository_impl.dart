@@ -25,4 +25,9 @@ class PageRepositoryImpl implements PageRepository {
     final PageModel pageModel = PageModel.fromEntity(newPage);
     await dataSource.updatePage(pageModel);
   }
+
+  @override
+  Future<int> getPageCountByAlbum(String albumId) async {
+    return await dataSource.getPageCountByAlbum(albumId);
+  }
 }

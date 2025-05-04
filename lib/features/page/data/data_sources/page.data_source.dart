@@ -12,6 +12,7 @@ class PageDataSource {
       final snapshot = await firestore
           .collection("pages")
           .where("album_id", isEqualTo: albumId)
+          .orderBy('page_number')
           .get();
 
       List<PageModel> pages = [];
@@ -39,6 +40,18 @@ class PageDataSource {
       await firestore.collection("pages").doc(page.uid).update(page.toJson());
     } catch (e) {
       throw Exception("Error updating page: $e");
+    }
+  }
+
+  Future<int> getPageCountByAlbum(String albumId) async {
+    try {
+      final snapshot = await firestore
+          .collection('pages')
+          .where('album_id', isEqualTo: albumId)
+          .get();
+      return snapshot.docs.length;
+    } catch (e) {
+      throw Exception("Error fetching page count: $e");
     }
   }
 }
