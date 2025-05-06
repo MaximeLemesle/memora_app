@@ -21,11 +21,33 @@ class TextPageEditorWidget extends StatefulWidget {
 
 class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
   final TextEditingController _titleController = TextEditingController();
-  XFile? _selectedImage;
   final TextEditingController _firstDescriptionController =
       TextEditingController();
   final TextEditingController _secondDescriptionController =
       TextEditingController();
+  XFile? _selectedImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController.text = widget.page.title ?? '';
+    _firstDescriptionController.text =
+        widget.page.texts != null && widget.page.texts!.isNotEmpty
+            ? widget.page.texts![0]
+            : '';
+    _secondDescriptionController.text =
+        widget.page.texts != null && widget.page.texts!.length > 1
+            ? widget.page.texts![1]
+            : '';
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _firstDescriptionController.dispose();
+    _secondDescriptionController.dispose();
+    super.dispose();
+  }
 
   Future<void> _pickImage() async {
     final pickedImage = await ImageService().pickImageFromGallery();
@@ -47,9 +69,7 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
                 /// Title of the page
                 InputWidget(
                   type: InputType.title,
-                  placeholder: widget.page.title!.isNotEmpty
-                      ? widget.page.title!
-                      : 'Titre de la page',
+                  placeholder: 'Titre de la page',
                   controller: _titleController,
                   hintStyle: Theme.of(context).textTheme.titleLarge,
                   onChanged: (value) {
@@ -64,11 +84,10 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
                   placeholder: 'Ajouter un texte ici...',
                   controller: _firstDescriptionController,
                   hintStyle: Theme.of(context).textTheme.titleLarge,
-                  onChanged: (value) {
-                    setState(() {});
-                  },
                   maxLength: 150,
                 ),
+
+                // TODO: Find why the image is not instant selected
 
                 /// Image of the page
                 GestureDetector(
@@ -77,16 +96,16 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
                     height: 200,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      image: _selectedImage == null
-                          ? const DecorationImage(
-                              image:
-                                  AssetImage('assets/images/default_cover.jpg'),
-                              fit: BoxFit.cover,
-                            )
-                          : DecorationImage(
-                              image: FileImage(File(_selectedImage!.path)),
-                              fit: BoxFit.cover,
-                            ),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: _selectedImage != null
+                            ? FileImage(File(_selectedImage!.path))
+                            : widget.page.images!.isNotEmpty
+                                ? NetworkImage(widget.page.images?.first)
+                                : const AssetImage(
+                                    'assets/images/default_cover.jpg',
+                                  ),
+                      ),
                       color: Theme.of(context).colorScheme.surfaceContainer,
                       borderRadius: BorderRadius.circular(4),
                     ),
@@ -106,12 +125,9 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
                 /// Description
                 InputWidget(
                   type: InputType.text,
-                  placeholder: 'Ajouter un texte ici...',
+                  placeholder: 'Ajouter une description ici...',
                   controller: _secondDescriptionController,
                   hintStyle: Theme.of(context).textTheme.titleLarge,
-                  onChanged: (value) {
-                    setState(() {});
-                  },
                   maxLength: 150,
                 ),
               ],
@@ -164,30 +180,42 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
       return;
     }
 
-    /// Upload the image to Firebase Storage
-    String filePath =
-        'albums/${page.albumId}/pages/page_${page.uid}/image_${Uuid().v4()}.png';
-
-    final downloadUrl = await ImageService().saveImageToFirebaseStorage(
-      _selectedImage!,
-      filePath,
-    );
-
-    /// Create the new page
-    final newPage = PageEntity(
-      uid: page.uid,
-      albumId: page.albumId,
-      type: page.type,
-      pageNumber: page.pageNumber,
-      title: _titleController.text,
-      texts: [
-        _firstDescriptionController.text,
-        _secondDescriptionController.text,
-      ],
-      images: [downloadUrl],
-    );
-
     try {
+      // add a loader
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => const Center(child: CircularProgressIndicator()),
+      );
+
+      /// Upload the image to Firebase Storage
+      String? downloadUrl;
+      if (_selectedImage != null) {
+        String filePath =
+            'albums/${page.albumId}/pages/page_${page.uid}/image_${Uuid().v4()}.png';
+
+        downloadUrl = await ImageService().saveImageToFirebaseStorage(
+          _selectedImage!,
+          filePath,
+        );
+      } else {
+        downloadUrl = widget.page.images?.first;
+      }
+
+      /// Create the new page
+      final newPage = PageEntity(
+        uid: page.uid,
+        albumId: page.albumId,
+        type: page.type,
+        pageNumber: page.pageNumber,
+        title: _titleController.text,
+        texts: [
+          _firstDescriptionController.text,
+          _secondDescriptionController.text,
+        ],
+        images: [downloadUrl],
+      );
+
       // Add the page in the album
       if (!mounted) return;
       final pageBloc = context.read<PageBloc>();
@@ -199,12 +227,14 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
       final album = await albumBloc.getAlbumById(page.albumId);
 
       if (!mounted) return;
+      Navigator.of(context); // Close the loader
       Navigator.of(context).pushNamed(
         '/album_page',
         arguments: album,
       );
     } catch (e) {
       if (!mounted) return;
+      Navigator.of(context); // Close the loader
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Erreur : $e")),
       );

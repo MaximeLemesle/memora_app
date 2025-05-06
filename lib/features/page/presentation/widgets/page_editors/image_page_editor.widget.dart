@@ -20,19 +20,18 @@ class ImagePageEditorWidget extends StatefulWidget {
 }
 
 class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   XFile? _selectedImage;
 
   @override
   void initState() {
     super.initState();
-    _titleController = TextEditingController(text: widget.page.title ?? '');
-    _descriptionController = TextEditingController(
-      text: widget.page.texts != null && widget.page.texts!.isNotEmpty
-          ? widget.page.texts!.first
-          : '',
-    );
+    _titleController.text = widget.page.title ?? '';
+    _descriptionController.text =
+        widget.page.texts != null && widget.page.texts!.isNotEmpty
+            ? widget.page.texts!.first
+            : '';
   }
 
   @override
@@ -65,9 +64,6 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
                   placeholder: 'Titre de la page',
                   controller: _titleController,
                   hintStyle: Theme.of(context).textTheme.titleLarge,
-                  onChanged: (value) {
-                    setState(() {});
-                  },
                   maxLength: 32,
                 ),
 
@@ -85,7 +81,8 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
                             : widget.page.images!.isNotEmpty
                                 ? NetworkImage(widget.page.images?.first)
                                 : const AssetImage(
-                                    'assets/images/default_cover.jpg'),
+                                    'assets/images/default_cover.jpg',
+                                  ),
                       ),
                       color: Theme.of(context).colorScheme.surfaceContainer,
                       borderRadius: BorderRadius.circular(4),
@@ -159,32 +156,39 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
       return;
     }
 
-    /// Upload the image to Firebase Storage
-    String? downloadUrl;
-    if (_selectedImage != null) {
-      String filePath =
-          'albums/${page.albumId}/pages/page_${page.uid}/image_${Uuid().v4()}.png';
-
-      downloadUrl = await ImageService().saveImageToFirebaseStorage(
-        _selectedImage!,
-        filePath,
-      );
-    } else {
-      downloadUrl = widget.page.images?.first;
-    }
-
-    /// Create the new page
-    final updatedPage = PageEntity(
-      uid: page.uid,
-      albumId: page.albumId,
-      type: page.type,
-      pageNumber: page.pageNumber,
-      title: _titleController.text,
-      texts: [_descriptionController.text],
-      images: [downloadUrl],
-    );
-
     try {
+      // add a loader
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => const Center(child: CircularProgressIndicator()),
+      );
+
+      /// Upload the image to Firebase Storage
+      String? downloadUrl;
+      if (_selectedImage != null) {
+        String filePath =
+            'albums/${page.albumId}/pages/page_${page.uid}/image_${Uuid().v4()}.png';
+
+        downloadUrl = await ImageService().saveImageToFirebaseStorage(
+          _selectedImage!,
+          filePath,
+        );
+      } else {
+        downloadUrl = widget.page.images?.first;
+      }
+
+      /// Create the new page
+      final updatedPage = PageEntity(
+        uid: page.uid,
+        albumId: page.albumId,
+        type: page.type,
+        pageNumber: page.pageNumber,
+        title: _titleController.text,
+        texts: [_descriptionController.text],
+        images: [downloadUrl],
+      );
+
       // Add the page in the album
       if (!mounted) return;
       final pageBloc = context.read<PageBloc>();
@@ -196,12 +200,14 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
       final album = await albumBloc.getAlbumById(page.albumId);
 
       if (!mounted) return;
+      Navigator.of(context); // Close the loader
       Navigator.of(context).pushNamed(
         '/album_page',
         arguments: album,
       );
     } catch (e) {
       if (!mounted) return;
+      Navigator.of(context); // Close the loader
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Erreur : $e")),
       );
