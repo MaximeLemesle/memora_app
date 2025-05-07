@@ -87,8 +87,6 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
                   maxLength: 150,
                 ),
 
-                // TODO: Find why the image is not instant selected
-
                 /// Image of the page
                 GestureDetector(
                   onTap: _pickImage,
@@ -163,7 +161,7 @@ class _TextPageEditorWidgetState extends State<TextPageEditorWidget> {
     }
 
     /// Check if the image is empty
-    if (_selectedImage == null) {
+    if (_selectedImage == null && widget.page.images == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Veuillez sélectionner une image.")),
       );
