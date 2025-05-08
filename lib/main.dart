@@ -16,7 +16,7 @@ import 'package:memora_app/features/landing/presentation/pages/landing.page.dart
 import 'package:memora_app/features/page/data/data_sources/page.data_source.dart';
 import 'package:memora_app/features/page/data/repositories/page.repository_impl.dart';
 import 'package:memora_app/features/page/domain/usecases/create_new_page.usecase.dart';
-import 'package:memora_app/features/page/domain/usecases/delete_page_by_id.usecase.dart';
+import 'package:memora_app/features/page/domain/usecases/delete_page.usecase.dart';
 import 'package:memora_app/features/page/domain/usecases/get_page_count_by_album.usecase.dart';
 import 'package:memora_app/features/page/domain/usecases/get_pages_by_album.usecase.dart';
 import 'package:memora_app/features/page/domain/usecases/update_page.usecase.dart';
@@ -72,7 +72,7 @@ void main() async {
             CreateNewPageUsecase(pageRepository),
             UpdatePageUsecase(pageRepository),
             GetPageCountByAlbumUsecase(pageRepository),
-            DeletePageByIdUsecase(pageRepository),
+            DeletePageUsecase(pageRepository),
           ),
         )
       ],

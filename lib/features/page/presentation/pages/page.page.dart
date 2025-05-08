@@ -84,7 +84,7 @@ class _PagePageState extends State<PagePage> {
           if (confirm != true || !mounted) return;
 
           /// Delete the page
-          await context.read<PageBloc>().deletePage(page.uid);
+          await context.read<PageBloc>().deletePage(page);
 
           /// Get the album without the page and pop the page
           if (!mounted) return;

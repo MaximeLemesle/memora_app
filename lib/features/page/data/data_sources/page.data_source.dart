@@ -1,10 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:memora_app/features/page/data/models/page.model.dart';
+import 'package:memora_app/features/page/domain/entities/page.entity.dart';
 
 class PageDataSource {
   final FirebaseFirestore firestore;
+  final FirebaseStorage storage;
 
-  PageDataSource({required this.firestore});
+  PageDataSource({
+    required this.firestore,
+    FirebaseStorage? storage,
+  }) : storage = storage ?? FirebaseStorage.instance;
 
   Future<List<PageModel>> getPagesByAlbum(String albumId) async {
     try {
@@ -55,10 +61,16 @@ class PageDataSource {
     }
   }
 
-  Future<void> deletePage(String pageId) async {
+  Future<void> deletePage(PageEntity page) async {
     try {
-      await firestore.collection("pages").doc(pageId).delete();
-      //TODO: Find a solution to also remove the image using the path 'page_{pageId}'
+      if (page.images != null) {
+        for (final imageUrl in page.images!) {
+          final ref = storage.refFromURL(imageUrl);
+          await ref.delete();
+        }
+      }
+
+      await firestore.collection("pages").doc(page.uid).delete();
     } catch (e) {
       throw Exception("Error deleting page: $e");
     }
