@@ -44,7 +44,23 @@ class _PagesListWidgetState extends State<PagesListWidget> {
                 if (index < pages.length) {
                   /// Fetch the pages in the album
                   final page = pages[index];
-                  child = PageRendererWidget(page: page);
+                  child = GestureDetector(
+                    child: PageRendererWidget(page: page),
+                    onTap: () {
+                      if (page.type == 'cover') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Impossible de modifier cette page"),
+                          ),
+                        );
+                        return;
+                      }
+                      Navigator.of(context).pushNamed(
+                        '/page_page',
+                        arguments: page,
+                      );
+                    },
+                  );
                 } else {
                   /// Add the button to create a new page
                   child = AddNewWidget(

@@ -21,8 +21,25 @@ class ImagePageEditorWidget extends StatefulWidget {
 
 class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
   final TextEditingController _titleController = TextEditingController();
-  XFile? _selectedImage;
   final TextEditingController _descriptionController = TextEditingController();
+  XFile? _selectedImage;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController.text = widget.page.title ?? '';
+    _descriptionController.text =
+        widget.page.texts != null && widget.page.texts!.isNotEmpty
+            ? widget.page.texts!.first
+            : '';
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
 
   Future<void> _pickImage() async {
     final pickedImage = await ImageService().pickImageFromGallery();
@@ -44,14 +61,9 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
                 /// Title of the page
                 InputWidget(
                   type: InputType.title,
-                  placeholder: widget.page.title!.isNotEmpty
-                      ? widget.page.title!
-                      : 'Titre de la page',
+                  placeholder: 'Titre de la page',
                   controller: _titleController,
                   hintStyle: Theme.of(context).textTheme.titleLarge,
-                  onChanged: (value) {
-                    setState(() {});
-                  },
                   maxLength: 32,
                 ),
 
@@ -62,16 +74,16 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
                     height: 300,
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      image: _selectedImage == null
-                          ? const DecorationImage(
-                              image:
-                                  AssetImage('assets/images/default_cover.jpg'),
-                              fit: BoxFit.cover,
-                            )
-                          : DecorationImage(
-                              image: FileImage(File(_selectedImage!.path)),
-                              fit: BoxFit.cover,
-                            ),
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: _selectedImage != null
+                            ? FileImage(File(_selectedImage!.path))
+                            : widget.page.images!.isNotEmpty
+                                ? NetworkImage(widget.page.images?.first)
+                                : const AssetImage(
+                                    'assets/images/default_cover.jpg',
+                                  ),
+                      ),
                       color: Theme.of(context).colorScheme.surfaceContainer,
                       borderRadius: BorderRadius.circular(4),
                     ),
@@ -94,9 +106,6 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
                   placeholder: 'Ajouter une description ici...',
                   controller: _descriptionController,
                   hintStyle: Theme.of(context).textTheme.titleLarge,
-                  onChanged: (value) {
-                    setState(() {});
-                  },
                   maxLength: 150,
                 ),
               ],
@@ -132,7 +141,7 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
     }
 
     /// Check if the image is empty
-    if (_selectedImage == null) {
+    if (_selectedImage == null && widget.page.images == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Veuillez sélectionner une image.")),
       );
@@ -147,27 +156,39 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
       return;
     }
 
-    /// Upload the image to Firebase Storage
-    String filePath =
-        'albums/${page.albumId}/pages/page_${page.uid}/image_${Uuid().v4()}.png';
-
-    final downloadUrl = await ImageService().saveImageToFirebaseStorage(
-      _selectedImage!,
-      filePath,
-    );
-
-    /// Create the new page
-    final updatedPage = PageEntity(
-      uid: page.uid,
-      albumId: page.albumId,
-      type: page.type,
-      pageNumber: page.pageNumber,
-      title: _titleController.text,
-      texts: [_descriptionController.text],
-      images: [downloadUrl],
-    );
-
     try {
+      // add a loader
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => const Center(child: CircularProgressIndicator()),
+      );
+
+      /// Upload the image to Firebase Storage
+      String? downloadUrl;
+      if (_selectedImage != null) {
+        String filePath =
+            'albums/${page.albumId}/pages/page_${page.uid}/image_${Uuid().v4()}.png';
+
+        downloadUrl = await ImageService().saveImageToFirebaseStorage(
+          _selectedImage!,
+          filePath,
+        );
+      } else {
+        downloadUrl = widget.page.images?.first;
+      }
+
+      /// Create the new page
+      final updatedPage = PageEntity(
+        uid: page.uid,
+        albumId: page.albumId,
+        type: page.type,
+        pageNumber: page.pageNumber,
+        title: _titleController.text,
+        texts: [_descriptionController.text],
+        images: [downloadUrl],
+      );
+
       // Add the page in the album
       if (!mounted) return;
       final pageBloc = context.read<PageBloc>();
@@ -179,12 +200,14 @@ class _ImagePageEditorWidgetState extends State<ImagePageEditorWidget> {
       final album = await albumBloc.getAlbumById(page.albumId);
 
       if (!mounted) return;
+      Navigator.of(context); // Close the loader
       Navigator.of(context).pushNamed(
         '/album_page',
         arguments: album,
       );
     } catch (e) {
       if (!mounted) return;
+      Navigator.of(context); // Close the loader
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Erreur : $e")),
       );
