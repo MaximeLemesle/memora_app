@@ -5,4 +5,5 @@ abstract class PageRepository {
   Future<void> createPage(PageEntity page);
   Future<void> updatePage(PageEntity newPage);
   Future<int> getPageCountByAlbum(String albumId);
+  Future<void> deletePageById(String id);
 }

@@ -30,4 +30,9 @@ class PageRepositoryImpl implements PageRepository {
   Future<int> getPageCountByAlbum(String albumId) async {
     return await dataSource.getPageCountByAlbum(albumId);
   }
+
+  @override
+  Future<void> deletePageById(String id) async {
+    await dataSource.deletePage(id);
+  }
 }

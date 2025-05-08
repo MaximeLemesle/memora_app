@@ -54,4 +54,13 @@ class PageDataSource {
       throw Exception("Error fetching page count: $e");
     }
   }
+
+  Future<void> deletePage(String pageId) async {
+    try {
+      await firestore.collection("pages").doc(pageId).delete();
+      //TODO: Find a solution to also remove the image using the path 'page_{pageId}'
+    } catch (e) {
+      throw Exception("Error deleting page: $e");
+    }
+  }
 }
