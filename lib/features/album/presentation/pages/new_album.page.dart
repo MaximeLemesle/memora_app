@@ -11,6 +11,8 @@ import 'package:memora_app/core/services/image.service.dart';
 import 'package:memora_app/core/widgets/button.widget.dart';
 import 'package:memora_app/features/album/domain/entities/album.entity.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
+import 'package:memora_app/features/page/domain/entities/page.entity.dart';
+import 'package:memora_app/features/page/presentation/blocs/page.bloc.dart';
 import 'package:memora_app/features/user/presentation/widgets/avatar.widget.dart';
 import 'package:uuid/uuid.dart';
 
@@ -86,10 +88,25 @@ class _NewAlbumPageState extends State<NewAlbumPage> {
         members: [],
       );
 
+      // Build the cover page entity
+      final coverPage = PageEntity(
+        uid: const Uuid().v4(),
+        albumId: albumId,
+        type: 'cover',
+        pageNumber: 0,
+        title: _titleController.text,
+        backgroundImage: downloadUrl,
+      );
+
       // Create the album
       if (!mounted) return;
       final albumBloc = context.read<AlbumBloc>();
       await albumBloc.createAlbum(album);
+
+      // Create the page
+      if (!mounted) return;
+      final pageBloc = context.read<PageBloc>();
+      await pageBloc.createPage(coverPage);
 
       // Success message
       if (!mounted) return;
