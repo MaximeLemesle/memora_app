@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/features/album/domain/entities/album.entity.dart';
 import 'package:memora_app/features/album/domain/usecases/create_new_album.usecase.dart';
+import 'package:memora_app/features/album/domain/usecases/delete_album.usecases.dart';
 import 'package:memora_app/features/album/domain/usecases/get_album_by_id.usecase.dart';
 import 'package:memora_app/features/album/domain/usecases/get_albums_by_user.usecase.dart';
 
@@ -29,15 +30,19 @@ class AlbumError extends AlbumState {
   AlbumError(this.message);
 }
 
+class AlbumDeleted extends AlbumState {}
+
 class AlbumBloc extends Cubit<AlbumState> {
   final GetAlbumsByUser getAlbumsByUser;
   final GetAlbumById getAlbumById;
   final CreateNewAlbum createNewAlbum;
+  final DeleteAlbumUsecase deleteAlbumUsecase;
 
   AlbumBloc(
     this.getAlbumsByUser,
     this.getAlbumById,
     this.createNewAlbum,
+    this.deleteAlbumUsecase,
   ) : super(AlbumInitial());
 
   Future<void> fetchAlbumsByUser(String owner) async {
@@ -64,6 +69,15 @@ class AlbumBloc extends Cubit<AlbumState> {
     try {
       await createNewAlbum(album);
       emit(AlbumSuccess());
+    } catch (e) {
+      emit(AlbumError(e.toString()));
+    }
+  }
+
+  Future<void> deleteAlbum(AlbumEntity album) async {
+    try {
+      await deleteAlbumUsecase(album);
+      emit(AlbumDeleted());
     } catch (e) {
       emit(AlbumError(e.toString()));
     }

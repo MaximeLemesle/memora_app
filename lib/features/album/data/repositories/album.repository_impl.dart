@@ -28,4 +28,11 @@ class AlbumRepositoryImpl implements AlbumRepository {
 
     await dataSource.createAlbum(albumModel);
   }
+
+  @override
+  Future<void> deleteAlbum(AlbumEntity album) async {
+    final AlbumModel albumModel = AlbumModel.fromEntity(album);
+
+    await dataSource.deleteAlbum(albumModel);
+  }
 }

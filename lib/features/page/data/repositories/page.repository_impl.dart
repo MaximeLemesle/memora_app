@@ -33,6 +33,8 @@ class PageRepositoryImpl implements PageRepository {
 
   @override
   Future<void> deletePage(PageEntity page) async {
-    await dataSource.deletePage(page);
+    final PageModel pageModel = PageModel.fromEntity(page);
+
+    await dataSource.deletePage(pageModel);
   }
 }

@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:memora_app/features/album/data/models/album.model.dart';
 
 class AlbumDataSource {
   final FirebaseFirestore firestore;
+  final FirebaseStorage storage;
 
-  AlbumDataSource({required this.firestore});
+  AlbumDataSource({
+    required this.firestore,
+    FirebaseStorage? storage,
+  }) : storage = storage ?? FirebaseStorage.instance;
 
   Future<List<AlbumModel>> getAlbumsByUser(String ownerId) async {
     try {
@@ -52,6 +57,18 @@ class AlbumDataSource {
       await firestore.collection("albums").doc(album.uid).set(album.toJson());
     } catch (e) {
       throw Exception("Error creating album: $e");
+    }
+  }
+
+  Future<void> deleteAlbum(AlbumModel album) async {
+    try {
+      final imageUrl = album.backgroundImage;
+      final ref = storage.refFromURL(imageUrl);
+      await ref.delete();
+
+      await firestore.collection("albums").doc(album.uid).delete();
+    } catch (e) {
+      throw Exception("Error deleting album: $e");
     }
   }
 }

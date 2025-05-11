@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:memora_app/features/page/data/models/page.model.dart';
-import 'package:memora_app/features/page/domain/entities/page.entity.dart';
 
 class PageDataSource {
   final FirebaseFirestore firestore;
@@ -61,7 +60,7 @@ class PageDataSource {
     }
   }
 
-  Future<void> deletePage(PageEntity page) async {
+  Future<void> deletePage(PageModel page) async {
     try {
       if (page.images != null) {
         for (final imageUrl in page.images!) {

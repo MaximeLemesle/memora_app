@@ -6,6 +6,7 @@ import 'package:memora_app/config/theme/app_theme.dart';
 import 'package:memora_app/features/album/data/data_sources/album.data_source.dart';
 import 'package:memora_app/features/album/data/repositories/album.repository_impl.dart';
 import 'package:memora_app/features/album/domain/usecases/create_new_album.usecase.dart';
+import 'package:memora_app/features/album/domain/usecases/delete_album.usecases.dart';
 import 'package:memora_app/features/album/domain/usecases/get_album_by_id.usecase.dart';
 import 'package:memora_app/features/album/domain/usecases/get_albums_by_user.usecase.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
@@ -64,6 +65,11 @@ void main() async {
             GetAlbumsByUser(albumRepository),
             GetAlbumById(albumRepository),
             CreateNewAlbum(albumRepository),
+            DeleteAlbumUsecase(
+              albumRepository,
+              GetPagesByAlbumUsecase(pageRepository),
+              DeletePageUsecase(pageRepository),
+            ),
           ),
         ),
         BlocProvider<PageBloc>(
