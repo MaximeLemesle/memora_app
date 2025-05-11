@@ -6,6 +6,7 @@ import 'package:memora_app/config/theme/app_theme.dart';
 import 'package:memora_app/features/album/data/data_sources/album.data_source.dart';
 import 'package:memora_app/features/album/data/repositories/album.repository_impl.dart';
 import 'package:memora_app/features/album/domain/usecases/create_new_album.usecase.dart';
+import 'package:memora_app/features/album/domain/usecases/delete_album.usecases.dart';
 import 'package:memora_app/features/album/domain/usecases/get_album_by_id.usecase.dart';
 import 'package:memora_app/features/album/domain/usecases/get_albums_by_user.usecase.dart';
 import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
@@ -16,6 +17,7 @@ import 'package:memora_app/features/landing/presentation/pages/landing.page.dart
 import 'package:memora_app/features/page/data/data_sources/page.data_source.dart';
 import 'package:memora_app/features/page/data/repositories/page.repository_impl.dart';
 import 'package:memora_app/features/page/domain/usecases/create_new_page.usecase.dart';
+import 'package:memora_app/features/page/domain/usecases/delete_page.usecase.dart';
 import 'package:memora_app/features/page/domain/usecases/get_page_count_by_album.usecase.dart';
 import 'package:memora_app/features/page/domain/usecases/get_pages_by_album.usecase.dart';
 import 'package:memora_app/features/page/domain/usecases/update_page.usecase.dart';
@@ -63,6 +65,11 @@ void main() async {
             GetAlbumsByUser(albumRepository),
             GetAlbumById(albumRepository),
             CreateNewAlbum(albumRepository),
+            DeleteAlbumUsecase(
+              albumRepository,
+              GetPagesByAlbumUsecase(pageRepository),
+              DeletePageUsecase(pageRepository),
+            ),
           ),
         ),
         BlocProvider<PageBloc>(
@@ -71,6 +78,7 @@ void main() async {
             CreateNewPageUsecase(pageRepository),
             UpdatePageUsecase(pageRepository),
             GetPageCountByAlbumUsecase(pageRepository),
+            DeletePageUsecase(pageRepository),
           ),
         )
       ],

@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:memora_app/config/theme/app_theme.dart';
 import 'package:memora_app/core/widgets/custom_app_bar.widget.dart';
+import 'package:memora_app/core/widgets/custom_modal.widget.dart';
 import 'package:memora_app/features/album/domain/entities/album.entity.dart';
+import 'package:memora_app/features/album/presentation/blocs/album.bloc.dart';
 import 'package:memora_app/features/album/presentation/widgets/pages_list.widget.dart';
 import 'package:memora_app/features/user/presentation/widgets/avatar.widget.dart';
 
@@ -141,7 +144,28 @@ class AlbumPage extends StatelessWidget {
             ),
           ),
         ),
-        onPressed: () {},
+        onPressed: () async {
+          /// Afficher le dialogue de confirmation
+          final confirm = await showDialog<bool>(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return CustomModalWidget(
+                title: 'Supprimer l\'album ?',
+                description: 'Es-tu sûr de vouloir supprimer cette album ?\n'
+                    'Cette action est irréversible.',
+              );
+            },
+          );
+
+          if (confirm != true || !context.mounted) return;
+
+          /// Delete the page
+          await context.read<AlbumBloc>().deleteAlbum(album);
+
+          if (!context.mounted) return;
+          Navigator.pushNamed(context, '/home_page');
+        },
       ),
     );
   }

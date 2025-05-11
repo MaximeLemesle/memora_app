@@ -7,6 +7,7 @@ enum ButtonVariant {
   secondary,
   ghost,
   tertiary,
+  danger,
 }
 
 enum ButtonSize {
@@ -78,6 +79,11 @@ class ButtonWidget extends StatelessWidget {
         backgroundColor = colorScheme.surfaceContainer.withValues(alpha: 0.7);
         foregroundColor = colorScheme.onSurface;
         borderColor = Theme.of(context).colorScheme.outline;
+        break;
+      case ButtonVariant.danger:
+        backgroundColor = CustomColors.error100;
+        foregroundColor = colorScheme.error;
+        borderColor = colorScheme.error;
         break;
     }
 

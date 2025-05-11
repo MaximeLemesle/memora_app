@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:memora_app/features/page/domain/entities/page.entity.dart';
 import 'package:memora_app/features/page/domain/usecases/create_new_page.usecase.dart';
+import 'package:memora_app/features/page/domain/usecases/delete_page.usecase.dart';
 import 'package:memora_app/features/page/domain/usecases/get_page_count_by_album.usecase.dart';
 import 'package:memora_app/features/page/domain/usecases/get_pages_by_album.usecase.dart';
 import 'package:memora_app/features/page/domain/usecases/update_page.usecase.dart';
@@ -31,17 +32,21 @@ class PageCountLoaded extends PageState {
   PageCountLoaded(this.count);
 }
 
+class PageDeleted extends PageState {}
+
 class PageBloc extends Cubit<PageState> {
   final GetPagesByAlbumUsecase getPagesByAlbumUsecase;
   final CreateNewPageUsecase createNewPageUsecase;
   final UpdatePageUsecase updatePageUsecase;
   final GetPageCountByAlbumUsecase getPageCountByAlbumUsecase;
+  final DeletePageUsecase deletePageUsecase;
 
   PageBloc(
     this.getPagesByAlbumUsecase,
     this.createNewPageUsecase,
     this.updatePageUsecase,
     this.getPageCountByAlbumUsecase,
+    this.deletePageUsecase,
   ) : super(PageInitial());
 
   Future<void> fetchPages(String owner) async {
@@ -81,6 +86,15 @@ class PageBloc extends Cubit<PageState> {
     } catch (e) {
       emit(PageError("Error: $e"));
       return null;
+    }
+  }
+
+  Future<void> deletePage(PageEntity page) async {
+    try {
+      await deletePageUsecase(page);
+      emit(PageDeleted());
+    } catch (e) {
+      emit(PageError(e.toString()));
     }
   }
 }

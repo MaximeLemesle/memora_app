@@ -60,6 +60,6 @@ Widget _buildBackButton(
         ),
       ),
     ),
-    onPressed: () => onPressedBackButton ?? Navigator.of(context).pop(),
+    onPressed: onPressedBackButton ?? () => Navigator.of(context).pop(),
   );
 }
