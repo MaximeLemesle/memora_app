@@ -52,13 +52,20 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+  fake_cloud_firestore: ^3.1.0
+  firebase_auth_mocks: ^0.14.1
   flutter_lints: ^5.0.0
+  mocktail: ^1.0.4
+  patrol: ^3.15.1
+
+patrol:
+  app_name: memora_app
+  android:
+    package_name: com.example.memora_app
+  ios:
+    bundle_id: com.example.memora_app
+  macos:
+    bundle_id: com.example.memora_app
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -8,20 +8,23 @@ import 'package:memora_app/features/user/domain/entities/user.entity.dart';
 import 'package:memora_app/features/user/domain/repository/user.repository.dart';
 
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth;
   final UserRepository userRepository;
 
-  AuthService()
-      : userRepository = UserRepositoryImpl(
-          dataSource: UserDataSource(firestore: FirebaseFirestore.instance),
-        );
+  AuthService({
+    FirebaseAuth? auth,
+    UserRepository? userRepository,
+  })  : _auth = auth ?? FirebaseAuth.instance,
+        userRepository = userRepository ??
+            UserRepositoryImpl(
+              dataSource: UserDataSource(firestore: FirebaseFirestore.instance),
+            );
 
   /// Sign Up a new user
-  Future<void> signup({
+  Future<bool> signup({
     required String name,
     required String email,
     required String password,
-    required BuildContext context,
   }) async {
     try {
       UserCredential userCredential =
@@ -39,14 +42,15 @@ class AuthService {
 
       await Future.delayed(const Duration(seconds: 1));
 
-      if (!context.mounted) return;
-      Navigator.pushReplacementNamed(context, '/home_page');
+      return true;
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'weak-password') {
         message = 'Le mot de passe est trop faible.';
       } else if (e.code == 'email-already-in-use') {
         message = 'Un compte existe déjà avec cet email.';
+      } else if (e.code == 'invalid-email') {
+        message = 'Adresse mail invalide.';
       } else {
         message = 'Erreur inconnue: ${e.message}';
       }
@@ -59,8 +63,7 @@ class AuthService {
         textColor: Colors.white,
         fontSize: 14.0,
       );
-    } catch (e) {
-      debugPrint("Error in signup: $e");
+      return false;
     }
   }
 
