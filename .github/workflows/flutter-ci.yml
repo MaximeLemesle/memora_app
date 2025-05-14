@@ -10,21 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) Get the code
+      #1 Get the code
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2) Install Flutter
+      #2 Install Flutter
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.27.2'
+          flutter-version: "3.27.2"
 
-      # 3) Get the Flutter version
+      #3 Get the Flutter version
       - name: Flutter version
         run: flutter --version
 
-      # 4) Clean the cache
+      #4 Clean the cache
       - name: Cache Pub
         uses: actions/cache@v3
         with:
@@ -33,18 +33,22 @@ jobs:
             ~/.flutter
           key: ${{ runner.os }}-flutter-${{ matrix.flutter-version }}
 
-      # 5) Clean the project
+      #5 Clean the project
       - name: Clean Flutter project
         run: flutter clean
 
-      # 6) Get the dependencies
+      #6 Get the dependencies
       - name: Get dependencies
         run: flutter pub get
 
-      # 5) Analyze
+      #7 Generate mocks
+      - name: Generate mocks with build_runner
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      #8 Analyze
       - name: Flutter analyze
         run: flutter analyze --no-fatal-infos
 
-      # 6) Execute unit tests
+      #9 Run tests
       - name: Flutter test
         run: flutter test --coverage

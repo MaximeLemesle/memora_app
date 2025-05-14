@@ -99,8 +99,6 @@ class _SignUpPageState extends State<SignUpPage> {
                         password: _passwordController.text,
                       );
 
-                      if (!mounted) return;
-
                       if (isCreated) {
                         navigator.pushNamed('/home_page');
                       } else {
