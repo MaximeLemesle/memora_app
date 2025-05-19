@@ -90,12 +90,26 @@ class _SignUpPageState extends State<SignUpPage> {
                     variant: ButtonVariant.primary,
                     size: ButtonSize.big,
                     onPressed: () async {
-                      await AuthService().signup(
+                      final navigator = Navigator.of(context);
+                      final messenger = ScaffoldMessenger.of(context);
+
+                      final isCreated = await AuthService().signup(
                         name: _nameController.text,
                         email: _emailController.text,
                         password: _passwordController.text,
-                        context: context,
                       );
+
+                      if (isCreated) {
+                        navigator.pushNamed('/home_page');
+                      } else {
+                        messenger.showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Erreur lors de la création du compte.',
+                            ),
+                          ),
+                        );
+                      }
                     },
                     fullWidth: true,
                   ),
