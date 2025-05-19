@@ -2,7 +2,7 @@ image: ghcr.io/cirruslabs/flutter
 
 stages:
   - lints
-  # - tests
+  - tests
   # - build
   # - deploy
 
@@ -14,3 +14,15 @@ lints:
     - flutter analyze
   tags:
     - flutter
+
+tests:
+  stage: tests
+  script:
+    - flutter test --coverage ./lib
+    -lcov -r coverage/lcov.info '*/__test*__/*' -o coverage/lcov_cleaned.info
+    - genhtml coverage/lcov_cleaned.info --output=coverage
+  tags:
+    - flutter
+  artifacts:
+    paths:
+      - coverage
