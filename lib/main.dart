@@ -31,7 +31,7 @@ import 'package:memora_app/features/user/presentation/blocs/user.bloc.dart';
 import 'package:memora_app/firebase_options.dart';
 import 'package:memora_app/features/auth/presentation/pages/login.page.dart';
 import 'package:memora_app/features/auth/presentation/pages/signup.page.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:flutter_localizations/flutter_localizations.dart';
 
 final RouteObserver<ModalRoute<void>> routeObserver =
     RouteObserver<ModalRoute<void>>();
@@ -95,16 +95,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Memora',
       navigatorObservers: [routeObserver],
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('fr', 'FR'),
-        Locale('en', 'US'),
-      ],
-      locale: const Locale('fr', 'FR'),
+      // localizationsDelegates: const [
+      //   GlobalMaterialLocalizations.delegate,
+      //   GlobalWidgetsLocalizations.delegate,
+      //   GlobalCupertinoLocalizations.delegate,
+      // ],
+      // supportedLocales: const [
+      //   Locale('fr', 'FR'),
+      //   Locale('en', 'US'),
+      // ],
+      // locale: const Locale('fr', 'FR'),
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: lightMode,

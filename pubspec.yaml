@@ -44,21 +44,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  patrol: ^3.15.1
   mockito: ^5.4.0
   build_runner: ^2.4.6
 
 dependency_overrides:
   analyzer: ^6.2.0
-
-patrol:
-  app_name: memora_app
-  android:
-    package_name: com.example.memora_app
-  ios:
-    bundle_id: com.example.memora_app
-  macos:
-    bundle_id: com.example.memora_app
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
