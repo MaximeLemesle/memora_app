@@ -6,6 +6,11 @@ stages:
   # - build
   # - deploy
 
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .pub-cache
+
 lints:
   stage: lints
   before_script:
