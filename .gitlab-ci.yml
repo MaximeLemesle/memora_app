@@ -12,8 +12,6 @@ lints:
     - bash reconfigure.sh
   script:
     - flutter analyze
-  tags:
-    - flutter
 
 tests:
   stage: tests
@@ -21,8 +19,6 @@ tests:
     - flutter test --coverage ./lib
     - lcov -r coverage/lcov.info '*/__test*__/*' -o coverage/lcov_cleaned.info
     - genhtml coverage/lcov_cleaned.info --output=coverage
-  tags:
-    - flutter
   artifacts:
     paths:
       - coverage
