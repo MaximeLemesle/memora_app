@@ -1,10 +1,5 @@
 name: Flutter CI
 
-on:
-  push:
-  pull_request:
-    branches: [main]
-
 jobs:
   flutter-analyze-and-test:
     runs-on: ubuntu-latest
